@@ -1,0 +1,24 @@
+package com.chatRobot.service;
+
+import com.chatRobot.model.Order;
+
+import java.util.List;
+import java.util.Map;
+
+public interface OrderService {
+    void addOrder(Order order);
+
+    boolean UpdateOrder(Order order);
+
+    boolean DeleteOrder(String OrderId);
+
+    List<Order> FindOrderByOrderId(String OrderId);
+
+    List<Order> FindOrderByProductId(String ProductId);
+
+    List<Order> FindAll();
+
+    List<Order> FindOrderByTimeNoproductid(Map map);
+
+    List<Order> FindOrderByTime(Map map);
+}

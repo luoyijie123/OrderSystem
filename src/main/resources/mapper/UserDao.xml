@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chatRobot.dao.IUserDao">
+    <!--注意sql语句没有分号结尾  -->
+
+
+
+    <insert id="addUser" parameterType="User">
+
+        insert into user(account,password,role) values(#{account},#{password},#{role})
+
+    </insert>
+
+
+
+    <!--注意这里的参数类型是parameterType而不是parameterMap，因为返回的是单个类型  -->
+
+    <select id="findUserByAccountAndPwd"  parameterType="map"  resultType="User">
+
+        select *from user t where account=#{account} and password=#{password}
+
+    </select>
+
+
+
+</mapper>
+
