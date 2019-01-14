@@ -174,7 +174,7 @@ public class UserController {
         this.session = session;
         java.util.Date currentTime = new java.util.Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String start_time = df.format(currentTime);//正式部署时传入url
+        String start_time = df.format(currentTime);//正式部署时传入
 
         System.out.println("session值为:"+session);
         String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time=2018-01-11 12:18:22&span=1200&session="+session+"&page_no=";
