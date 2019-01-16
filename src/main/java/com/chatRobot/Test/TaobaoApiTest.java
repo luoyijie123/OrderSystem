@@ -40,7 +40,7 @@ public class TaobaoApiTest {
             String json = Util.loadJson(url);
             System.out.println("json值为:" + json);
             JSONObject jsonObject = JSON.parseObject(json);
-            JSONObject response = jsonObject.getJSONObject("results");
+            JSONObject response = jsonObject.getJSONObject("tbk_sc_order_get_response");
             JSONArray orders = response.getJSONArray("n_tbk_order");
             List<Order> orderList = new ArrayList<Order>();
             size = orders.size();
