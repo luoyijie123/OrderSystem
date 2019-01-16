@@ -11,8 +11,10 @@ import com.chatRobot.util.TimeUtil;
 import com.chatRobot.util.Util;
 //import org.json.JSONArray;
 //import org.json.JSONObject;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,16 +38,20 @@ public class UserController {
 
     @Autowired
     private OrderService orderService;
-    private String redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
-    private String SERVER_URL="https://api.jd.com/routerjson";
-    private String session;
-    private String appKey = "C2CD6961D2C32326CD837705D6BB7273";
-    private String appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
+
+    private String taobao_session;
+
+    private String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
+    private String Jd_SERVER_URL="https://api.jd.com/routerjson";
+    private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
+    private String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
     private String jd_Access_token = "";
+    private int jdunionid;
+
     private String pdd_Access_token = "";
     private String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
     private String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
-    private int jdunionid;
+
 
     @RequestMapping("add")
     public String addUser(User user, Model model){
@@ -80,7 +86,7 @@ public class UserController {
         Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
         code = mapRequest.get("code");
         state = mapRequest.get("state");
-        json = Util.jd_Json(appKey,appSecret,redirect_uri,code,state);
+        json = Util.jd_Json(Jd_appKey,Jd_appSecret,Jd_redirect_uri,code,state);
         System.out.println(code);
         System.out.println(json);
         this.jd_Access_token = Util.jd_Access_token(json);
@@ -124,7 +130,7 @@ public class UserController {
 
     @RequestMapping("index")
     public String home(){
-        System.out.println("session值为:"+this.session);
+        System.out.println("淘宝session值为:"+this.taobao_session);
         return "index";
     }
 
@@ -170,17 +176,48 @@ public class UserController {
 
 
     @RequestMapping("/ajaxsettaobaosession")
-    public String getTaobaoSession(String session){
-        this.session = session;
+    public String getTaobaoSession(String session) throws ParseException {
+        this.taobao_session = session;
+        int page_no = 1;//页面从第一页开始
+        int size = 5;//随便取一个数字
         java.util.Date currentTime = new java.util.Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String start_time = df.format(currentTime);//正式部署时传入
-
-        System.out.println("session值为:"+session);
-        String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time=2018-01-11 12:18:22&span=1200&session="+session+"&page_no=";
-        url = url.replaceAll(" ", "%20");
-        String json = Util.loadJson(url);
-        System.out.println("json值为:"+json);
+        System.out.println("session值为:"+taobao_session);
+        do {
+           String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time=2018-01-11 12:18:22&span=1200&session=" + session + "&page_no="+page_no+"&page_size=100";
+           url = url.replaceAll(" ", "%20");
+           String json = Util.loadJson(url);
+           System.out.println("json值为:" + json);
+           JSONObject jsonObject = JSON.parseObject(json);
+           JSONObject response = jsonObject.getJSONObject("results");
+           JSONArray orders = response.getJSONArray("n_tbk_order");
+           List <Order> orderList = new ArrayList<Order>();
+           size = orders.size();
+           DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           for(int i = 0;i<orders.size();i++){
+               Order order = new Order();
+               JSONObject orderjson = (JSONObject) orders.get(i);
+               java.util.Date dateorder = format.parse(orderjson.getString("create_time"));
+               java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+               order.setOrderTime(ordertime);
+               order.setProductName(orderjson.getString("item_title"));
+               order.setProductId(orderjson.getString("num_iid"));
+               order.setOrderId(orderjson.getString("trade_id"));
+               order.setEstimated(orderjson.getString("commission"));
+               order.setChannel("淘宝");
+               if(orderjson.getString("tk_status").equals("3")) {
+                   order.setState("订单结算");
+               }else if (orderjson.getString("tk_status").equals("12")){
+                   order.setState("订单付款");
+               }else if (orderjson.getString("tk_status").equals("13")){
+                   order.setState("订单失效");
+               }else if (orderjson.getString("tk_status").equals("14")){
+                   order.setState("订单成功");
+               }
+           }
+           page_no++;
+       }while (size>0);
         return "index";
     }
 
@@ -192,7 +229,7 @@ public class UserController {
         System.out.println("unionid为"+jdunionid);
         int pageIndex = 1;
         while (hasMore.equals("true")) {
-            orderInfo = Util.jd_order(SERVER_URL, this.jd_Access_token, appKey, appSecret, jdunionid,pageIndex);
+            orderInfo = Util.jd_order(Jd_SERVER_URL, this.jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex);
             System.out.println("未经处理的订单信息" + orderInfo);
             //装填json数据
             JSONObject jsonObject = JSON.parseObject(orderInfo);
@@ -284,6 +321,11 @@ public class UserController {
 
         System.out.println("拼多多订单信息："+PddOrderInfo);
         return "index";
+    }
+
+    @Scheduled(cron = "* * * * * ? *")//每秒
+    public void fangfaming(){
+        System.out.println("定时任务一已执行!");
     }
 
 }
