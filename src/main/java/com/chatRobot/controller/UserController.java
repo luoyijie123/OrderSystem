@@ -3,6 +3,8 @@ package com.chatRobot.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.chatRobot.Test.JdApiTest;
+import com.chatRobot.Test.TaobaoApiTest;
 import com.chatRobot.model.Order;
 import com.chatRobot.model.User;
 import com.chatRobot.service.OrderService;
@@ -178,14 +180,15 @@ public class UserController {
     @RequestMapping("/ajaxsettaobaosession")
     public String getTaobaoSession(String session) throws ParseException {
         this.taobao_session = session;
-        int page_no = 1;//页面从第一页开始
+
+        /*int page_no = 1;//页面从第一页开始
         int size = 5;//随便取一个数字
         java.util.Date currentTime = new java.util.Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         String start_time = df.format(currentTime);//正式部署时传入
         System.out.println("session值为:"+taobao_session);
         do {
-           String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time=2018-01-11 12:18:22&span=1200&session=" + session + "&page_no="+page_no+"&page_size=100";
+           String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time=2018-01-11 12:18:22&span=1200&session=" + this.taobao_session + "&page_no="+page_no+"&page_size=100";
            url = url.replaceAll(" ", "%20");
            String json = Util.loadJson(url);
            System.out.println("json值为:" + json);
@@ -217,13 +220,14 @@ public class UserController {
                }
            }
            page_no++;
-       }while (size>0);
+       }while (size>0);*/
+        TaobaoApiTest.getApiData(this.taobao_session);
         return "index";
     }
 
     @RequestMapping("ajaxsetuniodid")
     public String getJduniodid(String unionid) throws ParseException {
-        String hasMore = "true";
+        /*String hasMore = "true";
         jdunionid = Integer.parseInt(unionid);
         String orderInfo = "";
         System.out.println("unionid为"+jdunionid);
@@ -304,11 +308,12 @@ public class UserController {
 
             }
             pageIndex++;
-        }
+        }*/
         //for(int i=0;i<orders.size();i++){
            //System.out.println("订单号："+orders.get(i).getOrderId());
         //}
 
+        JdApiTest.getApiData(unionid,jd_Access_token);
         return "index";
     }
 
@@ -321,11 +326,6 @@ public class UserController {
 
         System.out.println("拼多多订单信息："+PddOrderInfo);
         return "index";
-    }
-
-    @Scheduled(cron = "* * * * * ? *")//每秒
-    public void fangfaming(){
-        System.out.println("定时任务一已执行!");
     }
 
 }
