@@ -18,12 +18,6 @@ import java.util.List;
 
 public class JdApiTest {
 
-    @Autowired
-    private static UserService userService;
-
-    @Autowired
-    private static OrderService orderService;
-
     private static String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
     private static String Jd_SERVER_URL="https://api.jd.com/routerjson";
     private static String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
@@ -31,7 +25,8 @@ public class JdApiTest {
     private static String jd_Access_token = "";
     private static int jdunionid;
 
-    public static void getApiData(String unionid,String Access_token) throws ParseException {
+    public static List<Order> getApiData(String unionid,String Access_token) throws ParseException {
+        List<Order> orders = new ArrayList<Order>();
         String hasMore = "true";
         jdunionid = Integer.parseInt(unionid);
         jd_Access_token = Access_token;
@@ -45,7 +40,7 @@ public class JdApiTest {
             JSONObject jsonObject = JSON.parseObject(orderInfo);
             hasMore = jsonObject.getString("hasMore");
             JSONArray data = jsonObject.getJSONArray("data");
-            List<Order> orders = new ArrayList<Order>();
+
             for (int i = 0; i < data.size(); i++) {
                 JSONObject json = (JSONObject) data.get(i);
                 JSONArray skuList = json.getJSONArray("skuList");
@@ -108,13 +103,14 @@ public class JdApiTest {
                         order.setState("已结算");
                     }
 
-                    orderService.addOrder(order);
-                    //orders.add(order);
+                    //orderService.addOrder(order);
+                    orders.add(order);
                 }
 
             }
             pageIndex++;
         }
+        return orders;
     }
 
 }

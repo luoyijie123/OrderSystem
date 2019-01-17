@@ -304,7 +304,11 @@ public class UserController {
            //System.out.println("订单号："+orders.get(i).getOrderId());
         //}
 
-        JdApiTest.getApiData(unionid,jd_Access_token);
+        List<Order> orders = JdApiTest.getApiData(unionid,jd_Access_token);
+        for(int i =0;i<orders.size();i++) {
+            orderService.addOrder(orders.get(i));
+        }
+
         return "index";
     }
 

@@ -37,10 +37,13 @@ public class TaobaoApiTest {
             JSONObject response = jsonObject.getJSONObject("tbk_sc_order_get_response");
             JSONObject result = response.getJSONObject("results");
             JSONArray orders = result.getJSONArray("n_tbk_order");
-
-            size = orders.size();
+            if(orders!=null) {
+                size = orders.size();
+            }else {
+                size = 0;
+            }
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            for(int i = 0;i<orders.size();i++){
+            for(int i = 0;i<size;i++){
                 Order order = new Order();
                 JSONObject orderjson = (JSONObject) orders.get(i);
                 java.util.Date dateorder = format.parse(orderjson.getString("create_time"));
