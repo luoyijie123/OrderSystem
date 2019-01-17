@@ -1,33 +1,21 @@
 package com.chatRobot.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.chatRobot.Test.JdApiTest;
-import com.chatRobot.Test.TaobaoApiTest;
 import com.chatRobot.model.Order;
+import com.chatRobot.test.JdApiTest;
+import com.chatRobot.test.TaobaoApiTest;
 import com.chatRobot.model.User;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;
-import com.chatRobot.util.TimeUtil;
 import com.chatRobot.util.Util;
 //import org.json.JSONArray;
 //import org.json.JSONObject;
-import com.sun.org.apache.xpath.internal.operations.Or;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.Date;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -180,7 +168,7 @@ public class UserController {
     @RequestMapping("/ajaxsettaobaosession")
     public String getTaobaoSession(String session) throws ParseException {
         this.taobao_session = session;
-
+        TaobaoApiTest taobaoApiTest = new TaobaoApiTest();
         /*int page_no = 1;//页面从第一页开始
         int size = 5;//随便取一个数字
         java.util.Date currentTime = new java.util.Date();
@@ -221,7 +209,10 @@ public class UserController {
            }
            page_no++;
        }while (size>0);*/
-        TaobaoApiTest.getApiData(this.taobao_session);
+        List <Order> orders = taobaoApiTest.getApiData(this.taobao_session);
+        for(int i =0;i<orders.size();i++) {
+            orderService.addOrder(orders.get(i));
+        }
         return "index";
     }
 

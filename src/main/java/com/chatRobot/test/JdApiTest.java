@@ -1,4 +1,4 @@
-package com.chatRobot.Test;
+package com.chatRobot.test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;

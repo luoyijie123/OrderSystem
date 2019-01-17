@@ -1,4 +1,4 @@
-package com.chatRobot.Test;
+package com.chatRobot.test;
 
 public class PddApiTest {
 

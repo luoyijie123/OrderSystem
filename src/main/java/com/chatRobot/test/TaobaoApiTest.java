@@ -1,6 +1,4 @@
-package com.chatRobot.Test;
-//注入Service
-
+package com.chatRobot.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -9,6 +7,7 @@ import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;
 import com.chatRobot.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,18 +15,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class TaobaoApiTest {
 
-    @Autowired
-    private static UserService userService;
-
-    @Autowired
-    private static OrderService orderService;
 
     //private String taobao_session;
 
-    public static void getApiData(String taobao_session) throws ParseException {
+    public List<Order> getApiData(String taobao_session) throws ParseException {//返回从接口抓取的数据
+        List<Order> orderList = new ArrayList<Order>();
         int page_no = 1;//页面从第一页开始
         int size = 5;//随便取一个数字
         java.util.Date currentTime = new java.util.Date();
@@ -41,8 +35,9 @@ public class TaobaoApiTest {
             System.out.println("json值为:" + json);
             JSONObject jsonObject = JSON.parseObject(json);
             JSONObject response = jsonObject.getJSONObject("tbk_sc_order_get_response");
-            JSONArray orders = response.getJSONArray("n_tbk_order");
-            List<Order> orderList = new ArrayList<Order>();
+            JSONObject result = response.getJSONObject("results");
+            JSONArray orders = result.getJSONArray("n_tbk_order");
+
             size = orders.size();
             DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             for(int i = 0;i<orders.size();i++){
@@ -68,9 +63,11 @@ public class TaobaoApiTest {
                 java.util.Date datefinish = format.parse(orderjson.getString("earning_time"));
                 java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
                 order.setFinishTime(finishtime);
-                orderService.addOrder(order);
+                orderList.add(order);
+                //orderService.addOrder(order);
             }
             page_no++;
         }while (size>0);
+        return orderList;
     }
 }
