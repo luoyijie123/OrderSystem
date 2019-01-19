@@ -2,6 +2,7 @@ package com.chatRobot.controller;
 
 import com.chatRobot.model.Order;
 import com.chatRobot.test.JdApiTest;
+import com.chatRobot.test.PddApiTest;
 import com.chatRobot.test.TaobaoApiTest;
 import com.chatRobot.model.User;
 import com.chatRobot.service.OrderService;
@@ -315,11 +316,12 @@ public class UserController {
     @RequestMapping("PddShouquan")
     public String PddShouquan(){
 
-        String PddOrderInfo = "";
+        /*String PddOrderInfo = "";
 
         PddOrderInfo = Util.get_pddOrderApi(pdd_client_id,pdd_Access_token,pdd_client_secret);
 
-        System.out.println("拼多多订单信息："+PddOrderInfo);
+        System.out.println("拼多多订单信息："+PddOrderInfo);*/
+        PddApiTest.getApiData();
         return "index";
     }
 

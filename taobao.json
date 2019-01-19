@@ -1,0 +1,99 @@
+淘宝开发资源
+{"tbk_sc_order_get_response":{
+     "results":{
+     "n_tbk_order":[{"adzone_id":"58862081","adzone_name":"老司机1024","alipay_total_price":"69.0000","auction_category":"内衣\/家居服","commission":"21.05","commission_rate":"1.0000","create_time":"2018-01-11 12:23:15","earning_time":"2018-01-22 11:46:04","income_rate":"0.3050","item_num":1,"item_title":"波司登情侣保暖内衣男士女加厚保暖套装加绒加厚棉质纯色秋衣秋裤","num_iid":563483150826,"order_type":"天猫","pay_price":"69.00","price":"428.00","pub_share_pre_fee":"21.05","seller_nick":"波司登彩格专卖店","seller_shop_title":"波司登彩格专卖店","site_id":"15262054","site_name":"蒋帆","subsidy_fee":"0.3500","subsidy_rate":"0.0050","subsidy_type":"1","terminal_type":"2","tk3rd_type":"--","tk_status":3,"total_commission_fee":"20.7000","total_commission_rate":"0.3000","trade_id":106504610629832835,"trade_parent_id":106504610629832835}]
+     }
+
+     ,"request_id":"7ptaakvbfdt0"}
+
+  }
+
+  订单状态，1: 全部订单，3：订单结算，12：订单付款， 13：订单失效，14：订单成功； 订单查询类型为‘结算时间’时，只能查订单结算状态
+
+  淘客订单状态，3：订单结算，12：订单付款， 13：订单失效，14：订单成功
+
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
+/**
+ * @author 席海斌.信息部
+ * @date 2018年9月25日09:28:51
+ */
+@Controller
+public class Test {
+	
+	/**
+	 * 每天7,8点每隔5分钟刷新一次
+	 */
+	@Scheduled(cron = "0 0/5 7,8 * * ?")//每天7,8点每隔5分钟刷新一次			//(0 0/20 * * * ?)每隔20分钟执行一次 
+	public void fangfaming(){
+		System.out.println("定时任务一已执行!");
+	}
+}
+
+
+//淘宝session: 70000101723758f95698eea4477ec9f1dbe1df81f8841969b74bedd883cb4e5eaddba662395126756
+
+拼多多开发资源
+
+拼多多订单信息:
+{"order_list_get_response":
+      {"total_count":11,"order_list":
+        [{"match_channel":5,
+          "goods_price":1090,
+          "promotion_rate":100,
+          "verify_time":null,
+          "type":0,
+          "order_status":1,
+          "order_create_time":1546840277,
+          "order_settle_time":null,
+          "order_verify_time":null,
+          "order_group_success_time":1546840301,
+          "order_amount":990,
+          "order_modify_at":1546840307,
+          "auth_duo_id":0,
+          "goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜",
+          "batch_no":"",
+          "goods_quantity":1,
+          "goods_id":5387747964,
+          "goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg",
+          "order_receive_time":null,
+          "custom_parameters":"",
+          "promotion_amount":99,
+          "order_pay_time":1546840301,
+          "group_id":632006073222151581,
+          "duo_coupon_amount":100,
+          "order_status_desc":"已成团",
+          "order_sn":"190107-006073222151581",
+          "p_id":"1018465_13385431",
+          "zs_duo_id":null},
+         {"match_channel":7,
+          "goods_price":1090,
+          "promotion_rate":100,
+          "verify_time":null,
+          "type":0,
+          "order_status":1,
+          "order_create_time":1546838778,
+          "order_settle_time":null,
+          "order_verify_time":null,
+          "order_group_success_time":1546838781,
+          "order_amount":990,
+          "order_modify_at":1546838787,
+          "auth_duo_id":0,
+          "goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜",
+          "batch_no":"",
+          "goods_quantity":1,
+          "goods_id":5387747964,
+          "goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg",
+          "order_receive_time":null,
+          "custom_parameters":"",
+          "promotion_amount":99,
+          "order_pay_time":1546838781,
+          "group_id":632521118024731708,
+          "duo_coupon_amount":100,
+          "order_status_desc":"已成团",
+          "order_sn":"190107-521118024731708",
+          "p_id":"1018465_13385431",
+          "zs_duo_id":null},
+         {"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546837772,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546837881,"order_amount":990,"order_modify_at":1546837887,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546837881,"group_id":632236742902831138,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-236742902831138","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":7,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546837664,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546837673,"order_amount":990,"order_modify_at":1546837678,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546837673,"group_id":632048001843993909,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-048001843993909","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":7,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546836491,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546836495,"order_amount":990,"order_modify_at":1546836500,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546836495,"group_id":632413053092872714,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-413053092872714","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546836410,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546836416,"order_amount":990,"order_modify_at":1546836422,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546836416,"group_id":632540680520733126,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-540680520733126","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546836284,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546836285,"order_amount":990,"order_modify_at":1546836291,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546836285,"group_id":632028622848792799,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-028622848792799","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546836274,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546836281,"order_amount":990,"order_modify_at":1546836287,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546836281,"group_id":632057922028732867,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-057922028732867","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546836228,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546836235,"order_amount":990,"order_modify_at":1546836241,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546836235,"group_id":632377054167810066,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-377054167810066","p_id":"1018465_13385431","zs_duo_id":null},{"match_channel":5,"goods_price":1090,"promotion_rate":100,"verify_time":null,"type":0,"order_status":1,"order_create_time":1546835926,"order_settle_time":null,"order_verify_time":null,"order_group_success_time":1546835933,"order_amount":990,"order_modify_at":1546835939,"auth_duo_id":0,"goods_name":"云南新鲜水果玉米棒子甜脆玉米3斤/5斤/9斤装现摘可生吃时令蔬菜","batch_no":"","goods_quantity":1,"goods_id":5387747964,"goods_thumbnail_url":"http://t00img.yangkeduo.com/goods/images/2019-01-06/70f9b986f6b388ddd4b3debbdfd22b94.jpeg","order_receive_time":null,"custom_parameters":"","promotion_amount":99,"order_pay_time":1546835933,"group_id":632415823954931460,"duo_coupon_amount":100,"order_status_desc":"已成团","order_sn":"190107-415823954931460","p_id":"1018465_13385431","zs_duo_id":null}
+          ],
+          "request_id":"15478910704591967"}}

@@ -208,25 +208,26 @@ public class Util {
         return result;
     }
 
-    public static String get_pddOrderApi(String client_id,String access_token,String client_secret){//最近90天内多多进宝商品订单更新时间--查询时间开始。
+    public static String get_pddOrderApi(String client_id,String access_token,String client_secret,int page){//最近90天内多多进宝商品订单更新时间--查询时间开始。
         String data="";
-        String type = "pdd.ddk.oauth.order.list.increment.get";
+        String type = "pdd.ddk.order.list.increment.get";
         String timestamp = TimeUtil.UnixTimestamp();
-        String start_update_time = "1544716800";//2018-12-14 00:00:00 起始有订单的时间
-        String end_update_time = "1544803199";//2018-12-14 23:59:59
+
+        String start_update_time = "1546790400";//2019-01-07 00:00:00 起始有订单的时间
+        String end_update_time = "1546876799";//2019-01-07 23:59:59
         String data_type = "JSON";
         String version = "V1";
         Map<String,Object> parameter = new TreeMap<String, Object>();
         parameter.put("type",type);
         parameter.put("client_id",client_id);
-        parameter.put("access_token",access_token);
+        //parameter.put("access_token",access_token);
         parameter.put("timestamp",timestamp);
         parameter.put("data_type",data_type);
         //parameter.put("version",version);
         parameter.put("start_update_time",start_update_time);
         parameter.put("end_update_time",end_update_time);
-        parameter.put("page_size","10");
-        parameter.put("page","1");
+        parameter.put("page_size","100");
+        parameter.put("page",String.valueOf(page));
 
         String sign = SignUtils.getPddSign(parameter,client_secret);
         String url = "https://gw-api.pinduoduo.com/api/router";
@@ -245,12 +246,12 @@ public class Util {
             json.put("type",type);
             json.put("data_type", "JSON");
             json.put("timestamp",timestamp);
-            json.put("access_token",access_token);
+            //json.put("access_token",access_token);
             json.put("client_id",client_id);
             json.put("start_update_time",start_update_time);
             json.put("end_update_time",end_update_time);
-            json.put("page_size","10");
-            json.put("page","1");
+            json.put("page_size","100");
+            json.put("page",String.valueOf(page));
             json.put("sign",sign);
         } catch (JSONException e) {
             e.printStackTrace();
