@@ -194,7 +194,7 @@ public class Util {
 
 
         request.setUnionId( UnionId );
-        request.setTime(time);
+        request.setTime("20181219");
         request.setPageIndex(pageIndex);
         request.setPageSize( 500 );
 

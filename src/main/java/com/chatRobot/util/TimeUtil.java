@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.Locale;
 
 public class TimeUtil {
 
@@ -23,7 +24,7 @@ public class TimeUtil {
         return Long.toString(localDateTime.toEpochSecond(zoneOffset));
     }
 
-    public static String timeStamp2Date(String time) {//将13位时间戳转换为正常的时间
+    public static String timeStamp2Date(String time) {//将13位UNIX时间戳转换为正常的时间
         Long timeLong = Long.parseLong(time);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//要转换的时间格式
         Date date;
@@ -35,4 +36,12 @@ public class TimeUtil {
             return null;
         }
     }
+
+    public static String ten_TimeStamp2Date(String timestampString) {//将10位UNIX时间戳转换为正常的时间
+        String formats = "yyyy-MM-dd HH:mm:ss";
+        Long timestamp = Long.parseLong(timestampString) * 1000;
+        String date = new SimpleDateFormat(formats, Locale.CHINA).format(new Date(timestamp));
+        return date;
+    }
+
 }

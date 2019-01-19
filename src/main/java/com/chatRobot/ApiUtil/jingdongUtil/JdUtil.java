@@ -1,14 +1,11 @@
-package com.chatRobot.test;
+package com.chatRobot.ApiUtil.jingdongUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
-import com.chatRobot.service.OrderService;
-import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
 import com.chatRobot.util.Util;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,16 +13,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdApiTest {//测试用，不要在正式部署中去调用
+public class JdUtil {//正式部署中去调用，部署在定时任务模块
 
     private static String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
     private static String Jd_SERVER_URL="https://api.jd.com/routerjson";
     private static String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
     private static String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
-    private static String jd_Access_token = "";
-    private static int jdunionid;
+    private static String jd_Access_token = "";//token有效期为一年
+    private static int jdunionid = 1000189695;//后续从数据库中去获取，暂时写死
 
-    public static List<Order> getApiData(String unionid,String Access_token) throws ParseException {
+    public static List<Order> Monitoring_order(String unionid,String Access_token) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+
         List<Order> orders = new ArrayList<Order>();
         String hasMore = "true";
         jdunionid = Integer.parseInt(unionid);

@@ -314,14 +314,17 @@ public class UserController {
     }
 
     @RequestMapping("PddShouquan")
-    public String PddShouquan(){
+    public String PddShouquan() throws ParseException {
 
         /*String PddOrderInfo = "";
 
         PddOrderInfo = Util.get_pddOrderApi(pdd_client_id,pdd_Access_token,pdd_client_secret);
 
         System.out.println("拼多多订单信息："+PddOrderInfo);*/
-        PddApiTest.getApiData();
+        List<Order> orders = PddApiTest.getApiData();
+        for(int i=0;i<orders.size();i++){
+            orderService.addOrder(orders.get(i));
+        }
         return "index";
     }
 
