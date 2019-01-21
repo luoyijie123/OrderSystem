@@ -26,7 +26,32 @@ public class TaobaoTask {
     private OrderService orderService;
 
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
-    public void checkOrder(){
+    public void checkOrder() throws ParseException {
+        //check前一天的订单
+        Date date = new Date();//当前时间
+        Date DayDate = dayStartDate(date);//当前时间的0点0分
+        Date start = before_Oneday(DayDate);//前一天的0点0分
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while(start.compareTo(DayDate)<0){
+            start = addTwetyMin(start,20);
+            String deal_date = sdf.format(start);
+            List<Order> Apidatas = TaobaoUtil.Monitoring_order(deal_date);
+            OrderFilter(Apidatas);
+        }
+
+        //check前两天的订单
+        Date before_onedate = before_Oneday(new Date());//前一天时间
+        Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
+        Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while(before_twoDaystart.compareTo(before_oneDayDate)<0){
+            before_twoDaystart = addTwetyMin(before_twoDaystart,20);
+            String deal_date2 = sdf.format(before_twoDaystart);
+            List<Order> Apidatas_twodays = TaobaoUtil.Monitoring_order(deal_date2);
+            OrderFilter(Apidatas_twodays);
+        }
+
+
 
     }
 
@@ -144,4 +169,36 @@ public class TaobaoTask {
 
         return UpdateOrders;
     }
+
+    private static Date addTwetyMin(Date start, int offset) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(start);
+        c.add(Calendar.MINUTE, offset);
+        return c.getTime();
+    }
+
+    private static Date before_Oneday(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, -1);
+        return c.getTime();
+    }
+
+    private static Date before_Twoday(Date date){
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, -2);
+        return c.getTime();
+    }
+
+    private static Date dayStartDate(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.set(Calendar.HOUR_OF_DAY, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
+        c.set(Calendar.MILLISECOND, 0);
+        return c.getTime();
+    }
+
 }
