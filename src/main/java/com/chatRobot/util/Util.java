@@ -208,13 +208,13 @@ public class Util {
         return result;
     }
 
-    public static String get_pddOrderApi(String client_id,String access_token,String client_secret,int page){//最近90天内多多进宝商品订单更新时间--查询时间开始。
+    public static String get_pddOrderApi(String start_time,String end_time,String client_id,String access_token,String client_secret,int page){//最近90天内多多进宝商品订单更新时间--查询时间开始。
         String data="";
         String type = "pdd.ddk.order.list.increment.get";
         String timestamp = TimeUtil.UnixTimestamp();
 
-        String start_update_time = "1546790400";//2019-01-07 00:00:00 起始有订单的时间
-        String end_update_time = "1546876799";//2019-01-07 23:59:59
+        String start_update_time = start_time;
+        String end_update_time = end_time;
         String data_type = "JSON";
         String version = "V1";
         Map<String,Object> parameter = new TreeMap<String, Object>();

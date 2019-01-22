@@ -26,7 +26,9 @@ public class PddApiTest {
          int count = 5;//随便取一个数字
          while (count>0){
              String PddOrderInfo = "";
-             PddOrderInfo = Util.get_pddOrderApi(pdd_client_id, pdd_Access_token, pdd_client_secret,page_no);
+             String start_time = "1546790400";//2019-01-07 00:00:00 起始有订单的时间
+             String end_time = "1546876799";//2019-01-07 23:59:59
+             PddOrderInfo = Util.get_pddOrderApi(start_time,end_time,pdd_client_id, pdd_Access_token, pdd_client_secret,page_no);
              System.out.println("拼多多订单信息：" + PddOrderInfo);
              JSONObject jsonObject = JSON.parseObject(PddOrderInfo);
              JSONObject response = jsonObject.getJSONObject("order_list_get_response");

@@ -1,6 +1,7 @@
 package com.chatRobot.util;
 
 //import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 //import java.text.SimpleDateFormat;
 import java.text.SimpleDateFormat;
@@ -42,6 +43,27 @@ public class TimeUtil {
         Long timestamp = Long.parseLong(timestampString) * 1000;
         String date = new SimpleDateFormat(formats, Locale.CHINA).format(new Date(timestamp));
         return date;
+    }
+
+
+    /**
+     * String(yyyy-MM-dd HH:mm:ss)转10位时间戳
+     * @param time
+     * @return
+     */
+    public static String StringToTimestamp(String time){
+        String times = "";
+        try {
+            times = Long.toString((Timestamp.valueOf(time).getTime())/1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(times==""){
+            System.out.println("String转10位时间戳失败");
+        }
+
+        return times;
+
     }
 
 }
