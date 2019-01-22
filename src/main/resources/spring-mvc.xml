@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
     <!-- 扫描web相关的bean -->
     <context:component-scan base-package="com.chatRobot.controller"/>
@@ -25,6 +25,30 @@
 
     <!-- 对静态资源的访问 -->
     <mvc:resources mapping="/static/**" location="/static/" />
+
+
+    <!-- 配置拦截器 -->
+
+    <!-- 配置拦截器 -->
+
+    <mvc:interceptors>
+
+        <mvc:interceptor>
+
+            <!-- 拦截所有mvc控制器 -->
+
+            <mvc:mapping path="/**"/>
+
+            <!-- mvc:exclude-mapping是另外一种拦截，它可以在你后来的测试中对某个页面进行不拦截，这样就不用在
+                LoginInterceptor的preHandler方法里面获取不拦截的请求uri地址了(优选) -->
+            <mvc:exclude-mapping path="/user/login" />
+            <mvc:exclude-mapping path="/user/checklogin.action"/>
+            <bean class="com.chatRobot.intercepter.LoginInterceptor"></bean>
+
+        </mvc:interceptor>
+
+    </mvc:interceptors>
+
 
 
     <!-- 静态资源默认servlet配置 -->

@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -107,16 +108,23 @@ public class UserController {
 
 
     @RequestMapping("checklogin")
-    public String checklogin(String account,String password,Model model){
+    public String checklogin(String account, String password, Model model, HttpSession session){
         System.out.println("用户登录："+account+password);
 
         User user=userService.login(account,password);
         if(user!=null) {
             model.addAttribute("msg", "登录成功");
+            session.setAttribute("User_session", user);
             return "index";
         }else {
             return "login";
         }
+    }
+
+    @RequestMapping("logout")
+    public String logout(HttpSession session){
+       session.removeAttribute("User_session");
+       return "login";
     }
 
     @RequestMapping("index")
