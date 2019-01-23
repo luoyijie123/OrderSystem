@@ -29,7 +29,35 @@ public class PddTask {
 
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {
+        //check前一天的订单
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();//当前时间
+        Date DayDate = dayStartDate(date);//当前时间的0点0分
+        Date before_oneday_start = before_Oneday(DayDate);//前一天的0点0分
+        Date before_oneday_end = getnowEndTime(before_oneday_start);
+        //先转换为标准字符串格式
+        String string_before_oneStart = sdf.format(before_oneday_start);
+        String string_before_oneEnd = sdf.format(before_oneday_end);
+        //再转换为时间戳格式
+        String temp_before_oneStart = TimeUtil.StringToTimestamp(string_before_oneStart);//开始时刻
+        String temp_before_oneEnd = TimeUtil.StringToTimestamp(string_before_oneEnd);//结束时刻
+        List<Order> before_one_Apiorders = Pddutil.Monitoring_order(temp_before_oneStart,temp_before_oneEnd);
+        OrderFilter(before_one_Apiorders);
 
+
+        //check前两天的订单
+        Date before_onedate = before_Oneday(new Date());//前一天时间
+        Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
+        Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
+        Date before_twoDayend = getnowEndTime(before_twoDaystart);//前两天的最后时刻
+        //先转换为标准字符串格式
+        String string_before_twoStart = sdf.format(before_twoDaystart);
+        String string_before_twoEnd = sdf.format(before_twoDayend);
+        //再转换为时间戳格式
+        String temp_before_twoStart = TimeUtil.StringToTimestamp(string_before_twoStart);//开始时刻
+        String temp_before_twoEnd = TimeUtil.StringToTimestamp(string_before_twoEnd);//结束时刻
+        List<Order> before_two_Apiorders = Pddutil.Monitoring_order(temp_before_twoStart,temp_before_twoEnd);
+        OrderFilter(before_two_Apiorders);
     }
 
 
@@ -38,19 +66,21 @@ public class PddTask {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//时间处理模板
         List<Order> orders = new ArrayList<Order>();//订单总数
 
-        //获取当前时间之前20分钟之前的时间
+        //获取当前时间之前120分钟之前的时间
         String now = df.format(new Date());
-        Calendar beforeTime_20 = Calendar.getInstance();
-        beforeTime_20.add(Calendar.MINUTE,-20);
-        Date temp_20 = beforeTime_20.getTime();
-        String date_beforeTime_20 = df.format(temp_20);//正式传入api接口的参数
+        Calendar beforeTime_120 = Calendar.getInstance();
+        beforeTime_120.add(Calendar.MINUTE,-120);
+        Date temp_120 = beforeTime_120.getTime();
+        String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
 
         String deal_now = TimeUtil.StringToTimestamp(now);
-        String deal_before20 = TimeUtil.StringToTimestamp(date_beforeTime_20);
-        List<Order> orderList_20 = Pddutil.Monitoring_order(deal_before20,deal_now);
-        for(int i=0;i<orderList_20.size();i++){
-            orders.add(orderList_20.get(i));
+        String deal_before120 = TimeUtil.StringToTimestamp(date_beforeTime_120);
+        List<Order> orderList_120 = Pddutil.Monitoring_order(deal_before120,deal_now);
+        for(int i=0;i<orderList_120.size();i++){
+            orders.add(orderList_120.get(i));
         }
+
+        OrderFilter(orders);
     }
 
     public void OrderFilter(List<Order> orders){//订单集群处理过滤器,传入的是api接口获取的订单
@@ -122,7 +152,7 @@ public class PddTask {
         return c.getTime();
     }
 
-    private static Date dayStartDate(Date date) {
+    private static Date dayStartDate(Date date) {//获取一天当中最开始的时间
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         c.set(Calendar.HOUR_OF_DAY, 0);
@@ -130,5 +160,15 @@ public class PddTask {
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
         return c.getTime();
+    }
+
+    public static Date getnowEndTime(Date date) {//获取一天当中的最后时刻
+        Calendar todayEnd = Calendar.getInstance();
+        todayEnd.setTime(date);
+        todayEnd.set(Calendar.HOUR_OF_DAY, 23);
+        todayEnd.set(Calendar.MINUTE, 59);
+        todayEnd.set(Calendar.SECOND, 59);
+        todayEnd.set(Calendar.MILLISECOND, 999);
+        return todayEnd.getTime();
     }
 }
