@@ -317,8 +317,27 @@ public class UserController {
         for(int i =0;i<orders.size();i++) {
             orderService.addOrder(orders.get(i));
         }
-
         return "index";
+    }
+
+    @RequestMapping("jiankong")
+    public String jiankong_Manager(){
+        return "jiankong";
+    }
+
+    @RequestMapping("pdd_manager")
+    public String pdd_manager(){
+        return "pdd_manager";
+    }
+
+    @RequestMapping("jd_manager")
+    public String jd_manager(){
+        return "jd_manager";
+    }
+
+    @RequestMapping("tb_manager")
+    public String tb_manager(){
+        return "tb_manager";
     }
 
     @RequestMapping("PddShouquan")

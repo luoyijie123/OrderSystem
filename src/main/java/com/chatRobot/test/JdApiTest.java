@@ -30,12 +30,13 @@ public class JdApiTest {//测试用，不要在正式部署中去调用
         String hasMore = "true";
         jdunionid = Integer.parseInt(unionid);
         jd_Access_token = Access_token;
+        String test_time = "20181219";
         String orderInfo = "";
         System.out.println("unionid为"+jdunionid);
         int size=0;
         int pageIndex = 1;
         while (hasMore.equals("true")) {
-            orderInfo = Util.jd_order(Jd_SERVER_URL, jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex);
+            orderInfo = Util.jd_order(Jd_SERVER_URL, jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex,test_time);
             System.out.println("未经处理的订单信息" + orderInfo);
             //装填json数据
             JSONObject jsonObject = JSON.parseObject(orderInfo);

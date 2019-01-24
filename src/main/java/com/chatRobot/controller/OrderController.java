@@ -49,6 +49,26 @@ public class OrderController {
         return "redirect:/user/checkuser";
     }
 
+    @RequestMapping("jiankong")
+    public String jiankong_Manager(){
+        return "redirect:/user/jiankong";
+    }
+
+    @RequestMapping("pdd_manager")
+    public String pdd_manager(){
+        return "redirect:/user/pdd_manager";
+    }
+
+    @RequestMapping("jd_manager")
+    public String jd_manager(){
+        return "redirect:/user/jd_manager";
+    }
+
+    @RequestMapping("tb_manager")
+    public String tb_manager(){
+        return "redirect:/user/tb_manager";
+    }
+
     @RequestMapping("output")
     public String output(){
 
@@ -89,15 +109,10 @@ public class OrderController {
         File file = new File(filepath);
 
         if (!file.getParentFile().exists()) {
-
             file.getParentFile().mkdirs();
-
         }
-
         try {
-
             file.createNewFile();
-
         } catch (IOException e) {
 
             e.printStackTrace();

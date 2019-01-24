@@ -184,7 +184,6 @@
     </div>
 
     <div class="container-fluid">
-
         <!-- Side menu -->
         <div class="sidebar-nav nav-collapse collapse">
             <div class="user_side clearfix">
@@ -233,6 +232,13 @@
                     <div class="accordion-heading">
                         <a class="accordion-toggle b_9FDDF6" href="/lbsite/tongjiexcel"><i class="icon-bullhorn"></i>
                             <span>新建会员</span></a>
+                    </div>
+                </div>
+
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle b_9FDDF6" href="jiankong"><i class="icon-bullhorn"></i>
+                            <span>监控账号管理</span></a>
                     </div>
                 </div>
 

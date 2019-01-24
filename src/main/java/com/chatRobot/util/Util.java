@@ -183,18 +183,18 @@ public class Util {
         return Access_token;
     }
 
-    public static String jd_order(String SERVER_URL,String accessToken,String appKey,String appSecret,int UnionId,int pageIndex){
+    public static String jd_order(String SERVER_URL,String accessToken,String appKey,String appSecret,int UnionId,int pageIndex,String start_time){
 
         String result = "";
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-        String time = df.format(new Date());//当前时间
+        String time = start_time;
         JdClient client=new DefaultJdClient(SERVER_URL,accessToken,appKey,appSecret);
 
         UnionServiceQueryOrderListRequest request=new UnionServiceQueryOrderListRequest();
 
 
         request.setUnionId( UnionId );
-        request.setTime("20181219");
+        request.setTime(time);
         request.setPageIndex(pageIndex);
         request.setPageSize( 500 );
 

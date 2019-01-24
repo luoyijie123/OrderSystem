@@ -19,21 +19,21 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
     private static String Jd_SERVER_URL="https://api.jd.com/routerjson";
     private static String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
     private static String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
-    private static String jd_Access_token = "";//token有效期为一年
+    private static String jd_Access_token = "410610b8-4205-40e5-810b-98ea315a87b2";//token有效期为一年,暂时写死
     private static int jdunionid = 1000189695;//后续从数据库中去获取，暂时写死
 
-    public static List<Order> Monitoring_order(String unionid,String Access_token) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+    public static List<Order> Monitoring_order(String start_time) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
 
         List<Order> orders = new ArrayList<Order>();
         String hasMore = "true";
-        jdunionid = Integer.parseInt(unionid);
-        jd_Access_token = Access_token;
+        //jdunionid = Integer.parseInt(unionid);
+        //jd_Access_token = Access_token;
         String orderInfo = "";
         System.out.println("unionid为"+jdunionid);
         int size=0;
         int pageIndex = 1;
         while (hasMore.equals("true")) {
-            orderInfo = Util.jd_order(Jd_SERVER_URL, jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex);
+            orderInfo = Util.jd_order(Jd_SERVER_URL, jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex,start_time);
             System.out.println("未经处理的订单信息" + orderInfo);
             //装填json数据
             JSONObject jsonObject = JSON.parseObject(orderInfo);

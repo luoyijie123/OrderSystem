@@ -1,13 +1,11 @@
 <%--
   Created by IntelliJ IDEA.
   User: 75293
-  Date: 2018/11/2
-  Time: 2:32
+  Date: 2019/1/25
+  Time: 1:09
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,57 +33,6 @@
     <script src="../static/js/lyz.calendar.min.js" type="text/javascript"></script>
     <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.js"></script>
     <script>
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                var csrftoken = getCookie('csrftoken');
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-
-        function autofetch(optype) {
-            $.post("/lbsite/ajaxjosdata/",
-                {
-                    type: optype,
-                    datestr: $("#txtBeginDate").val(),
-
-                },
-                function (ret) {
-                    var status = ret["status"];
-                    if (status == "noauth") {
-                        alert("未授权");
-                    }
-                    else if (status == "empty") {
-                        alert("未查到相关数据");
-                    }
-                    else if (status == "ok") {
-                        alert("获取成功，共" + ret["msg"] + "条");
-                    }
-                });
-            return false;
-        }
 
         function getNowFormatDate() {
             var date = new Date();
@@ -109,6 +56,7 @@
                 var today = new Date();
                 var todaystr = getNowFormatDate()
                 $("#txtBeginDate").val(todaystr);
+                $("#txtEndDate").val(todaystr);
                 $("#txtBeginDate").calendar({
 
                     controlId: "divDate",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
@@ -130,6 +78,26 @@
 
                 });
 
+                $("#txtEndDate").calendar({
+
+                    controlId: "divDate2",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
+
+                    speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
+
+                    complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
+
+                    readonly: true,                                       // 目标对象是否设为只读，默认：true
+
+                    upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
+
+                    lowerLimit: new Date("2018/04/15"),                   // 日期下限，默认：NaN(不限制)
+
+                    callback: function () {                               // 点击选择日期后的回调函数
+
+
+                    }
+
+                });
 
             });
 
@@ -294,79 +262,31 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="pdd_manager">拼多多</a></li>
+                <li><a href="jd_manager">京东</a></li>
+                <li><a href="tb_manager">淘宝客</a></li>
+            </ul>
 
-
-            <div class="oneitem">
-                <span style="color:red;float:left"></span>
-
-
-            </div>
-
-
-            <div class="oneitem">
-
-
-                <div style="float:left;clear:both;width:100%;">
-                    <div>
-                        <span style="font-size:16px;">我们可实时为您监控最新订单信息。</span>
-                        <br>也就是说如果您已经在"首页"设置了京东授权并填写京东联盟ID,系统将自动为您监控最新订单，下面的可以都不用看了。
-                        <Br>
-                        若不想后台自动监控，可在"首页"中将"联盟ID"设为 0
-                    </div>
-
-
-                    <div style="width:100%;margin-top:20px;border:solid 1px green;">
-                        特殊情况下可通过下面的两个按键手动更新某日的订单状态<Br>
-                        <span style="width:70px;">日期</span>
-                        <input id="txtBeginDate" name="txtBeginDate"
-                               style="width:170px;padding:7px 10px;border:1px solid #ccc;margin-right:10px;"
-                               value="日期"/>
-                        <div style="float:left;margin-left:200px;">
-                            <div id="calcontainer"></div>
-
-                        </div>
-                        <Br>
-                        <div style="margin-top:2px;margin-bottom: 10px;">
-
-                            <br>
-                            <a href="#" onclick="autofetch('autofetchnew')" style="margin-right: 30px;">获取该日所有订单</a>
-                            <a href="#" onclick="autofetch('autoupdate')">自动更新(暂不需要使用)</a>
-                            <Br>点击之后可能要等待1分钟才完成任务，有返回弹窗才表示操作成功。
-                        </div>
-
-
-
-                    </div>
-
-
-                </div>
-
-
-
-            </div>
-
-
-
-            <div class="oneitem" style="margin-top:20px;border:solid 1px blue;">
-
-                <Br>
-                当然您仍可以在关闭自动监控之后继续使用手动上传Excel的模式，完全不受影响。
-                <br>
-                上传京东后台导出的订单数据(请将导出的csv文件转换为xls格式后再上传)
-                <form method="post" enctype="multipart/form-data">
-                    <p><label for="id_filepath">Filepath:</label> <input type="file" name="filepath" required id="id_filepath" /></p>
-                    <input type="submit" value="上传" style="width:100px;height:30px;" class="greenbtn"/>
-
-                </form>
-
-                <hr>
-
-            </div>
-            本系统也可用于淘宝及其他平台的订单统计，使用说明：
-            <br>按照下面的模板填写相应字段后上传，其中标红的为必填项，非必填的列也不要删除。<br>
-            <a href="/lbsite/taobaotemplate/">模板下载链接</a>
-
-
+            <table class="table">
+                <caption>基本的表格布局</caption>
+                <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>城市</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Tanmay</td>
+                    <td>Bangalore</td>
+                </tr>
+                <tr>
+                    <td>Sachin</td>
+                    <td>Mumbai</td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <!-- /Main window -->
 
@@ -388,4 +308,5 @@
 
 </body>
 </html>
+
 
