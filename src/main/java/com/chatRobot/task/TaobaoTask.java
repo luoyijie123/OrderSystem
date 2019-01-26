@@ -10,10 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class TaobaoTask {
@@ -143,11 +140,14 @@ public class TaobaoTask {
     public List<Order> FindInsertOrder(List<Order>ApiOrders,List<Order> exist_orders){//筛选出需要插入的订单
 
         List<Order> InsertOrders = new ArrayList<Order>();
-        for(int i=0;i<ApiOrders.size();i++){
+        Iterator<Order> iterator = ApiOrders.iterator();
+
+        while (iterator.hasNext()){
+            Order order = iterator.next();
             for(int j=0;j<exist_orders.size();j++){
-               if(ApiOrders.get(i).getOrderId().equals(exist_orders.get(j).getOrderId())==true && ApiOrders.get(i).getProductId().equals(exist_orders.get(j).getProductId())==true){//订单ID和商品ID若是相同直接删除元素
-                   ApiOrders.remove(i);
-               }
+                if(order.getOrderId().equals(exist_orders.get(j).getOrderId())==true && order.getProductId().equals(exist_orders.get(j).getProductId())==true){//订单ID和商品ID若是相同直接删除元素
+                    iterator.remove();
+                }
             }
         }
         for(int i=0;i<ApiOrders.size();i++){

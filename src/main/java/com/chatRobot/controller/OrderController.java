@@ -17,10 +17,7 @@ import java.io.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/order")
@@ -69,6 +66,11 @@ public class OrderController {
         return "redirect:/user/tb_manager";
     }
 
+    @RequestMapping("UserManager")
+    public String UserManager(){
+        return "redirect:/user/UserManager";
+    }
+
     @RequestMapping("output")
     public String output(){
 
@@ -80,7 +82,10 @@ public class OrderController {
     public File download(String txtBeginDate, String txtEndDate, String productid, HttpServletRequest request, HttpServletResponse response) throws ParseException {
         ExportExcel<Order> ex = new ExportExcel<Order>();
         String[] headers = {"下单时间","商品名称","商品id","订单号","预估金额","订单渠道","订单状态","完成时间","微信","返款状态","是否提交","提交时间"};
-        String filepath = "E:\\download\\"+"订单详情"+".xls";
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String title = df.format(date);
+        String filepath = "E:\\download\\"+title+".xls";
         List<Order> orders = new ArrayList<Order>();
 
         String beginTime = txtBeginDate;
@@ -128,7 +133,6 @@ public class OrderController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
         return file;
     }

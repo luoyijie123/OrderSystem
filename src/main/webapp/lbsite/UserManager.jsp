@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 75293
+  Date: 2019/1/27
+  Time: 1:18
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,126 +30,132 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-
+    <script src="../static/js/lyz.calendar.min.js" type="text/javascript"></script>
+    <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.js"></script>
     <script>
-        function getCookie(name) {
-            var cookieValue = null;
-            if (document.cookie && document.cookie != '') {
-                var cookies = document.cookie.split(';');
-                for (var i = 0; i < cookies.length; i++) {
-                    var cookie = jQuery.trim(cookies[i]);
-                    // Does this cookie string begin with the name we want?
-                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
+
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
             }
-            return cookieValue;
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            return currentdate;
         }
 
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
+        $(
+            function () {
+                new ClipboardJS('.btn');
+                var today = new Date();
+                var todaystr = getNowFormatDate()
+                $("#txtBeginDate").val(todaystr);
+                $("#txtEndDate").val(todaystr);
+                $("#txtBeginDate").calendar({
 
-        $.ajaxSetup({
-            beforeSend: function (xhr, settings) {
-                var csrftoken = getCookie('csrftoken');
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-        var totaldingdanlist = [];
+                    controlId: "divDate",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
 
-        function cleartb() {
-            //var headstr="<tr><td>下单时间</td><td>商品名称</td><td>订单号</td><td>预估金额</td><td>订单状态</td><td>完成时间</td></tr>";
-            $("#restb tbody").html("");
-            totaldingdanlist = []
-        }
+                    speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
 
-        function addmultiRow(tbjson) {
-            //var tbjson = $.parseJSON(tbjson);
-            var tbjson = tbjson;
-            var totalstr = [];
-            for (var rowitem in tbjson) {
-                var rowitem = tbjson[rowitem];
-                totaldingdanlist.push(rowitem["orderId"]);
-                var rowTemplate = "<tr><td>" + rowitem["orderTime"] + "</td><td>" + rowitem["productName"] + "</td><td>" + rowitem["orderId"] + "</td><td>" + rowitem["estimated"] + "</td><td>" + rowitem["state"] + "</td><td>" + rowitem["finishTime"] + "</td><td>"+rowitem["weixin"]+"</td><td>"+rowitem["refunds"]+"</td><td>"+rowitem["isSubmit"]+"</td><td>"+rowitem["submitTime"]+"</td><td>"+rowitem["channel"]+"</td></tr>";
-                totalstr.push(rowTemplate);
-            }
-            var finalstr = totalstr.join("");
-            $("#restb tbody").html(finalstr);
+                    complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
 
-        }
+                    readonly: true,                                       // 目标对象是否设为只读，默认：true
 
-        function setfankuan(fankuan) {
-            var lst = JSON.stringify(totaldingdanlist);
-            if(totaldingdanlist.length==0){
-                alert("无数据可更新");
-                return false;
-            }
-            if( fankuan==1) fankuanstr="已返款";
-            else if(fankuan==0) fankuanstr="未返款";
-            $.post("/lbsite/ajaxsellerdingdan/",
-                {
-                    type: "setfankuan",
-                    dingdanlist: lst,
-                    fankuanstr:fankuanstr
-                },
-                function (ret) {
-                    var status = ret["status"];
-                    if (status == "noauth") {
-                        alert("未授权");
+                    upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
+
+                    lowerLimit: new Date("2018/04/15"),                   // 日期下限，默认：NaN(不限制)
+
+                    callback: function () {                               // 点击选择日期后的回调函数
+
+
                     }
-                    else if (status == "empty") {
-                        alert("未查到相关订单");
-                    }
-                    else if (status == "ok") {
-                        alert("设置成功");
-                    }
+
                 });
-            return false;
-        }
 
-        function getfromdb() {
-            var lst = $("#dingdanlist").val();
+                $("#txtEndDate").calendar({
 
-            $.post("${pageContext.request.contextPath}/order/ajaxsellerdingdan/",
-                {
-                    type: "getdd",
+                    controlId: "divDate2",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
 
-                    dingdanlist: lst
+                    speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
 
-                },
-                function (ret) {
-                    //alert(ret);
-                    //ret = $.parseJSON(ret);
-                    var status = ret["status"];
-                    if (status == "noauth") {
-                        alert("未授权");
-                    }
-                    else if (status == "empty") {
-                        alert("未查到相关订单");
-                    }
-                    else if (status == "ok") {
-                        retdata = ret["data"];
-                        cleartb();
-                        addmultiRow(retdata);
+                    complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
+
+                    readonly: true,                                       // 目标对象是否设为只读，默认：true
+
+                    upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
+
+                    lowerLimit: new Date("2018/04/15"),                   // 日期下限，默认：NaN(不限制)
+
+                    callback: function () {                               // 点击选择日期后的回调函数
+
+
                     }
 
+                });
 
-                },"json");
-            return false;
-        }
-
+            });
 
     </script>
 
 
 
-    <title> 添加已返款 </title>
+
+    <style>
+        .greenbtn {
+            color: #e8f0de;
+            border: solid 1px #538312;
+            background: -webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+            display: inline-block;
+            zoom: 1;
+            vertical-align: baseline;
+            margin: 0 2px;
+            outline: none;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            font: 14px/100% Arial, Helvetica, sans-serif;
+            padding: .5em 2em .55em;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+            border-radius: .5em;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+            box-sizing: border-box;
+            align-items: flex-start;
+            text-rendering: auto;
+            letter-spacing: normal;
+            word-spacing: normal;
+            text-transform: none;
+            text-indent: 0px;
+        }
+
+        .oneitem {
+            float: left;
+            clear: both;
+            width: 100%
+        }
+
+        #divDate {
+            margin-top: 20px;
+        }
+
+        #divDate2 {
+            margin-top: 60px;
+        }
+
+        #id_filepath {
+            background-color: #e8f0de;
+        }
+    </style>
+    <link href="../static/css/lyz.calendar.css" rel="stylesheet" type="text/css"/>
+
+
+
+    <title> 后台首页 </title>
 </head>
 <body>
 <div id="wrap">
@@ -184,6 +197,7 @@
     </div>
 
     <div class="container-fluid">
+
         <!-- Side menu -->
         <div class="sidebar-nav nav-collapse collapse">
             <div class="user_side clearfix">
@@ -248,53 +262,7 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-
-
-            <div>
-                <input type='hidden' name='csrfmiddlewaretoken' value='vVmdq6loOkBT9nqK0KYkbh8ctAe1JX57km8hMCiAmviY9Qu6o7uY43PVRpnlzFL4' />
-                一行一个订单号，多次提交以最后提交的为准。<br>
-                <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;">
-                    <div style="display: flex;justify-content: left;">
-
-            <textarea class="weui-textarea" id="dingdanlist" name="dingdanlist"
-                      style="width:90%;background-color: #EEE;height:300px;" rows="11" placeholder="一行一个订单号"></textarea>
-                    </div>
-
-                    <br>
-
-                </div>
-                <a style="width:300px;" class="weui-btn weui-btn_plain-primary" onclick="getfromdb()">提交</a>
-            </div>
-            <div id="showresulttb">
-                <div id="resultstr">
-                    <span><a href="#" onclick="setfankuan(1)">设为已返款</a> </span>
-                    <span><a href="#" onclick="setfankuan(0)">设为未返款</a> </span>
-
-                </div>
-                <Br>"提交时间"默认时间为系统增加此功能的时间"2018-05-30 18:29:08"，之后提交的订单此项数据才会更新。
-                <div class="table-responsive">
-                    <table id="restb" class="table table-bordered" style="text-align: center;font-size:12px;">
-                        <thead>
-                        <tr>
-                            <th>下单时间</th>
-                            <th>商品名称</th>
-                            <th>订单号</th>
-                            <th>预估金额</th>
-                            <th>订单状态</th>
-                            <th>完成时间</th>
-                            <th>微信昵称</th>
-                            <th>返款状态</th>
-                            <th>是否提交</th>
-                            <th>提交时间</th>
-                            <th>订单渠道</th>
-                        </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-            </div>
-
-
+            <h1 align="center">待开发</h1>
         </div>
         <!-- /Main window -->
 

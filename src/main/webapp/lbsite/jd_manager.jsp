@@ -244,7 +244,7 @@
 
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="/lbsite/tongjiexcel"><i class="icon-bullhorn"></i>
+                        <a class="accordion-toggle b_9FDDF6" href="UserManager"><i class="icon-bullhorn"></i>
                             <span>新建会员</span></a>
                     </div>
                 </div>
@@ -269,21 +269,19 @@
             </ul>
 
             <table class="table">
-                <caption>基本的表格布局</caption>
+                <caption>当前授权的的京东联盟账号</caption>
                 <thead>
                 <tr>
-                    <th>名称</th>
-                    <th>城市</th>
+                    <th>手机</th>
+                    <th>联盟ID</th>
+                    <th>姓名</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Tanmay</td>
-                    <td>Bangalore</td>
-                </tr>
-                <tr>
-                    <td>Sachin</td>
-                    <td>Mumbai</td>
+                    <td>18958755878</td>
+                    <td>1000189695</td>
+                    <td></td>
                 </tr>
                 </tbody>
             </table>

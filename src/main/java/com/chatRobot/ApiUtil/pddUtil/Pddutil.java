@@ -45,6 +45,10 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
                 java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
                 order.setOrderTime(ordertime);
 
+                java.util.Date datefinish = format.parse(TimeUtil.ten_TimeStamp2Date(orderjson.getString("order_modify_at")));
+                java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                order.setOrderTime(finishtime);
+
                 order.setProductName(orderjson.getString("goods_name"));
                 order.setProductId(orderjson.getString("goods_id"));
                 order.setEstimated(orderjson.getString("promotion_amount"));

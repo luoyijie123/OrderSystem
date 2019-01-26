@@ -16,7 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
@@ -175,7 +178,10 @@ public class UserController {
 
 
     @RequestMapping("/ajaxsettaobaosession")
-    public String getTaobaoSession(String session) throws ParseException {
+    public String getTaobaoSession(HttpServletResponse response, String session) throws ParseException, IOException {//获取淘宝授权Session，暂不开启，后续写入数据库
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out=response.getWriter();
+
         this.taobao_session = session;
         TaobaoApiTest taobaoApiTest = new TaobaoApiTest();
         /*int page_no = 1;//页面从第一页开始
@@ -218,15 +224,20 @@ public class UserController {
            }
            page_no++;
        }while (size>0);*/
-        List <Order> orders = taobaoApiTest.getApiData(this.taobao_session);
+        /*List <Order> orders = taobaoApiTest.getApiData(this.taobao_session);
         for(int i =0;i<orders.size();i++) {
             orderService.addOrder(orders.get(i));
-        }
+        }*/
+        out.println("后续提供动态授权服务");
+        out.flush();
+        out.close();
         return "index";
     }
 
     @RequestMapping("ajaxsetuniodid")
-    public String getJduniodid(String unionid) throws ParseException {
+    public String getJduniodid(HttpServletResponse response,String unionid) throws ParseException, IOException {//获取京东联盟ID，暂不开启，后续写入数据库
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out=response.getWriter();
         /*String hasMore = "true";
         jdunionid = Integer.parseInt(unionid);
         String orderInfo = "";
@@ -313,10 +324,13 @@ public class UserController {
            //System.out.println("订单号："+orders.get(i).getOrderId());
         //}
 
-        List<Order> orders = JdApiTest.getApiData(unionid,jd_Access_token);
-        for(int i =0;i<orders.size();i++) {
-            orderService.addOrder(orders.get(i));
-        }
+        //List<Order> orders = JdApiTest.getApiData(unionid,jd_Access_token);
+        //for(int i =0;i<orders.size();i++) {
+            //orderService.addOrder(orders.get(i));
+        //}
+        out.println("后续提供动态授权服务");
+        out.flush();
+        out.close();
         return "index";
     }
 
@@ -324,6 +338,12 @@ public class UserController {
     public String jiankong_Manager(){
         return "jiankong";
     }
+
+    @RequestMapping("UserManager")
+    public String UserManager(){
+        return "UserManager";
+    }
+
 
     @RequestMapping("pdd_manager")
     public String pdd_manager(){
@@ -348,10 +368,11 @@ public class UserController {
         PddOrderInfo = Util.get_pddOrderApi(pdd_client_id,pdd_Access_token,pdd_client_secret);
 
         System.out.println("拼多多订单信息："+PddOrderInfo);*/
-        List<Order> orders = PddApiTest.getApiData();
+
+        /*List<Order> orders = PddApiTest.getApiData();
         for(int i=0;i<orders.size();i++){
             orderService.addOrder(orders.get(i));
-        }
+        }*/
         return "index";
     }
 

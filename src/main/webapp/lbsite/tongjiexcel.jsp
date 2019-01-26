@@ -244,7 +244,7 @@
 
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="/lbsite/tongjiexcel"><i class="icon-bullhorn"></i>
+                        <a class="accordion-toggle b_9FDDF6" href="UserManager"><i class="icon-bullhorn"></i>
                             <span>新建会员</span></a>
                     </div>
                 </div>

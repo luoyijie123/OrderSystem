@@ -244,7 +244,7 @@
 
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="/lbsite/tongjiexcel"><i class="icon-bullhorn"></i>
+                        <a class="accordion-toggle b_9FDDF6" href="UserManager"><i class="icon-bullhorn"></i>
                             <span>新建会员</span></a>
                     </div>
                 </div>
@@ -263,10 +263,12 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="pdd_manager">拼多多</a></li>
+                <li><a href="pdd_manager">拼多多</a></li>
                 <li><a href="jd_manager">京东</a></li>
                 <li><a href="tb_manager">淘宝客</a></li>
             </ul>
+
+            <h1 align="center">点击上方按钮即可查看</h1>
         </div>
         <!-- /Main window -->
 
