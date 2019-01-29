@@ -36,6 +36,8 @@ public class UserController {
 
     private String taobao_session;
 
+    private String basePath;
+
     private String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
     private String Jd_SERVER_URL="https://api.jd.com/routerjson";
     private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
@@ -131,7 +133,9 @@ public class UserController {
     }
 
     @RequestMapping("index")
-    public String home(){
+    public String home(HttpServletRequest request){
+        String path = request.getContextPath();
+        System.out.println(basePath);
         System.out.println("淘宝session值为:"+this.taobao_session);
         return "index";
     }
