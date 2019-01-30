@@ -38,7 +38,7 @@ public class UserController {
 
     private String basePath;
 
-    private String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
+    private String Jd_redirect_uri = basePath+"user/josauth";
     private String Jd_SERVER_URL="https://api.jd.com/routerjson";
     private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
     private String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
@@ -113,9 +113,12 @@ public class UserController {
 
 
     @RequestMapping("checklogin")
-    public String checklogin(String account, String password, Model model, HttpSession session){
+    public String checklogin(String account, String password, Model model, HttpSession session,HttpServletRequest request){
         System.out.println("用户登录："+account+password);
-
+        String path = request.getContextPath();
+        this.basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        System.out.println("项目根路径:"+basePath);
+        Util.setBasePath(this.basePath);
         User user=userService.login(account,password);
         if(user!=null) {
             model.addAttribute("msg", "登录成功");

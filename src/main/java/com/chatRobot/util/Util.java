@@ -23,6 +23,15 @@ import java.util.TreeMap;
 import static javafx.scene.input.KeyCode.J;
 
 public class Util {
+    public static String basePath;
+
+    public static String getBasePath() {
+        return basePath;
+    }
+
+    public static void setBasePath(String basePath) {
+        Util.basePath = basePath;
+    }
 
     public static String loadJson(String url) {
         StringBuilder json = new StringBuilder();
@@ -135,7 +144,7 @@ public class Util {
               json.put("client_secret", "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd");
               json.put("grant_type","authorization_code");
               json.put("code",code);
-              json.put("redirect_uri","http://localhost:8080/ChatRobot/user/pinduoduoauth");
+              json.put("redirect_uri",basePath+"user/pinduoduoauth");
         } catch (JSONException e) {
             e.printStackTrace();
         }   String json1 = HttpUtil.loadJSON(url, json.toString());
