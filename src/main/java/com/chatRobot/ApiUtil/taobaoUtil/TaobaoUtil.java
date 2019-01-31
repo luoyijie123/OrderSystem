@@ -30,7 +30,7 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
             String url = "http://api.tkurl.top/tbk_order?appkey=6oiyzUgz&start_time="+start_date+"&span=1200&session=" + taobao_session + "&page_no="+page_no+"&page_size=100";
             url = url.replaceAll(" ", "%20");
             String json = Util.loadJson(url);
-            System.out.println("json值为:" + json);
+            System.out.println("未经处理的淘宝订单信息:" + json);
             JSONObject jsonObject = JSON.parseObject(json);
             JSONObject response = jsonObject.getJSONObject("tbk_sc_order_get_response");
             JSONObject result = response.getJSONObject("results");

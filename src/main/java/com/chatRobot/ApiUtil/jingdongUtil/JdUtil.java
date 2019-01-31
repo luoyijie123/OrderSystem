@@ -34,7 +34,7 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
         int pageIndex = 1;
         while (hasMore.equals("true")) {
             orderInfo = Util.jd_order(Jd_SERVER_URL, jd_Access_token, Jd_appKey, Jd_appSecret, jdunionid,pageIndex,start_time);
-            System.out.println("未经处理的订单信息" + orderInfo);
+            System.out.println("未经处理的京东订单信息" + orderInfo);
             //装填json数据
             JSONObject jsonObject = JSON.parseObject(orderInfo);
             hasMore = jsonObject.getString("hasMore");

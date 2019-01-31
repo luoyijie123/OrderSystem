@@ -154,7 +154,7 @@
 
                 <div class="top-menu visible-desktop">
                     <ul class="pull-right">
-                        <li><a href="/lbsite/logout/"><i class="icon-off"></i>退出</a></li>
+                        <li><a href="logout"><i class="icon-off"></i>退出</a></li>
                     </ul>
                 </div>
 

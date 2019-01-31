@@ -26,7 +26,7 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
         while (count>0){
             String PddOrderInfo = "";
             PddOrderInfo = Util.get_pddOrderApi(start_date,end_date,pdd_client_id, pdd_Access_token, pdd_client_secret,page_no);
-            System.out.println("拼多多订单信息：" + PddOrderInfo);
+            System.out.println("未经处理的拼多多订单信息：" + PddOrderInfo);
             JSONObject jsonObject = JSON.parseObject(PddOrderInfo);
             JSONObject response = jsonObject.getJSONObject("order_list_get_response");
             JSONArray order_list = response.getJSONArray("order_list");
@@ -47,7 +47,7 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
 
                 java.util.Date datefinish = format.parse(TimeUtil.ten_TimeStamp2Date(orderjson.getString("order_modify_at")));
                 java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
-                order.setOrderTime(finishtime);
+                order.setFinishTime(finishtime);
 
                 order.setProductName(orderjson.getString("goods_name"));
                 order.setProductId(orderjson.getString("goods_id"));
