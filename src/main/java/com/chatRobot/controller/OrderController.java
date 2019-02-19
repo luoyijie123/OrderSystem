@@ -79,13 +79,18 @@ public class OrderController {
 
     @RequestMapping("downloadExcel")
     @ResponseBody
-    public File download(String txtBeginDate, String txtEndDate, String productid, HttpServletRequest request, HttpServletResponse response) throws ParseException {
+    public void download(String txtBeginDate, String txtEndDate, String productid, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
+        OutputStream out = response.getOutputStream();
         ExportExcel<Order> ex = new ExportExcel<Order>();
         String[] headers = {"下单时间","商品名称","商品id","订单号","预估金额","订单渠道","订单状态","完成时间","微信","返款状态","是否提交","提交时间"};
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String title = df.format(date);
-        String filepath = "E:\\download\\"+title+".xls";
+        //String filepath = "E:\\download\\"+title+".xls";
+        response.reset();// 清空输出流
+        response.setHeader("Content-disposition", "attachment; filename="	+ title + ".xls"); //设定输出文件头,该方法有两个参数，分别表示应答头的名字和值。
+        response.setContentType("application/msexcel");
+
         List<Order> orders = new ArrayList<Order>();
 
         String beginTime = txtBeginDate;
@@ -111,21 +116,21 @@ public class OrderController {
             orders = orderService.FindOrderByTimeNoproductid(map);
         }
 
-        File file = new File(filepath);
+//        File file = new File(filepath);
+//
+//        if (!file.getParentFile().exists()) {
+//            file.getParentFile().mkdirs();
+//        }
+//        try {
+//            file.createNewFile();
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//
+//        }
 
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        }
         try {
-            file.createNewFile();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-
-        }
-
-        try {
-            OutputStream out = new FileOutputStream(file);
+            //OutputStream out = new FileOutputStream(file);
             ex.exportExcel("订单详情",headers,orders,out,"yyyy-MM-dd");
             out.close();
         } catch (FileNotFoundException e) {
@@ -134,7 +139,6 @@ public class OrderController {
             e.printStackTrace();
         }
 
-        return file;
     }
 
     @RequestMapping("index")
