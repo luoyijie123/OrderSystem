@@ -50,7 +50,7 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
                 order.setProductName(orderjson.getString("item_title"));
                 order.setProductId(orderjson.getString("num_iid"));
                 order.setOrderId(orderjson.getString("trade_id"));
-                order.setEstimated(orderjson.getString("commission"));
+                order.setEstimated(orderjson.getString("commission")+"元");
                 order.setChannel("淘宝");
                 if(orderjson.getString("tk_status").equals("3")) {
                     order.setState("订单结算");

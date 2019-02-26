@@ -51,7 +51,7 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
 
                 order.setProductName(orderjson.getString("goods_name"));
                 order.setProductId(orderjson.getString("goods_id"));
-                order.setEstimated(orderjson.getString("promotion_amount"));
+                order.setEstimated(orderjson.getString("promotion_amount")+"分");
                 order.setChannel("拼多多");
                 if(orderjson.getString("order_status").equals("-1")) {
                     order.setState("未支付");

@@ -64,7 +64,7 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
                     order.setFinishTime(finishtime);
                     //String tempString = "";
                     //tempString = tempString+temp.getString("skuName");
-                    order.setEstimated(temp.getString("estimateFee"));
+                    order.setEstimated(temp.getString("estimateFee")+"元");
                     order.setProductName(temp.getString("skuName"));
                     order.setProductId(temp.getString("skuId"));
                     order.setOrderId(json.getString("orderId"));
