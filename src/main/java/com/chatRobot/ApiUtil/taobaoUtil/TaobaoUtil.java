@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
 import com.chatRobot.util.Util;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.util.StringUtil;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class TaobaoUtil {//正式部署中去调用，部署在定时任务模块
 
-    private static String taobao_session ="7000010120503564b12df12528f17a9796c87305d83260ac3305a8385609a33556ce4b02395126756";
+    private static String taobao_session ="70000100134174d234d98ea80c4f8479edf67f36c1f32512ee2884e1f39844bb2ab2bdb2395126756";
                                            //70000101723758f95698eea4477ec9f1dbe1df81f8841969b74bedd883cb4e5eaddba662395126756
     public static List<Order> Monitoring_order(String date) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
         List<Order> orderList = new ArrayList<Order>();
@@ -61,9 +63,12 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
                 }else if (orderjson.getString("tk_status").equals("14")){
                     order.setState("订单成功");
                 }
-                java.util.Date datefinish = format.parse(orderjson.getString("earning_time"));
-                java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
-                order.setFinishTime(finishtime);
+
+                if(orderjson.containsKey("earning_time") && StringUtils.isNotBlank(orderjson.getString("earning_time"))) {
+                    java.util.Date datefinish = format.parse(orderjson.getString("earning_time"));
+                    java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                    order.setFinishTime(finishtime);
+                }
                 orderList.add(order);
                 //orderService.addOrder(order);
             }
