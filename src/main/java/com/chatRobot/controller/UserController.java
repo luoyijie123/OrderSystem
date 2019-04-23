@@ -153,6 +153,11 @@ public class UserController {
         return "redirect:/order/uploadjddb";
     }
 
+    @RequestMapping("datachaxun")
+    public String datachaxun(){
+        return "redirect:/order/datachaxun";
+    }
+
     @RequestMapping("selectorder")
     public String SelectOrder(){
         return "redirect:/order/selectorder";

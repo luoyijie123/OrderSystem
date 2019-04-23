@@ -190,24 +190,34 @@
                             <span>上传数据</span></a>
                     </div>
                 </div>
+
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>订单查询</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>
-                            <span>订单查询</span></a>
+                        <a class="accordion-toggle b_9FDDF6" href="datachaxun"><i class="icon-bullhorn"></i>
+                            <span>数据查询</span></a>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>
-                            <span>查找用户</span></a>
-                    </div>
-                </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>
-                            <span>按商品查询</span></a>
-                    </div>
-                </div>
+
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>查找用户</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>按商品查询</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle b_9FDDF6" href="output"><i class="icon-bullhorn"></i>
@@ -242,53 +252,38 @@
                 <input type='hidden' name='csrfmiddlewaretoken' value='iYM8XIZw0GBAN1m1YkHyLDdFAKbxd2D7Z1tftkK0aqIl6UmMOC9T5M8TNU4BsO3E' />
                 <table>
                     <tr>
-
-                        <td><input type="checkbox" name="settingoption" value="weixin"/></td>
-
-
                         <td>微信号</td>
+                        <td><input type="text" name="weixinAccount" placeholder="必填"/></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="xingming"/></td>
-
-
-
                         <td>姓名</td>
+                        <td><input type="text" name="name" placeholder="必填"/></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="nickname"/></td>
-
-
-
                         <td>微信昵称</td>
+                        <td><input type="text" name="weixinName" placeholder="必填"/></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="alipay"/></td>
-
-
-
                         <td>支付宝账号</td>
+                        <td><input type="text" name="zhifubao" placeholder="必填"/></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="phone" checked/></td>
-
-
                         <td>手机号码</td>
+                        <td><input type="text" name="phone" placeholder="必填"/></td>
                     </tr>
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="platform"/></td>
-
-
-
                         <td>平台账号</td>
+                        <td><input type="text" name="account"/></td>
                     </tr>
 
                     <tr>
-                        <td><input type="checkbox" name="settingoption" value="email"/></td>
-
-
-
                         <td>邮箱</td>
+                        <td><input type="text" name="email"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>团队名称</td>
+                        <td><input type="text" name="tuandui" placeholder="没有可以不必填写"/></td>
                     </tr>
                 </table>
 

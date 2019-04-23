@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: 75293
   Date: 2019/1/25
-  Time: 1:09
+  Time: 0:46
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -238,6 +238,7 @@
                             <%--<span>查找用户</span></a>--%>
                     <%--</div>--%>
                 <%--</div>--%>
+
                 <%--<div class="accordion-group">--%>
                     <%--<div class="accordion-heading">--%>
                         <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
@@ -273,28 +274,12 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="pdd_manager">拼多多</a></li>
-                <li><a href="jd_manager">京东</a></li>
-                <li><a href="tb_manager">淘宝客</a></li>
+                <li><a href="selectorder">订单查询</a></li>
+                <li><a href="selectproduct">商品查询</a></li>
+                <li><a href="checkuser">用户查询</a></li>
             </ul>
 
-            <table class="table">
-                <caption>当前授权的的多多进宝联盟账号</caption>
-                <thead>
-                <tr>
-                    <th>手机</th>
-                    <th>多多客ID</th>
-                    <th>姓名</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>13777730765</td>
-                    <td>1018465</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
+            <h1 align="center">点击上方按钮选择你需要的数据查询</h1>
         </div>
         <!-- /Main window -->
 
@@ -316,5 +301,4 @@
 
 </body>
 </html>
-
 

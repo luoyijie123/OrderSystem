@@ -77,6 +77,11 @@ public class OrderController {
        return "tongjiexcel";
     }
 
+    @RequestMapping("datachaxun")
+    public String datachaxun(){
+       return "datachaxun";
+    }
+
     @RequestMapping("downloadExcel")
     @ResponseBody
     public void download(String txtBeginDate, String txtEndDate, String productid, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {

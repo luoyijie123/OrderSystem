@@ -218,24 +218,35 @@
                             <span>上传数据</span></a>
                     </div>
                 </div>
+
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>订单查询</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="accordion-group">
                     <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>
-                            <span>订单查询</span></a>
+                        <a class="accordion-toggle b_9FDDF6" href="datachaxun"><i class="icon-bullhorn"></i>
+                            <span>数据查询</span></a>
                     </div>
                 </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>
-                            <span>查找用户</span></a>
-                    </div>
-                </div>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>
-                            <span>按商品查询</span></a>
-                    </div>
-                </div>
+
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>查找用户</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
+                <%--<div class="accordion-group">--%>
+                    <%--<div class="accordion-heading">--%>
+                        <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
+                            <%--<span>按商品查询</span></a>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle b_9FDDF6" href="output"><i class="icon-bullhorn"></i>
@@ -263,7 +274,11 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-
+            <ul class="nav nav-tabs">
+                <li><a href="selectorder">订单查询</a></li>
+                <li><a href="selectproduct">商品查询</a></li>
+                <li><a href="checkuser">用户查询</a></li>
+            </ul>
 
             <div style="clear:both;">
                 <input type='hidden' name='csrfmiddlewaretoken' value='p9RcAQac96FaFhA16sBvELQ2KDpYTtN6eADgWm7oHhmfFKEnuP79xxxL8syiJbt3' />
