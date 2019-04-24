@@ -194,7 +194,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle active b_F79999" href="index"><i class="icon-dashboard"></i>
-                            <span>首页</span></a>
+                            <span>授权中心和账号管理</span></a>
                     </div>
                 </div>
                 <div class="accordion-group">
@@ -246,13 +246,6 @@
                     </div>
                 </div>
 
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="jiankong"><i class="icon-bullhorn"></i>
-                            <span>监控账号管理</span></a>
-                    </div>
-                </div>
-
             </div>
         </div>
         <!-- /Side menu -->
@@ -260,7 +253,7 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
             <ul class="nav nav-tabs">
-                <li><a href="selectorder">订单查询</a></li>
+                <li class="active"><a href="selectorder">订单查询</a></li>
                 <li><a href="selectproduct">商品查询</a></li>
                 <li><a href="checkuser">用户查询</a></li>
             </ul>

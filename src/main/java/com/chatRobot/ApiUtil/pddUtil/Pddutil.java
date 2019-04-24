@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Pddutil {//正式部署中去调用，部署在定时任务模块
 
-    private static String pdd_Access_token = "";
+//    private static String pdd_Access_token = "";
     private static String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
     private static String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
 
@@ -25,7 +25,7 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
         int count = 5;//随便取一个数字
         while (count>0){
             String PddOrderInfo = "";
-            PddOrderInfo = Util.get_pddOrderApi(start_date,end_date,pdd_client_id, pdd_Access_token, pdd_client_secret,page_no);
+            PddOrderInfo = Util.get_pddOrderApi(start_date,end_date,pdd_client_id,pdd_client_secret,page_no);
             System.out.println("未经处理的拼多多订单信息：" + PddOrderInfo);
             JSONObject jsonObject = JSON.parseObject(PddOrderInfo);
             JSONObject response = jsonObject.getJSONObject("order_list_get_response");

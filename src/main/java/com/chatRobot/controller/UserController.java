@@ -55,10 +55,8 @@ public class UserController {
 
         System.out.println("用户创建："+user.getAccount()+user.getPassword());
         userService.addUser(user);
-
         model.addAttribute("msg","注册成功");
         //注册成功后跳转success.jsp页面
-
         return "success";
     }
 
@@ -151,6 +149,21 @@ public class UserController {
     @RequestMapping("uploadjddb")
     public String update(){
         return "redirect:/order/uploadjddb";
+    }
+
+    @RequestMapping("jdshouquan")
+    public String jdshouquan(){
+        return "jdshouquan";
+    }
+
+    @RequestMapping("tbshouquan")
+    public String tbshouquan(){
+        return "tbshouquan";
+    }
+
+    @RequestMapping("pddshouquan")
+    public String pddshouquan(){
+        return "pddshouquan";
     }
 
     @RequestMapping("datachaxun")
@@ -372,8 +385,8 @@ public class UserController {
         return "tb_manager";
     }
 
-    @RequestMapping("PddShouquan")
-    public String PddShouquan() throws ParseException {
+    @RequestMapping("PddTongbu")
+    public String PddTongbu() throws ParseException {
 
         /*String PddOrderInfo = "";
 

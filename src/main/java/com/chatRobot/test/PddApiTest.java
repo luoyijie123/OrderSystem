@@ -16,7 +16,7 @@ import java.util.List;
 
 public class PddApiTest {
 
-    private static String pdd_Access_token = "";
+//    private static String pdd_Access_token = "";
     private static String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
     private static String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
 
@@ -28,7 +28,7 @@ public class PddApiTest {
              String PddOrderInfo = "";
              String start_time = "1546790400";//2019-01-07 00:00:00 起始有订单的时间
              String end_time = "1546876799";//2019-01-07 23:59:59
-             PddOrderInfo = Util.get_pddOrderApi(start_time,end_time,pdd_client_id, pdd_Access_token, pdd_client_secret,page_no);
+             PddOrderInfo = Util.get_pddOrderApi(start_time,end_time,pdd_client_id,pdd_client_secret,page_no);
              System.out.println("拼多多订单信息：" + PddOrderInfo);
              JSONObject jsonObject = JSON.parseObject(PddOrderInfo);
              JSONObject response = jsonObject.getJSONObject("order_list_get_response");

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 75293
-  Date: 2019/1/25
-  Time: 1:09
+  Date: 2019/4/25
+  Time: 1:25
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -30,10 +30,38 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="../static/js/lyz.calendar.min.js" type="text/javascript"></script>
+    <script src="static/js/lyz.calendar.min.js" type="text/javascript"></script>
     <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.js"></script>
     <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                var csrftoken = getCookie('csrftoken');
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
         function getNowFormatDate() {
             var date = new Date();
             var seperator1 = "-";
@@ -101,6 +129,31 @@
 
             });
 
+        function setuniodid() {
+            var unionid = $("#unionidinput").val();
+            $.post("${pageContext.request.contextPath}/user/ajaxsetuniodid/",
+                {
+                    unionid: unionid
+                },
+                function (ret) {
+                    alert(ret);
+                });
+            return false;
+        }
+
+
+        function settaobaosession() {
+            var session = $("#taobaosession").val();
+            $.post("${pageContext.request.contextPath}/user/ajaxsettaobaosession.action",
+                {
+                    session: session
+                },
+                function (ret) {
+                    alert(ret);
+
+                });
+            return false;
+        }
     </script>
 
 
@@ -151,7 +204,7 @@
             background-color: #e8f0de;
         }
     </style>
-    <link href="../static/css/lyz.calendar.css" rel="stylesheet" type="text/css"/>
+    <link href="static/css/lyz.calendar.css" rel="stylesheet" type="text/css"/>
 
 
 
@@ -219,10 +272,10 @@
                 </div>
 
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>订单查询</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
+                <%--<span>订单查询</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
 
                 <div class="accordion-group">
@@ -233,16 +286,16 @@
                 </div>
 
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>查找用户</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
+                <%--<span>查找用户</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>按商品查询</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
+                <%--<span>按商品查询</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
 
                 <div class="accordion-group">
@@ -265,34 +318,24 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-            <ul class="nav nav-tabs">
-                <li class><a href="index">授权中心</a></li>
-                <li class="active"><a href="pdd_manager">拼多多</a></li>
-                <li><a href="jd_manager">京东</a></li>
-                <li><a href="tb_manager">淘宝客</a></li>
-            </ul>
-
-            <table class="table">
-                <caption>当前授权的的多多进宝联盟账号</caption>
-                <thead>
-                <tr>
-                    <th>手机</th>
-                    <th>多多客ID</th>
-                    <th>姓名</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>13777730765</td>
-                    <td>1018465</td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
         </div>
-        <!-- /Main window -->
 
-    </div><!--/.fluid-container-->
+
+    </div>
+    <!-- /Main window -->
+
+</div><!--/.fluid-container-->
 </div><!-- wrap ends-->
 <script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript" src="../static/assets/js/raphael-min.js"></script>

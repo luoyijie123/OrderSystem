@@ -208,7 +208,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle active b_F79999" href="index"><i class="icon-dashboard"></i>
-                            <span>首页</span></a>
+                            <span>授权中心和账号管理</span></a>
                     </div>
                 </div>
                 <div class="accordion-group">
@@ -259,13 +259,6 @@
                     </div>
                 </div>
 
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle b_9FDDF6" href="jiankong"><i class="icon-bullhorn"></i>
-                            <span>监控账号管理</span></a>
-                    </div>
-                </div>
-
             </div>
         </div>
         <!-- /Side menu -->
@@ -273,6 +266,7 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
             <ul class="nav nav-tabs">
+                <li><a href="index">授权中心</a></li>
                 <li><a href="pdd_manager">拼多多</a></li>
                 <li><a href="jd_manager">京东</a></li>
                 <li class="active"><a href="tb_manager">淘宝客</a></li>

@@ -217,7 +217,7 @@ public class Util {
         return result;
     }
 
-    public static String get_pddOrderApi(String start_time,String end_time,String client_id,String access_token,String client_secret,int page){//最近90天内多多进宝商品订单更新时间--查询时间开始。
+    public static String get_pddOrderApi(String start_time,String end_time,String client_id,String client_secret,int page){//最近90天内多多进宝商品订单更新时间--查询时间开始。
         String data="";
         String type = "pdd.ddk.order.list.increment.get";
         String timestamp = TimeUtil.UnixTimestamp();
