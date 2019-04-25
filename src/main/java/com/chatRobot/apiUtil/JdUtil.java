@@ -1,11 +1,15 @@
-package com.chatRobot.ApiUtil.jingdongUtil;
+package com.chatRobot.apiUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
+import com.chatRobot.service.OrderService;
+import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
 import com.chatRobot.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,7 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdUtil {//正式部署中去调用，部署在定时任务模块
+
+    //注入Service
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     private static String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
     private static String Jd_SERVER_URL="https://api.jd.com/routerjson";

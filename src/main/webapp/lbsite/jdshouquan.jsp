@@ -314,20 +314,40 @@
             <form>
                 <div class="form-group">
                     <label for="exampleInputAppKey">京东联盟appKey</label>
-                    <input type="text" class="form-control" id="exampleInputAppKey" placeholder="Email">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="exampleInputAppKey" placeholder="必填">
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputAppSecret">京东联盟appSecret</label>
-                    <input type="text" class="form-control" id="exampleInputAppSecret" placeholder="Password">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="exampleInputAppSecret" placeholder="必填">
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputJdunionid">京东联盟jdunionid</label>
-                    <input type="text" class="form-control" id="exampleInputJdunionid" placeholder="Password">
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="exampleInputJdunionid" placeholder="必填">
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-default">Submit</button>
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" placeholder="必填">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">手机</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone" placeholder="必填">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-default">进入授权</button>
             </form>
         </div>
 

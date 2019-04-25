@@ -1,6 +1,6 @@
 package com.chatRobot.task;
 
-import com.chatRobot.ApiUtil.jingdongUtil.JdUtil;
+import com.chatRobot.apiUtil.JdUtil;
 import com.chatRobot.model.Order;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;

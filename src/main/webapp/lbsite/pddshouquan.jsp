@@ -320,14 +320,34 @@
         <div class="main_container" id="dashboard_page">
             <form>
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                    <label for="exampleInputClientid">拼多多client_id</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="exampleInputClientid" placeholder="必填">
+                    </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <label for="exampleInputclientsecret">拼多多client_secret</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="exampleInputclientsecret" placeholder="必填">
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
+
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" placeholder="必填">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">手机</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone" placeholder="必填">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-default">设置</button>
             </form>
         </div>
 

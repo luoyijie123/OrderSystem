@@ -1,12 +1,15 @@
-package com.chatRobot.ApiUtil.taobaoUtil;
+package com.chatRobot.apiUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
+import com.chatRobot.service.OrderService;
+import com.chatRobot.service.UserService;
 import com.chatRobot.util.Util;
 import org.apache.commons.lang.StringUtils;
-import org.apache.poi.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,7 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class TaobaoUtil {//正式部署中去调用，部署在定时任务模块
+
+    //注入Service
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     private static String taobao_session ="70000100134174d234d98ea80c4f8479edf67f36c1f32512ee2884e1f39844bb2ab2bdb2395126756";
                                            //70000101723758f95698eea4477ec9f1dbe1df81f8841969b74bedd883cb4e5eaddba662395126756

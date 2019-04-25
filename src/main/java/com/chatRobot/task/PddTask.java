@@ -1,7 +1,6 @@
 package com.chatRobot.task;
 
-import com.chatRobot.ApiUtil.pddUtil.Pddutil;
-import com.chatRobot.ApiUtil.taobaoUtil.TaobaoUtil;
+import com.chatRobot.apiUtil.Pddutil;
 import com.chatRobot.model.Order;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;

@@ -1,11 +1,15 @@
-package com.chatRobot.ApiUtil.pddUtil;
+package com.chatRobot.apiUtil;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
+import com.chatRobot.service.OrderService;
+import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
 import com.chatRobot.util.Util;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,8 +17,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Pddutil {//正式部署中去调用，部署在定时任务模块
 
+    //注入Service
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 //    private static String pdd_Access_token = "";
     private static String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
     private static String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
