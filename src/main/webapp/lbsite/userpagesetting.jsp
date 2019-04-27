@@ -34,6 +34,10 @@
 
 
     <script>
+        function alert() {
+            window.alert("更新成功")
+        }
+        
         function getCookie(name) {
             var cookieValue = null;
             if (document.cookie && document.cookie != '') {
@@ -241,12 +245,16 @@
 
             <br><span style="color:red">设置成功</span><br>
             1、选择要让用户填写的联系方式
-            <form method="post" enctype="multipart/form-data">
+            <form action="userupdate">
                 <input type='hidden' name='csrfmiddlewaretoken' value='iYM8XIZw0GBAN1m1YkHyLDdFAKbxd2D7Z1tftkK0aqIl6UmMOC9T5M8TNU4BsO3E' />
                 <table>
                     <tr>
+                        <td>平台账号</td>
+                        <td><label type="text" name="account"/>${userModel.user.account}</td>
+                    </tr>
+                    <tr>
                         <td>微信号</td>
-                        <td><input type="text" name="weixinAccount" placeholder="必填"/></td>
+                        <td><input type="text" name="weixinAccount" placeholder="必填"/>${userModel.user.weixing_account}</td>
                     </tr>
                     <tr>
                         <td>姓名</td>
@@ -264,10 +272,6 @@
                         <td>手机号码</td>
                         <td><input type="text" name="phone" placeholder="必填"/></td>
                     </tr>
-                    <tr>
-                        <td>平台账号</td>
-                        <td><input type="text" name="account"/></td>
-                    </tr>
 
                     <tr>
                         <td>邮箱</td>
@@ -280,7 +284,7 @@
                     </tr>
                 </table>
 
-                <input type="submit" value="确定" class="weui-btn weui-btn_mini weui-btn_primary"/><br>
+                <input type="submit" value="确定" class="weui-btn weui-btn_mini weui-btn_primary" onclick="alert()"/><br>
             </form>
 
         </div>

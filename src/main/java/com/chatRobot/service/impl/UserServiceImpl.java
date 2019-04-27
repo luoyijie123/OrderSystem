@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean updateUser(User user) {
+        return userDao.updateUser(user);
+    }
+
+    @Override
     public User login(String account, String password) {
          User user=userDao.findUserByAccountAndPwd(account,password);
          if(user != null && user.getPassword().equals(password))
@@ -27,5 +32,10 @@ public class UserServiceImpl implements UserService{
              return user;
          }
          return null;
+    }
+
+    @Override
+    public User getUserByaccount(String account) {
+        return userDao.findUserByAccount(account);
     }
 }

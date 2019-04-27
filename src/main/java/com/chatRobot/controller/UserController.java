@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,8 +67,22 @@ public class UserController {
     }
 
     @RequestMapping("userpagesetting")
-    public String userpagesetting(){
-        return "userpagesetting";
+    public ModelAndView userpagesetting(HttpSession session,Model model){
+        User user = (User)session.getAttribute("User_session");
+        model.addAttribute("user",user);
+
+        return new ModelAndView("userpagesetting","userModel",model);
+    }
+
+    @RequestMapping("userupdate")
+    public ModelAndView userupdate(HttpSession session,Model model,String weixinAccount,String name,String weixinName,String apliypay,String phone,String email,String team){
+        User olduser = (User)session.getAttribute("User_session");
+
+        User newUser = userService.getUserByaccount(olduser.getAccount());
+
+        model.addAttribute("user",newUser);
+
+        return new ModelAndView("userpagesetting","userModel",model);
     }
 
 
