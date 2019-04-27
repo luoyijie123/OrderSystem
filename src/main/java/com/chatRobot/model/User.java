@@ -8,7 +8,11 @@ public class User {
 
     private String userlink;
 
+    private String role;
+
     private String weixing_account;
+
+    private String zhifubao_account;
 
     private String name;
 
@@ -19,6 +23,22 @@ public class User {
     private String email;
 
     private String team_name;
+
+    public String getZhifubao_account() {
+        return zhifubao_account;
+    }
+
+    public void setZhifubao_account(String zhifubao_account) {
+        this.zhifubao_account = zhifubao_account;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public String getUserlink() {
         return userlink;

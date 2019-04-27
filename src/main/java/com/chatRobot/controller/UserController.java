@@ -68,18 +68,28 @@ public class UserController {
 
     @RequestMapping("userpagesetting")
     public ModelAndView userpagesetting(HttpSession session,Model model){
-        User user = (User)session.getAttribute("User_session");
-        model.addAttribute("user",user);
+        User olduser = (User)session.getAttribute("User_session");
+
+        User newUser = userService.getUserByaccount(olduser.getAccount());
+        model.addAttribute("user",newUser);
 
         return new ModelAndView("userpagesetting","userModel",model);
     }
 
     @RequestMapping("userupdate")
-    public ModelAndView userupdate(HttpSession session,Model model,String weixinAccount,String name,String weixinName,String apliypay,String phone,String email,String team){
+    public ModelAndView userupdate(HttpSession session,Model model,String weixinAccount,String name,String weixinName,String zhifubao,String phone,String email,String team){
         User olduser = (User)session.getAttribute("User_session");
 
         User newUser = userService.getUserByaccount(olduser.getAccount());
+        newUser.setWeixing_account(weixinAccount);
+        newUser.setName(name);
+        newUser.setWeixing_name(weixinName);
+        newUser.setZhifubao_account(zhifubao);
+        newUser.setPhone(phone);
+        newUser.setEmail(email);
+        newUser.setTeam_name(team);
 
+        userService.updateUser(newUser);
         model.addAttribute("user",newUser);
 
         return new ModelAndView("userpagesetting","userModel",model);

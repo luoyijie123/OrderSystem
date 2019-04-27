@@ -1,0 +1,7 @@
+-- ALTER TABLE user ADD COLUMN weixing_account VARCHAR(30);
+-- ALTER TABLE user ADD COLUMN name VARCHAR(30);
+-- ALTER TABLE user ADD COLUMN weixing_name VARCHAR(30);
+-- ALTER TABLE user ADD COLUMN phone VARCHAR(30);
+-- ALTER TABLE user ADD COLUMN email VARCHAR(30);
+-- ALTER TABLE user ADD COLUMN team_name VARCHAR(30);
+ALTER TABLE user ADD COLUMN zhifubao_account VARCHAR(30);

@@ -34,8 +34,8 @@
 
 
     <script>
-        function alert() {
-            window.alert("更新成功")
+        function display_alert() {
+           alert("更新成功")
         }
         
         function getCookie(name) {
@@ -243,9 +243,9 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
 
-            <br><span style="color:red">设置成功</span><br>
+            <%--<br><span style="color:red">设置成功</span><br>--%>
             1、选择要让用户填写的联系方式
-            <form action="userupdate">
+            <form action="${pageContext.request.contextPath}/user/userupdate.action">
                 <input type='hidden' name='csrfmiddlewaretoken' value='iYM8XIZw0GBAN1m1YkHyLDdFAKbxd2D7Z1tftkK0aqIl6UmMOC9T5M8TNU4BsO3E' />
                 <table>
                     <tr>
@@ -254,37 +254,37 @@
                     </tr>
                     <tr>
                         <td>微信号</td>
-                        <td><input type="text" name="weixinAccount" placeholder="必填"/>${userModel.user.weixing_account}</td>
+                        <td><input type="text" name="weixinAccount" placeholder="必填" value="${userModel.user.weixing_account}"/></td>
                     </tr>
                     <tr>
                         <td>姓名</td>
-                        <td><input type="text" name="name" placeholder="必填"/></td>
+                        <td><input type="text" name="name" placeholder="必填" value="${userModel.user.name}"/></td>
                     </tr>
                     <tr>
                         <td>微信昵称</td>
-                        <td><input type="text" name="weixinName" placeholder="必填"/></td>
+                        <td><input type="text" name="weixinName" placeholder="必填" value="${userModel.user.weixing_name}"/></td>
                     </tr>
                     <tr>
                         <td>支付宝账号</td>
-                        <td><input type="text" name="zhifubao" placeholder="必填"/></td>
+                        <td><input type="text" name="zhifubao" placeholder="必填" value="${userModel.user.zhifubao_account}"/></td>
                     </tr>
                     <tr>
                         <td>手机号码</td>
-                        <td><input type="text" name="phone" placeholder="必填"/></td>
+                        <td><input type="text" name="phone" placeholder="必填" value="${userModel.user.phone}"/></td>
                     </tr>
 
                     <tr>
                         <td>邮箱</td>
-                        <td><input type="text" name="email"/></td>
+                        <td><input type="text" name="email" value="${userModel.user.email}"/></td>
                     </tr>
 
                     <tr>
                         <td>团队名称</td>
-                        <td><input type="text" name="tuandui" placeholder="没有可以不必填写"/></td>
+                        <td><input type="text" name="team" placeholder="没有可以不必填写" value="${userModel.user.team_name}"/></td>
                     </tr>
                 </table>
 
-                <input type="submit" value="确定" class="weui-btn weui-btn_mini weui-btn_primary" onclick="alert()"/><br>
+                <input type="submit" value="确定" class="weui-btn weui-btn_mini weui-btn_primary" onclick="display_alert()"/><br>
             </form>
 
         </div>
