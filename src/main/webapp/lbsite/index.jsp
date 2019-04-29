@@ -336,14 +336,16 @@
                 <hr>
 
             </div>
+            <form action="${pageContext.request.contextPath}/user/checklogin.action">
             <div class="oneitem">
                 2、您的专属用户查单链接(供您的用户查询订单状态使用)
                 <br>
-                <input id="tiandanurl" type="text" style="width:330px;" value="https://jd.zbxkq.com/lbsite/checkjd/YBJs8QyLqq">
+                <input id="tiandanurl" type="text" style="width:330px;" value="${usermodel.user.userlink}" />
                 <br>
-                <button class="btn" data-clipboard-text="https://jd.zbxkq.com/lbsite/checkjd/YBJs8QyLqq">复制</button>
+                <button class="btn" data-clipboard-text="${usermodel.user.userlink}">复制</button>
 
             </div>
+            </form>
             <div class="oneitem" style="margin-top:20px;">
 
                 3、授权我们获取您的京东客订单信息(京东不会让我们看到您的敏感信息),只需一次即可。

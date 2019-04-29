@@ -107,58 +107,50 @@
 <body ontouchstart style="width:100%;height:100%;">
 <div id="mainbody" style=" margin-bottom: 100px;width:100%;">
 
-    <div style="width:100%;clear:both;">
-        您所有提交过的订单(若发现缺少订单可尝试重新提交，若还少，请联系管理员。)
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="clientSelectOrder">订单查询</a></li>
+        <li><a href="clientHistoryOrder">历史订单</a></li>
+    </ul>
 
+    <div>
+        <input type='hidden' name='csrfmiddlewaretoken' value='vVmdq6loOkBT9nqK0KYkbh8ctAe1JX57km8hMCiAmviY9Qu6o7uY43PVRpnlzFL4' />
+        一行一个订单号，多次提交以最后提交的为准。<br>
+        <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;">
+            <div style="display: flex;justify-content: left;">
+
+            <textarea class="weui-textarea" id="dingdanlist" name="dingdanlist"
+                      style="width:90%;background-color: #EEE;height:300px;" rows="11" placeholder="一行一个订单号"></textarea>
+            </div>
+
+            <br>
+
+        </div>
+        <a style="width:300px;" class="weui-btn weui-btn_plain-primary" onclick="getfromdb()">提交</a>
     </div>
-    <div style="width:100%;clear:both;">
 
+    <div id="showresulttb">
+        <Br>"提交时间"默认时间为系统增加此功能的时间"2018-05-30 18:29:08"，之后提交的订单此项数据才会更新。
         <div class="table-responsive">
-            <div>
-                <table class="table table-bordered" style="text-align: center;font-size:12px;">
-                    <tr style="text-align: center;">
-                        <td>订单号</td>
-                        <td>商品名</td>
-                        <td>付款金额</td>
-                        <td>状态</td>
-                    </tr>
-
-                </table>
-                <p>说明： <br>若有未查询到的订单请稍后再查询。<br>
-                    若显示"已付款"表示订单状态正常。<br>
-                    请确保在"个人设置"中设置了联系方式。
-                </p>
-                <div style="marign-top:30px;">
-                    <button id="btn" style="z-index:999;opacity:0;width:1px;height:1px;"></button>
-                    <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.js"></script>
-                    <script type="text/javascript">
-
-                        var clipboard = new ClipboardJS('#btn', {
-                                text: function () {
-
-                                    return "1mk1w663M8";
-                                }
-                            }
-                        );
-
-
-                        function wxclosepage() {
-                            $.post("/lbsite/ajaxredbag/",
-                                {
-                                    type: "redbag_checkresult"
-                                }
-                            );
-
-                            $("#btn").click();
-                            WeixinJSBridge.call('closeWindow');
-
-                            return false;
-                        }
-                    </script>
-                    <a id="btnclose" onclick="wxclosepage()" href="#" style="width:150px;"
-
-                       class="weui-btn weui-btn_primary ">退出</a>
-                </div>
+            <table id="restb" class="table table-bordered" style="text-align: center;font-size:12px;">
+                <thead>
+                <tr>
+                    <th>下单时间</th>
+                    <th>商品名称</th>
+                    <th>订单号</th>
+                    <th>预估金额</th>
+                    <th>订单状态</th>
+                    <th>完成时间</th>
+                    <th>微信昵称</th>
+                    <th>返款状态</th>
+                    <th>是否提交</th>
+                    <th>提交时间</th>
+                    <th>订单渠道</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 
             </div>
         </div>
@@ -176,15 +168,9 @@
 
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
-    <a href="clientSelectOrder" class="weui-tabbar__item">
-                    <span style="display: inline-block;position: relative;">
-                        <img src="../static/icons-search.png" alt="" class="weui-tabbar__icon">
-                    </span>
-        <p class="weui-tabbar__label">查询订单</p>
-    </a>
     <a href="clientHistoryOrder" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">历史订单</p>
+        <p class="weui-tabbar__label">订单操作</p>
     </a>
     <a href="clientUsersetting" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">

@@ -128,15 +128,9 @@
 
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
-    <a href="clientSelectOrder" class="weui-tabbar__item">
-                    <span style="display: inline-block;position: relative;">
-                        <img src="../static/icons-search.png" alt="" class="weui-tabbar__icon">
-                    </span>
-        <p class="weui-tabbar__label">查询订单</p>
-    </a>
     <a href="clientHistoryOrder" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">历史订单</p>
+        <p class="weui-tabbar__label">订单操作</p>
     </a>
     <a href="clientUsersetting" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">

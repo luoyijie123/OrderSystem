@@ -100,6 +100,11 @@
 <body ontouchstart style="width:100%;height:100%;">
 <div id="mainbody" style=" margin-bottom: 100px;width:100%;">
 
+    <ul class="nav nav-tabs">
+        <li><a href="clientSelectOrder">订单查询</a></li>
+        <li  class="active"><a href="clientHistoryOrder">历史订单</a></li>
+    </ul>
+
     <div style="width:100%;clear:both;">
         您所有提交过的订单(若发现缺少订单可尝试重新提交，若还少，请联系管理员。)
 
@@ -169,15 +174,10 @@
 
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
-    <a href="clientSelectOrder" class="weui-tabbar__item">
-                    <span style="display: inline-block;position: relative;">
-                        <img src="../static/icons-search.png" alt="" class="weui-tabbar__icon">
-                    </span>
-        <p class="weui-tabbar__label">查询订单</p>
-    </a>
+
     <a href="clientHistoryOrder" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
-        <p class="weui-tabbar__label">历史订单</p>
+        <p class="weui-tabbar__label">订单操作</p>
     </a>
     <a href="clientUsersetting" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">

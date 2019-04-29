@@ -10,6 +10,7 @@ import com.chatRobot.service.UserService;
 import com.chatRobot.util.Util;
 //import org.json.JSONArray;
 //import org.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -89,6 +91,7 @@ public class UserController {
         newUser.setEmail(email);
         newUser.setTeam_name(team);
 
+
         userService.updateUser(newUser);
         model.addAttribute("user",newUser);
 
@@ -136,7 +139,7 @@ public class UserController {
 
 
     @RequestMapping("checklogin")
-    public String checklogin(String account, String password, Model model, HttpSession session,HttpServletRequest request){
+    public ModelAndView checklogin(String account, String password, Model model, HttpSession session,HttpServletRequest request){
         System.out.println("用户登录："+account+password);
         String path = request.getContextPath();
         this.basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -146,10 +149,22 @@ public class UserController {
         if(user!=null) {
             model.addAttribute("msg", "登录成功");
             session.setAttribute("User_session", user);
-            return "index";
+            if(!StringUtils.isNotBlank(user.getUserlink())){
+                UUID uuid = UUID.randomUUID();
+                user.setUserlink(uuid.toString().replace("-", ""));
+                userService.updateUser(user);
+                model.addAttribute(user.getUserlink(),"user");
+            }
+            return new ModelAndView("index","usermodel",model);
         }else {
-            return "login";
+            return new ModelAndView("login");
         }
+    }
+
+    @RequestMapping("setlink")
+    public ModelAndView setlink(HttpSession session,Model model){
+
+       return new ModelAndView();
     }
 
     @RequestMapping("logout")

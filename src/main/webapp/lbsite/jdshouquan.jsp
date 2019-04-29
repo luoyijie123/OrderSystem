@@ -327,7 +327,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="exampleInputJdunionid">京东联盟jdunionid</label>
+                    <label for="exampleInputJdunionid">京东联盟jdunionid(联盟id)</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="exampleInputJdunionid" placeholder="必填">
                     </div>
