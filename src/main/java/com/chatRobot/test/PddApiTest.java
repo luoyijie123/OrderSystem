@@ -45,7 +45,7 @@ public class PddApiTest {
                  order.setOrderId(orderjson.getString("order_sn"));
 
                  java.util.Date dateorder = format.parse(TimeUtil.ten_TimeStamp2Date(orderjson.getString("order_create_time")));
-                 java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                 java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                  order.setOrderTime(ordertime);
 
                  order.setProductName(orderjson.getString("goods_name"));

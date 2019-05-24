@@ -336,13 +336,13 @@
                 <hr>
 
             </div>
-            <form action="${pageContext.request.contextPath}/user/checklogin.action">
+            <form action="${pageContext.request.contextPath}/user/setlink.action">
             <div class="oneitem">
                 2、您的专属用户查单链接(供您的用户查询订单状态使用)
                 <br>
-                <input id="tiandanurl" type="text" style="width:330px;" value="${usermodel.user.userlink}" />
+                <input id="tiandanurl" type="text" style="width:330px;" value="${linkmodel.user.userlink}" />
                 <br>
-                <button class="btn" data-clipboard-text="${usermodel.user.userlink}">复制</button>
+                <button class="btn" data-clipboard-text="${linkmodel.user.userlink}">复制(点击按钮后可显示)</button>
 
             </div>
             </form>
@@ -350,11 +350,11 @@
 
                 3、授权我们获取您的京东客订单信息(京东不会让我们看到您的敏感信息),只需一次即可。
                 <Br>
-                <span style="color:red">若验证码输错了请直接关掉京东的窗口然后再次点下面的链接重试。</span><br>
-                您当前已成功授权我们获取您的京东客订单数据，若有问题可尝试重新授权。<Br>
+                <%--<span style="color:red">若验证码输错了请直接关掉京东的窗口然后再次点下面的链接重试。</span><br>--%>
+                <%--您当前已成功授权我们获取您的京东客订单数据，若有问题可尝试重新授权。<Br>--%>
                 <a href="jdshouquan" target="_blank" class="greenbtn">点击进入授权京东账号</a><br>
                 每次授权京东后一定要重新设置一遍 京东联盟id,类似于 1000123123这样的数字<br>
-                联盟ID<input type="text" id="unionidinput" value="1000923743"><a href="#" onclick="setuniodid()">点此设置联盟id</a>
+                <%--联盟ID<input type="text" id="unionidinput" value="1000923743"><a href="#" onclick="setuniodid()">点此设置联盟id</a>--%>
                 <hr>
 
             </div>
@@ -363,23 +363,24 @@
 
                 4、授权我们获取您的淘宝客订单信息(淘宝不会让我们看到您的敏感信息),只需一次即可。
                 <Br>
-                <span style="color:red">若验证码输错了请直接关掉淘宝的窗口然后再次点下面的链接重试。</span><br>
-                您当前已成功授权我们获取您的淘宝客订单数据，若有问题可尝试重新授权。<Br>
-                <a href="tbshouquan" target="_blank" class="greenbtn">点击进入授权淘宝客账号</a><br>
+                <%--<span style="color:red">若验证码输错了请直接关掉淘宝的窗口然后再次点下面的链接重试。</span><br>--%>
+                <%--您当前已成功授权我们获取您的淘宝客订单数据，若有问题可尝试重新授权。<Br>--%>
+                <a href="taobaoLogin" target="_blank" class="greenbtn">点击进入授权淘宝客账号</a><br>
                 每次授权淘宝客后一定要重新设置一遍 淘宝客session,类似于 1000123123这样的数字<br>
-                淘宝客session<input type="text" id="taobaosession" value="1000923743"><a href="#" onclick="settaobaosession()">点此设置淘宝客session</a>
+                <%--淘宝客session<input type="text" id="taobaosession" value="1000923743"><a href="#" onclick="settaobaosession()">点此设置淘宝客session</a>--%>
                 <hr>
 
             </div>
 
             <div class="oneitem" style="margin-top:20px;">
 
-                5、直接点击同步数据即可。
-                <Br>
-                <span style="color:red">若验证码输错了请直接关掉多多进宝的窗口然后再次点下面的链接重试。</span><br>
-                您当前已成功授权我们获取您的多多进宝订单数据，若有问题可尝试重新授权。<Br>
+                <%--5、直接点击同步数据即可。--%>
+                <%--<Br>--%>
+                <%--<span style="color:red">若验证码输错了请直接关掉多多进宝的窗口然后再次点下面的链接重试。</span><br>--%>
+                    5、授权我们获取您的多多客订单信息(多多客不会让我们看到您的敏感信息),只需一次即可。
+                    <Br>
                 <a href="pddshouquan" target="_blank" class="greenbtn">点击进入授权多多进宝账号</a><br>
-                <a href="PddTongbu">点此同步数据</a>
+                <%--<a href="PddTongbu">点此同步数据</a>--%>
                 <hr>
 
             </div>

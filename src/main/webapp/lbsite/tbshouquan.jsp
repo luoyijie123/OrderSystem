@@ -320,6 +320,10 @@
         <div class="main_container" id="dashboard_page">
             <form>
                 <div class="form-group">
+                    <a href="taobaoLogin">点击此处获取淘宝session，复制后粘贴至下面</a>
+                </div>
+
+                <div class="form-group">
                     <label for="exampleInputSession">淘宝session</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="exampleInputSession" placeholder="必填">

@@ -137,7 +137,7 @@ public class Util {
         return jsonStr;
     }
 
-    public static String pdd_Json(String code){
+    public static String pdd_Json(String pdd_client_id,String pdd_client_secret,String code){
         String url="http://open-api.pinduoduo.com/oauth/token";
         JSONObject json=new JSONObject();
         try { json.put("client_id","1e3f5855199b47dd90e060343c690eef");

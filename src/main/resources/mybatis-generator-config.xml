@@ -33,7 +33,7 @@
 
         <!-- Mapper 接口文件的位置 -->
         <javaClientGenerator targetPackage="com.chatRobot.dao" targetProject="F:\workplace\ChatRobot\src\main\java" type="XMLMAPPER">
-            <property name="enableSubPackages" value="false"/>
+            <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 相关表的配置 -->

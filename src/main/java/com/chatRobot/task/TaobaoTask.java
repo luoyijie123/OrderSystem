@@ -48,6 +48,18 @@ public class TaobaoTask {
             OrderFilter(Apidatas_twodays);
         }
 
+        //check前三天的订单
+        Date before_twodate = before_Twoday(new Date());//前二天时间
+        Date before_twoDayDate = dayStartDate(before_twodate);//前二天时间的0点0分
+        Date before_threeDaystart = before_Oneday(before_twoDayDate);//前三天的0点0分
+        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        while(before_threeDaystart.compareTo(before_twoDayDate)<0){
+            before_threeDaystart = addTwetyMin(before_threeDaystart,20);
+            String deal_date2 = sdf.format(before_threeDaystart);
+            List<Order> Apidatas_threedays = TaobaoUtil.Monitoring_order(deal_date2);
+            OrderFilter(Apidatas_threedays);
+        }
+
 
 
     }

@@ -58,12 +58,12 @@ public class JdApiTest {//测试用，不要在正式部署中去调用
                     Order order = new Order();
                     order.setChannel("京东");
                     java.util.Date dateorder = format.parse(TimeUtil.timeStamp2Date(json.getString("orderTime")));
-                    java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                    java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                     order.setOrderTime(ordertime);
 
                     //java.sql.Date finishtime = (java.sql.Date) format.parse(TimeUtil.timeStamp2Date(json.getString("finishTime")));
                     java.util.Date datefinish = format.parse(TimeUtil.timeStamp2Date(json.getString("finishTime")));
-                    java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                    java.sql.Timestamp finishtime = new java.sql.Timestamp(datefinish.getTime());
                     order.setFinishTime(finishtime);
                     //String tempString = "";
                     //tempString = tempString+temp.getString("skuName");

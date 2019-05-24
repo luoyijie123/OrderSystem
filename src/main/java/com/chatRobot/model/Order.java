@@ -1,20 +1,21 @@
 package com.chatRobot.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Order {
-    private Date orderTime;//下单时间
+    private Timestamp orderTime;//下单时间
     private String productName;//商品名称
     private String productId;//商品id
     private String orderId;//订单号
     private String Estimated;//预估金额
     private String channel;//订单渠道
     private String state;//订单状态
-    private Date finishTime;//完成时间
+    private Timestamp finishTime;//完成时间
     private String weixin;//微信昵称
     private String Refunds;//返款状态
     private String isSubmit;//是否提交
-    private Date submitTime;//提交时间
+    private Timestamp submitTime;//提交时间
 
     public String getChannel() {
         return channel;
@@ -65,11 +66,11 @@ public class Order {
         this.state = state;
     }
 
-    public Date getFinishTime() {
+    public Timestamp getFinishTime() {
         return finishTime;
     }
 
-    public void setFinishTime(Date finishTime) {
+    public void setFinishTime(Timestamp finishTime) {
         this.finishTime = finishTime;
     }
 
@@ -97,19 +98,19 @@ public class Order {
         this.isSubmit = isSubmit;
     }
 
-    public Date getOrderTime() {
+    public Timestamp getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(Timestamp orderTime) {
         this.orderTime = orderTime;
     }
 
-    public Date getSubmitTime() {
+    public Timestamp getSubmitTime() {
         return submitTime;
     }
 
-    public void setSubmitTime(Date submitTime) {
+    public void setSubmitTime(Timestamp submitTime) {
         this.submitTime = submitTime;
     }
 }

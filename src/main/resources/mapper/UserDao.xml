@@ -28,7 +28,7 @@
     </select>
 
     <update id="updateUser" parameterType="User">
-        update user set zhifubao_account=#{zhifubao_account},weixing_account=#{weixing_account},name=#{name},weixing_name=#{weixing_name},phone=#{phone},email=#{email},team_name=#{team_name} where account=#{account}
+        update user set userlink=#{userlink},zhifubao_account=#{zhifubao_account},weixing_account=#{weixing_account},name=#{name},weixing_name=#{weixing_name},phone=#{phone},email=#{email},team_name=#{team_name} where account=#{account}
     </update>
 
 

@@ -1,7 +1,6 @@
 package com.chatRobot.service.impl;
 
 import com.chatRobot.dao.PddauthoMapper;
-import com.chatRobot.model.Jdautho;
 import com.chatRobot.model.Pddautho;
 import com.chatRobot.service.PddauthoService;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,9 @@ public class PddauthoServiceImpl implements PddauthoService {
     @Resource
     private PddauthoMapper pddauthoMapper;
 
+
     @Override
-    public int deleteById(Integer id) {
+    public int deleteByAccount(String id) {
         return pddauthoMapper.deleteByPrimaryKey(id);
     }
 
@@ -25,8 +25,8 @@ public class PddauthoServiceImpl implements PddauthoService {
     }
 
     @Override
-    public Pddautho selectById(Integer id) {
-        return pddauthoMapper.selectByPrimaryKey(id);
+    public Pddautho selectByAccount(String account) {
+        return pddauthoMapper.selectByPrimaryKey(account);
     }
 
     @Override

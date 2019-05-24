@@ -5,11 +5,11 @@ import com.chatRobot.model.Pddautho;
 import com.chatRobot.model.Tbautho;
 
 public interface TbauthoService {
-    int deleteById(Integer id);
+    int deleteByaccount(String account);
 
-    int AddPddautho(Tbautho record);
+    int AddTbautho(Tbautho record);
 
-    Tbautho selectById(Integer id);
+    Tbautho selectByaccount(String account);
 
     int update(Tbautho record);
 }

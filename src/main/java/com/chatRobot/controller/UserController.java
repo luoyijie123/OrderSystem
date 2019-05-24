@@ -1,12 +1,10 @@
 package com.chatRobot.controller;
 
-import com.chatRobot.model.Order;
+import com.chatRobot.model.*;
+import com.chatRobot.service.*;
 import com.chatRobot.test.JdApiTest;
 import com.chatRobot.test.PddApiTest;
 import com.chatRobot.test.TaobaoApiTest;
-import com.chatRobot.model.User;
-import com.chatRobot.service.OrderService;
-import com.chatRobot.service.UserService;
 import com.chatRobot.util.Util;
 //import org.json.JSONArray;
 //import org.json.JSONObject;
@@ -37,16 +35,29 @@ public class UserController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JdauthoService jdauthoService;
+
+    @Autowired
+    private PddauthoService pddauthoService;
+
+    @Autowired
+    private TbauthoService tbauthoService;
+
     private String taobao_session;
 
     private String basePath;
 
     private String Jd_redirect_uri = basePath+"user/josauth";
     private String Jd_SERVER_URL="https://api.jd.com/routerjson";
-    private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
-    private String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
-    private String jd_Access_token = "";
-    private int jdunionid;
+//    private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
+//    private String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
+//    private String jd_Access_token = "";
+//    private int jdunionid;
+//    private String Jd_appKey ="";
+//    private String Jd_appSecret = "";
+//    private String jd_Access_token = "";
+//    private int jdunionid;
 
     private String pdd_Access_token = "";
     private String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
@@ -69,8 +80,8 @@ public class UserController {
     }
 
     @RequestMapping("userpagesetting")
-    public ModelAndView userpagesetting(HttpSession session,Model model){
-        User olduser = (User)session.getAttribute("User_session");
+    public ModelAndView userpagesetting(HttpServletRequest request,Model model){
+        User olduser = (User)request.getSession().getAttribute("User_session");
 
         User newUser = userService.getUserByaccount(olduser.getAccount());
         model.addAttribute("user",newUser);
@@ -79,8 +90,8 @@ public class UserController {
     }
 
     @RequestMapping("userupdate")
-    public ModelAndView userupdate(HttpSession session,Model model,String weixinAccount,String name,String weixinName,String zhifubao,String phone,String email,String team){
-        User olduser = (User)session.getAttribute("User_session");
+    public ModelAndView userupdate(HttpServletRequest request,Model model,String weixinAccount,String name,String weixinName,String zhifubao,String phone,String email,String team){
+        User olduser = (User)request.getSession().getAttribute("User_session");
 
         User newUser = userService.getUserByaccount(olduser.getAccount());
         newUser.setWeixing_account(weixinAccount);
@@ -100,7 +111,10 @@ public class UserController {
 
 
     @RequestMapping("josauth")
-    public String backjos(HttpServletRequest request){//获取京东的access_taken
+    public ModelAndView loback_Josauth(HttpServletRequest request,Model model,HttpSession session,String JdAppkey,String JdappSecret,String jdunionid){//获取京东的access_taken
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+        Jdautho jdautho = jdauthoService.selectByUserAccount(currentUser.getAccount());
         String code ="";
         String state = "";
         String json = "";
@@ -109,17 +123,24 @@ public class UserController {
         Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
         code = mapRequest.get("code");
         state = mapRequest.get("state");
-        json = Util.jd_Json(Jd_appKey,Jd_appSecret,Jd_redirect_uri,code,state);
+//        json = Util.jd_Json(Jd_appKey,Jd_appSecret,Jd_redirect_uri,code,state);
+        json = Util.jd_Json(jdautho.getJdAppkey(),jdautho.getJdAppsecret(),Jd_redirect_uri,code,state);
         System.out.println(code);
         System.out.println(json);
-        this.jd_Access_token = Util.jd_Access_token(json);
-        System.out.println(jd_Access_token);
+//        this.jd_Access_token = Util.jd_Access_token(json);
+        String jd_accessToken = Util.jd_Access_token(json);
+        jdautho.setJdAccessToken(jd_accessToken);
+        jdauthoService.update(jdautho);
+        System.out.println(jd_accessToken);
 
-        return "josauth";
+        return new ModelAndView("josauth");
     }
 
     @RequestMapping("pinduoduoauth")
     public String backpingduo(HttpServletRequest request){
+
+        User currentUser = (User) request.getSession().getAttribute("User_session");
+        Pddautho pddautho = pddauthoService.selectByAccount(currentUser.getAccount());
 
         String code="";
         String json = "";
@@ -128,7 +149,7 @@ public class UserController {
         Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
         code = mapRequest.get("code");
         System.out.println("code值为"+code);
-        json = Util.pdd_Json(code);
+        json = Util.pdd_Json(pddautho.getPddClientId(),pddautho.getPddClientSecret(),code);
         System.out.println("json值为"+json);
         this.pdd_Access_token = Util.pingduoduo_Access_token(json);
         System.out.println("拼多多Access_token值为"+this.pdd_Access_token);
@@ -139,7 +160,7 @@ public class UserController {
 
 
     @RequestMapping("checklogin")
-    public ModelAndView checklogin(String account, String password, Model model, HttpSession session,HttpServletRequest request){
+    public ModelAndView checklogin(String account, String password, Model model,HttpServletRequest request){
         System.out.println("用户登录："+account+password);
         String path = request.getContextPath();
         this.basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -148,28 +169,30 @@ public class UserController {
         User user=userService.login(account,password);
         if(user!=null) {
             model.addAttribute("msg", "登录成功");
-            session.setAttribute("User_session", user);
+            request.getSession().setAttribute("User_session", user);
             if(!StringUtils.isNotBlank(user.getUserlink())){
-                UUID uuid = UUID.randomUUID();
-                user.setUserlink(uuid.toString().replace("-", ""));
+//                UUID uuid = UUID.randomUUID();
+                user.setUserlink(basePath+"/client/clientHistoryOrder/YBJs8QyLqq"+user.getAccount());
                 userService.updateUser(user);
-                model.addAttribute(user.getUserlink(),"user");
             }
-            return new ModelAndView("index","usermodel",model);
+            return new ModelAndView("index");
         }else {
             return new ModelAndView("login");
         }
     }
 
     @RequestMapping("setlink")
-    public ModelAndView setlink(HttpSession session,Model model){
+    public ModelAndView setlink(HttpServletRequest request,Model model){
 
-       return new ModelAndView();
+        User olduser = (User)request.getSession().getAttribute("User_session");
+        User newUser = userService.getUserByaccount(olduser.getAccount());
+        model.addAttribute("user",newUser);
+        return new ModelAndView("index","linkmodel",model);
     }
 
     @RequestMapping("logout")
-    public String logout(HttpSession session){
-       session.removeAttribute("User_session");
+    public String logout(HttpServletRequest request){
+       request.getSession().removeAttribute("User_session");
        return "login";
     }
 
@@ -193,7 +216,27 @@ public class UserController {
 
     @RequestMapping("jdshouquan")
     public String jdshouquan(){
+
         return "jdshouquan";
+    }
+
+    @RequestMapping("jdshouquan_operation")
+    public ModelAndView jdshouquan_operation(HttpServletRequest request,String JdAppkey,String JdappSecret,String jdunionid,String name,String phone){
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+
+        Jdautho jdautho = new Jdautho();
+        jdautho.setUserAccount(currentUser.getAccount());
+        jdautho.setJdAppkey(JdAppkey);
+        jdautho.setJdAppsecret(JdappSecret);
+        jdautho.setJdunionid(jdunionid);
+        jdautho.setName(name);
+        jdautho.setPhone(phone);
+
+        jdauthoService.AddJdautho(jdautho);
+
+        return new ModelAndView("josLogin");
+
     }
 
     @RequestMapping("tbshouquan")
@@ -201,9 +244,44 @@ public class UserController {
         return "tbshouquan";
     }
 
+    @RequestMapping("tbshouquan_operation")
+    public ModelAndView tbshouquan_operation(HttpServletRequest request,String taobaoSession,String taobaoAccount,String name,String phone){
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+
+        Tbautho tbautho = new Tbautho();
+        tbautho.setUserAccount(currentUser.getAccount());
+        tbautho.setTaobaoSession(taobaoSession);
+        tbautho.setTaobaoAccount(taobaoAccount);
+        tbautho.setName(name);
+        tbautho.setPhone(phone);
+
+        tbauthoService.AddTbautho(tbautho);
+
+        return new ModelAndView("index");
+    }
+
     @RequestMapping("pddshouquan")
     public String pddshouquan(){
+
         return "pddshouquan";
+    }
+
+    @RequestMapping("pddshouquan_operation")
+    public ModelAndView pddshouquan_operation(HttpServletRequest request,String pdd_client_id,String pdd_client_secret,String name,String phone){
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+
+        Pddautho pddautho = new Pddautho();
+        pddautho.setUserAccount(currentUser.getAccount());
+        pddautho.setPddClientId(pdd_client_id);
+        pddautho.setPddClientSecret(pdd_client_secret);
+        pddautho.setName(name);
+        pddautho.setPhone(phone);
+
+        pddauthoService.AddPddautho(pddautho);
+
+        return new ModelAndView("index");
     }
 
     @RequestMapping("datachaxun")

@@ -53,16 +53,16 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
                 order.setOrderId(orderjson.getString("order_sn"));
 
                 java.util.Date dateorder = format.parse(TimeUtil.ten_TimeStamp2Date(orderjson.getString("order_create_time")));
-                java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                 order.setOrderTime(ordertime);
 
                 java.util.Date datefinish = format.parse(TimeUtil.ten_TimeStamp2Date(orderjson.getString("order_modify_at")));
-                java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                java.sql.Timestamp finishtime = new java.sql.Timestamp(datefinish.getTime());
                 order.setFinishTime(finishtime);
 
                 order.setProductName(orderjson.getString("goods_name"));
                 order.setProductId(orderjson.getString("goods_id"));
-                order.setEstimated(orderjson.getString("promotion_amount")+"分");
+                order.setEstimated(0.01*Integer.parseInt(orderjson.getString("order_amount"))+"元");
                 order.setChannel("拼多多");
                 if(orderjson.getString("order_status").equals("-1")) {
                     order.setState("未支付");

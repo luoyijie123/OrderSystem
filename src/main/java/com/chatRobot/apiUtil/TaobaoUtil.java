@@ -27,7 +27,7 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
     @Autowired
     private OrderService orderService;
 
-    private static String taobao_session ="70000100134174d234d98ea80c4f8479edf67f36c1f32512ee2884e1f39844bb2ab2bdb2395126756";
+    private static String taobao_session ="70000101325356299b691c87e9594484c5d861ead30a40bb379edbc1ea5ff92939bf0e82395126756";
                                            //70000101723758f95698eea4477ec9f1dbe1df81f8841969b74bedd883cb4e5eaddba662395126756
     public static List<Order> Monitoring_order(String date) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
         List<Order> orderList = new ArrayList<Order>();
@@ -58,12 +58,12 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
                 Order order = new Order();
                 JSONObject orderjson = (JSONObject) orders.get(i);
                 java.util.Date dateorder = format.parse(orderjson.getString("create_time"));
-                java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                 order.setOrderTime(ordertime);
                 order.setProductName(orderjson.getString("item_title"));
                 order.setProductId(orderjson.getString("num_iid"));
                 order.setOrderId(orderjson.getString("trade_id"));
-                order.setEstimated(orderjson.getString("commission")+"元");
+                order.setEstimated(orderjson.getString("alipay_total_price")+"元");
                 order.setChannel("淘宝");
                 if(orderjson.getString("tk_status").equals("3")) {
                     order.setState("订单结算");
@@ -77,7 +77,7 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
 
                 if(orderjson.containsKey("earning_time") && StringUtils.isNotBlank(orderjson.getString("earning_time"))) {
                     java.util.Date datefinish = format.parse(orderjson.getString("earning_time"));
-                    java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                    java.sql.Timestamp finishtime = new java.sql.Timestamp(datefinish.getTime());
                     order.setFinishTime(finishtime);
                 }
                 orderList.add(order);

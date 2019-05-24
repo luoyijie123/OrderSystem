@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chatRobot.model.Order;
+import com.chatRobot.service.JdauthoService;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
@@ -27,14 +28,17 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private JdauthoService jdauthoService;
+
     private static String Jd_redirect_uri = "http://localhost:8080/ChatRobot/user/josauth";
     private static String Jd_SERVER_URL="https://api.jd.com/routerjson";
-    private static String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
-    private static String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
-    private static String jd_Access_token = "410610b8-4205-40e5-810b-98ea315a87b2";//token有效期为一年,暂时写死
-    private static int jdunionid = 1000189695;//后续从数据库中去获取，暂时写死
+//    private static String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
+//    private static String Jd_appSecret = "3e6a076050a24f1a89ee7ddbd314f561";
+//    private static String jd_Access_token = "410610b8-4205-40e5-810b-98ea315a87b2";//token有效期为一年,暂时写死
+//    private static int jdunionid = 1000189695;//后续从数据库中去获取，暂时写死
 
-    public static List<Order> Monitoring_order(String start_time) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+    public static List<Order> Monitoring_order(String start_time, String Jd_appKey, String Jd_appSecret, String jd_Access_token, int jdunionid) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
 
         List<Order> orders = new ArrayList<Order>();
         String hasMore = "true";
@@ -67,16 +71,16 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
                     Order order = new Order();
                     order.setChannel("京东");
                     java.util.Date dateorder = format.parse(TimeUtil.timeStamp2Date(json.getString("orderTime")));
-                    java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                    java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                     order.setOrderTime(ordertime);
 
                     //java.sql.Date finishtime = (java.sql.Date) format.parse(TimeUtil.timeStamp2Date(json.getString("finishTime")));
                     java.util.Date datefinish = format.parse(TimeUtil.timeStamp2Date(json.getString("finishTime")));
-                    java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                    java.sql.Timestamp finishtime = new java.sql.Timestamp(datefinish.getTime());
                     order.setFinishTime(finishtime);
                     //String tempString = "";
                     //tempString = tempString+temp.getString("skuName");
-                    order.setEstimated(temp.getString("estimateFee")+"元");
+                    order.setEstimated(temp.getString("payPrice")+"元");
                     order.setProductName(temp.getString("skuName"));
                     order.setProductId(temp.getString("skuId"));
                     order.setOrderId(json.getString("orderId"));

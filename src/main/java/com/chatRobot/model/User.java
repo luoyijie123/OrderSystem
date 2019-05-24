@@ -24,6 +24,36 @@ public class User {
 
     private String team_name;
 
+    private String jdauthoId;
+
+    private String pddauthoId;
+
+    private String tbauthoId;
+
+    public String getJdauthoId() {
+        return jdauthoId;
+    }
+
+    public void setJdauthoId(String jdauthoId) {
+        this.jdauthoId = jdauthoId;
+    }
+
+    public String getPddauthoId() {
+        return pddauthoId;
+    }
+
+    public void setPddauthoId(String pddauthoId) {
+        this.pddauthoId = pddauthoId;
+    }
+
+    public String getTbauthoId() {
+        return tbauthoId;
+    }
+
+    public void setTbauthoId(String tbauthoId) {
+        this.tbauthoId = tbauthoId;
+    }
+
     public String getZhifubao_account() {
         return zhifubao_account;
     }

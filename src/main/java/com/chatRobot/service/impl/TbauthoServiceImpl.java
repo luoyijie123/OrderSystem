@@ -1,7 +1,6 @@
 package com.chatRobot.service.impl;
 
 import com.chatRobot.dao.TbauthoMapper;
-import com.chatRobot.model.Jdautho;
 import com.chatRobot.model.Tbautho;
 import com.chatRobot.service.TbauthoService;
 import org.springframework.stereotype.Service;
@@ -14,19 +13,20 @@ public class TbauthoServiceImpl implements TbauthoService {
     @Resource
     private TbauthoMapper tbauthoMapper;
 
+
     @Override
-    public int deleteById(Integer id) {
-        return tbauthoMapper.deleteByPrimaryKey(id);
+    public int deleteByaccount(String account) {
+        return tbauthoMapper.deleteByPrimaryKey(account);
     }
 
     @Override
-    public int AddPddautho(Tbautho record) {
+    public int AddTbautho(Tbautho record) {
         return tbauthoMapper.insert(record);
     }
 
     @Override
-    public Tbautho selectById(Integer id) {
-        return tbauthoMapper.selectByPrimaryKey(id);
+    public Tbautho selectByaccount(String account) {
+        return tbauthoMapper.selectByPrimaryKey(account);
     }
 
     @Override

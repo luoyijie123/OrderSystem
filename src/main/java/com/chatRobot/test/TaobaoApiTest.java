@@ -48,7 +48,7 @@ public class TaobaoApiTest {//测试用，不要在正式部署中去调用
                 Order order = new Order();
                 JSONObject orderjson = (JSONObject) orders.get(i);
                 java.util.Date dateorder = format.parse(orderjson.getString("create_time"));
-                java.sql.Date ordertime = new java.sql.Date(dateorder.getTime());
+                java.sql.Timestamp ordertime = new java.sql.Timestamp(dateorder.getTime());
                 order.setOrderTime(ordertime);
                 order.setProductName(orderjson.getString("item_title"));
                 order.setProductId(orderjson.getString("num_iid"));
@@ -65,7 +65,7 @@ public class TaobaoApiTest {//测试用，不要在正式部署中去调用
                     order.setState("订单成功");
                 }
                 java.util.Date datefinish = format.parse(orderjson.getString("earning_time"));
-                java.sql.Date finishtime = new java.sql.Date(datefinish.getTime());
+                java.sql.Timestamp finishtime = new java.sql.Timestamp(datefinish.getTime());
                 order.setFinishTime(finishtime);
                 orderList.add(order);
                 //orderService.addOrder(order);

@@ -315,35 +315,35 @@
                 <div class="form-group">
                     <label for="exampleInputAppKey">京东联盟appKey</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputAppKey" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputAppKey" placeholder="必填" name="JdAppkey">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputAppSecret">京东联盟appSecret</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputAppSecret" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputAppSecret" placeholder="必填" name="JdappSecret">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputJdunionid">京东联盟jdunionid(联盟id)</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputJdunionid" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputJdunionid" placeholder="必填" name="jdunionid">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="必填">
+                        <input type="text" class="form-control" id="name" placeholder="必填" name="name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">手机</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="必填">
+                        <input type="text" class="form-control" id="phone" placeholder="必填" name="phone">
                     </div>
                 </div>
 
