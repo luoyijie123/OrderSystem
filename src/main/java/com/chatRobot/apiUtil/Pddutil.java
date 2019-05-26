@@ -27,10 +27,10 @@ public class Pddutil {//正式部署中去调用，部署在定时任务模块
     @Autowired
     private OrderService orderService;
 //    private static String pdd_Access_token = "";
-    private static String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
-    private static String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
+//    private static String pdd_client_id = "1e3f5855199b47dd90e060343c690eef";
+//    private static String pdd_client_secret = "6293f7d6a22cac64d87ae1d95b5ed71e5bf7d7dd";
 
-    public static List<Order> Monitoring_order(String start_date,String end_date) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+    public static List<Order> Monitoring_order(String start_date, String end_date, String pdd_client_id, String pdd_client_secret) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
         List<Order> orders = new ArrayList<Order>();
         int page_no = 1;//页面从第一页开始
         int count = 5;//随便取一个数字

@@ -1,7 +1,8 @@
 package com.chatRobot.service;
 
-import com.chatRobot.model.Jdautho;
 import com.chatRobot.model.Pddautho;
+
+import java.util.List;
 
 public interface PddauthoService {
     int deleteByAccount(String id);
@@ -11,4 +12,6 @@ public interface PddauthoService {
     Pddautho selectByAccount(String account);
 
     int update(Pddautho record);
+
+    List<Pddautho> findAll();
 }

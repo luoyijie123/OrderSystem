@@ -283,9 +283,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>13777730765</td>
-                    <td>1018465</td>
-                    <td></td>
+                    <td>${pddauthoModel.pddautho.phone}</td>
+                    <td>${pddauthoModel.pddautho.ddkId}</td>
+                    <td>${pddauthoModel.pddautho.name}</td>
                 </tr>
                 </tbody>
             </table>

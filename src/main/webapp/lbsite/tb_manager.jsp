@@ -283,9 +283,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>1024老司机</td>
-                    <td>13777730765</td>
-                    <td></td>
+                    <td>${tbauthoModel.tbautho.taobaoAccount}</td>
+                    <td>${tbauthoModel.tbautho.phone}</td>
+                    <td>${tbauthoModel.tbautho.name}</td>
                 </tr>
                 </tbody>
             </table>

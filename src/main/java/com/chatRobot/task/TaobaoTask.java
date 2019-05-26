@@ -2,7 +2,9 @@ package com.chatRobot.task;
 
 import com.chatRobot.apiUtil.TaobaoUtil;
 import com.chatRobot.model.Order;
+import com.chatRobot.model.Tbautho;
 import com.chatRobot.service.OrderService;
+import com.chatRobot.service.TbauthoService;
 import com.chatRobot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,113 +24,141 @@ public class TaobaoTask {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private TbauthoService tbauthoService;
+
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {
+
+        //获取所有账户的淘宝授权信息
+        List<Tbautho> tbauthoList = tbauthoService.findAll();
+
         //check前一天的订单
-        Date date = new Date();//当前时间
-        Date DayDate = dayStartDate(date);//当前时间的0点0分
-        Date start = before_Oneday(DayDate);//前一天的0点0分
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        while(start.compareTo(DayDate)<0){
-            start = addTwetyMin(start,20);
-            String deal_date = sdf.format(start);
-            List<Order> Apidatas = TaobaoUtil.Monitoring_order(deal_date);
-            OrderFilter(Apidatas);
+        SimpleDateFormat sdf = null;
+        for (Tbautho tbautho : tbauthoList) {
+            Date date = new Date();//当前时间
+            Date DayDate = dayStartDate(date);//当前时间的0点0分
+            Date start = before_Oneday(DayDate);//前一天的0点0分
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            while(start.compareTo(DayDate)<0){
+                start = addTwetyMin(start,20);
+                String deal_date = sdf.format(start);
+                List<Order> Apidatas = TaobaoUtil.Monitoring_order(deal_date, tbautho.getTaobaoSession());
+                OrderFilter(Apidatas);
+            }
         }
 
         //check前两天的订单
-        Date before_onedate = before_Oneday(new Date());//前一天时间
-        Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
-        Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        while(before_twoDaystart.compareTo(before_oneDayDate)<0){
-            before_twoDaystart = addTwetyMin(before_twoDaystart,20);
-            String deal_date2 = sdf.format(before_twoDaystart);
-            List<Order> Apidatas_twodays = TaobaoUtil.Monitoring_order(deal_date2);
-            OrderFilter(Apidatas_twodays);
+        for (Tbautho tbautho : tbauthoList) {
+            Date before_onedate = before_Oneday(new Date());//前一天时间
+            Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
+            Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            while(before_twoDaystart.compareTo(before_oneDayDate)<0){
+                before_twoDaystart = addTwetyMin(before_twoDaystart,20);
+                String deal_date2 = sdf.format(before_twoDaystart);
+                List<Order> Apidatas_twodays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaoSession());
+                OrderFilter(Apidatas_twodays);
+            }
         }
 
         //check前三天的订单
-        Date before_twodate = before_Twoday(new Date());//前二天时间
-        Date before_twoDayDate = dayStartDate(before_twodate);//前二天时间的0点0分
-        Date before_threeDaystart = before_Oneday(before_twoDayDate);//前三天的0点0分
-        //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        while(before_threeDaystart.compareTo(before_twoDayDate)<0){
-            before_threeDaystart = addTwetyMin(before_threeDaystart,20);
-            String deal_date2 = sdf.format(before_threeDaystart);
-            List<Order> Apidatas_threedays = TaobaoUtil.Monitoring_order(deal_date2);
-            OrderFilter(Apidatas_threedays);
+        for (Tbautho tbautho : tbauthoList) {
+            Date before_twodate = before_Twoday(new Date());//前二天时间
+            Date before_twoDayDate = dayStartDate(before_twodate);//前二天时间的0点0分
+            Date before_threeDaystart = before_Oneday(before_twoDayDate);//前三天的0点0分
+            //SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            while(before_threeDaystart.compareTo(before_twoDayDate)<0){
+                before_threeDaystart = addTwetyMin(before_threeDaystart,20);
+                String deal_date2 = sdf.format(before_threeDaystart);
+                List<Order> Apidatas_threedays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaoSession());
+                OrderFilter(Apidatas_threedays);
+            }
         }
-
-
 
     }
 
     @Scheduled(cron= "0 0/5 * * * ? ")//间隔五分钟执行
     public void dailyOrder() throws ParseException {//全天候24小时监控订单，每隔五分钟获取一次近两小时的订单
+        //获取所有账户的淘宝授权信息
+        List<Tbautho> tbauthoList = tbauthoService.findAll();
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//时间处理模板
         List<Order> orders = new ArrayList<Order>();//订单总数
 
         //获取当前时间之前120分钟之前的时间
-        Calendar beforeTime_120 = Calendar.getInstance();
-        beforeTime_120.add(Calendar.MINUTE,-120);
-        Date temp_120 = beforeTime_120.getTime();
-        String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
-        List<Order> orderList_120 = TaobaoUtil.Monitoring_order(date_beforeTime_120);
-        for(int i=0;i<orderList_120.size();i++){
-            orders.add(orderList_120.get(i));
+        for (Tbautho tbautho : tbauthoList) {
+            Calendar beforeTime_120 = Calendar.getInstance();
+            beforeTime_120.add(Calendar.MINUTE,-120);
+            Date temp_120 = beforeTime_120.getTime();
+            String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
+            List<Order> orderList_120 = TaobaoUtil.Monitoring_order(date_beforeTime_120, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_120.size();i++){
+                orders.add(orderList_120.get(i));
+            }
         }
 
         //获取当前时间之前100分钟之前的时间
-        Calendar beforeTime_100 = Calendar.getInstance();
-        beforeTime_100.add(Calendar.MINUTE,-100);
-        Date temp_100 = beforeTime_100.getTime();
-        String date_beforeTime_100 = df.format(temp_100);//正式传入api接口的参数
-        List<Order> orderList_100 = TaobaoUtil.Monitoring_order(date_beforeTime_100);
-        for(int i=0;i<orderList_100.size();i++){
-            orders.add(orderList_100.get(i));
+        Calendar beforeTime_100 = null;
+        for (Tbautho tbautho : tbauthoList) {
+            beforeTime_100 = Calendar.getInstance();
+            beforeTime_100.add(Calendar.MINUTE,-100);
+            Date temp_100 = beforeTime_100.getTime();
+            String date_beforeTime_100 = df.format(temp_100);//正式传入api接口的参数
+            List<Order> orderList_100 = TaobaoUtil.Monitoring_order(date_beforeTime_100, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_100.size();i++){
+                orders.add(orderList_100.get(i));
+            }
         }
 
         //获取当前时间之前80分钟之前的时间
         Calendar beforeTime_80 = Calendar.getInstance();
-        beforeTime_80.add(Calendar.MINUTE,-80);
-        Date temp_80 = beforeTime_100.getTime();
-        String date_beforeTime_80 = df.format(temp_80);//正式传入api接口的参数
-        List<Order> orderList_80 = TaobaoUtil.Monitoring_order(date_beforeTime_80);
-        for(int i=0;i<orderList_80.size();i++){
-            orders.add(orderList_80.get(i));
+        for (Tbautho tbautho : tbauthoList) {
+            beforeTime_80.add(Calendar.MINUTE,-80);
+            Date temp_80 = beforeTime_100.getTime();
+            String date_beforeTime_80 = df.format(temp_80);//正式传入api接口的参数
+            List<Order> orderList_80 = TaobaoUtil.Monitoring_order(date_beforeTime_80, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_80.size();i++){
+                orders.add(orderList_80.get(i));
+            }
         }
 
         //获取当前时间之前60分钟之前的时间
         Calendar beforeTime_60 = Calendar.getInstance();
-        beforeTime_60.add(Calendar.MINUTE,-60);
-        Date temp_60 = beforeTime_60.getTime();
-        String date_beforeTime_60 = df.format(temp_60);//正式传入api接口的参数
-        List<Order> orderList_60 = TaobaoUtil.Monitoring_order(date_beforeTime_60);
-        for(int i=0;i<orderList_60.size();i++){
-            orders.add(orderList_60.get(i));
+        for (Tbautho tbautho : tbauthoList) {
+            beforeTime_60.add(Calendar.MINUTE,-60);
+            Date temp_60 = beforeTime_60.getTime();
+            String date_beforeTime_60 = df.format(temp_60);//正式传入api接口的参数
+            List<Order> orderList_60 = TaobaoUtil.Monitoring_order(date_beforeTime_60, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_60.size();i++){
+                orders.add(orderList_60.get(i));
+            }
         }
 
         //获取当前时间之前40分钟之前的时间
         Calendar beforeTime_40 = Calendar.getInstance();
-        beforeTime_40.add(Calendar.MINUTE,-40);
-        Date temp_40 = beforeTime_40.getTime();
-        String date_beforeTime_40 = df.format(temp_40);//正式传入api接口的参数
-        List<Order> orderList_40 = TaobaoUtil.Monitoring_order(date_beforeTime_40);
-        for(int i=0;i<orderList_40.size();i++){
-            orders.add(orderList_40.get(i));
+        for (Tbautho tbautho : tbauthoList) {
+            beforeTime_40.add(Calendar.MINUTE,-40);
+            Date temp_40 = beforeTime_40.getTime();
+            String date_beforeTime_40 = df.format(temp_40);//正式传入api接口的参数
+            List<Order> orderList_40 = TaobaoUtil.Monitoring_order(date_beforeTime_40, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_40.size();i++){
+                orders.add(orderList_40.get(i));
+            }
         }
 
         //获取当前时间之前20分钟之前的时间
         Calendar beforeTime_20 = Calendar.getInstance();
-        beforeTime_20.add(Calendar.MINUTE,-20);
-        Date temp_20 = beforeTime_20.getTime();
-        String date_beforeTime_20 = df.format(temp_20);//正式传入api接口的参数
-        List<Order> orderList_20 = TaobaoUtil.Monitoring_order(date_beforeTime_20);
-        for(int i=0;i<orderList_20.size();i++){
-            orders.add(orderList_20.get(i));
+        for (Tbautho tbautho : tbauthoList) {
+            beforeTime_20.add(Calendar.MINUTE,-20);
+            Date temp_20 = beforeTime_20.getTime();
+            String date_beforeTime_20 = df.format(temp_20);//正式传入api接口的参数
+            List<Order> orderList_20 = TaobaoUtil.Monitoring_order(date_beforeTime_20, tbautho.getTaobaoSession());
+            for(int i=0;i<orderList_20.size();i++){
+                orders.add(orderList_20.get(i));
+            }
+            OrderFilter(orders);
         }
-        OrderFilter(orders);
     }
 
     public void OrderFilter(List<Order>orders){//订单集群处理过滤器,传入的是api接口获取的订单

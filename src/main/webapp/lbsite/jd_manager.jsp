@@ -283,9 +283,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>18958755878</td>
-                    <td>1000189695</td>
-                    <td></td>
+                    <td>${jdauthoModel.jdautho.phone}</td>
+                    <td>${jdauthoModel.jdautho.jdunionid}</td>
+                    <td>${jdauthoModel.jdautho.name}</td>
                 </tr>
                 </tbody>
             </table>

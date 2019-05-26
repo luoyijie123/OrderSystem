@@ -1,8 +1,11 @@
 package com.chatRobot.task;
 
 import com.chatRobot.apiUtil.Pddutil;
+import com.chatRobot.model.Jdautho;
 import com.chatRobot.model.Order;
+import com.chatRobot.model.Pddautho;
 import com.chatRobot.service.OrderService;
+import com.chatRobot.service.PddauthoService;
 import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,59 +26,78 @@ public class PddTask {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private PddauthoService pddauthoService;
+
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {
+
+        //获取所有账户的拼多多授权信息
+        List<Pddautho> pddauthoList = pddauthoService.findAll();
+
         //check前一天的订单
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();//当前时间
-        Date DayDate = dayStartDate(date);//当前时间的0点0分
-        Date before_oneday_start = before_Oneday(DayDate);//前一天的0点0分
-        Date before_oneday_end = getnowEndTime(before_oneday_start);
-        //先转换为标准字符串格式
-        String string_before_oneStart = sdf.format(before_oneday_start);
-        String string_before_oneEnd = sdf.format(before_oneday_end);
-        //再转换为时间戳格式
-        String temp_before_oneStart = TimeUtil.StringToTimestamp(string_before_oneStart);//开始时刻
-        String temp_before_oneEnd = TimeUtil.StringToTimestamp(string_before_oneEnd);//结束时刻
-        List<Order> before_one_Apiorders = Pddutil.Monitoring_order(temp_before_oneStart,temp_before_oneEnd);
-        OrderFilter(before_one_Apiorders);
+
+        for (Pddautho pddautho : pddauthoList) {
+            Date date = new Date();//当前时间
+            Date DayDate = dayStartDate(date);//当前时间的0点0分
+            Date before_oneday_start = before_Oneday(DayDate);//前一天的0点0分
+            Date before_oneday_end = getnowEndTime(before_oneday_start);
+            //先转换为标准字符串格式
+            String string_before_oneStart = sdf.format(before_oneday_start);
+            String string_before_oneEnd = sdf.format(before_oneday_end);
+            //再转换为时间戳格式
+            String temp_before_oneStart = TimeUtil.StringToTimestamp(string_before_oneStart);//开始时刻
+            String temp_before_oneEnd = TimeUtil.StringToTimestamp(string_before_oneEnd);//结束时刻
+            List<Order> before_one_Apiorders = new ArrayList<Order>();
+            before_one_Apiorders = Pddutil.Monitoring_order(temp_before_oneStart,temp_before_oneEnd,pddautho.getPddClientId(),pddautho.getPddClientSecret());
+            OrderFilter(before_one_Apiorders);
+        }
+
 
         //check前两天的订单
-        Date before_onedate = before_Oneday(new Date());//前一天时间
-        Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
-        Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
-        Date before_twoDayend = getnowEndTime(before_twoDaystart);//前两天的最后时刻
-        //先转换为标准字符串格式
-        String string_before_twoStart = sdf.format(before_twoDaystart);
-        String string_before_twoEnd = sdf.format(before_twoDayend);
-        //再转换为时间戳格式
-        String temp_before_twoStart = TimeUtil.StringToTimestamp(string_before_twoStart);//开始时刻
-        String temp_before_twoEnd = TimeUtil.StringToTimestamp(string_before_twoEnd);//结束时刻
-        List<Order> before_two_Apiorders = Pddutil.Monitoring_order(temp_before_twoStart,temp_before_twoEnd);
-        OrderFilter(before_two_Apiorders);
+        for (Pddautho pddautho : pddauthoList) {
+            Date before_onedate = before_Oneday(new Date());//前一天时间
+            Date before_oneDayDate = dayStartDate(before_onedate);//前一天时间的0点0分
+            Date before_twoDaystart = before_Oneday(before_oneDayDate);//前两天的0点0分
+            Date before_twoDayend = getnowEndTime(before_twoDaystart);//前两天的最后时刻
+            //先转换为标准字符串格式
+            String string_before_twoStart = sdf.format(before_twoDaystart);
+            String string_before_twoEnd = sdf.format(before_twoDayend);
+            //再转换为时间戳格式
+            String temp_before_twoStart = TimeUtil.StringToTimestamp(string_before_twoStart);//开始时刻
+            String temp_before_twoEnd = TimeUtil.StringToTimestamp(string_before_twoEnd);//结束时刻
+            List<Order> before_two_Apiorders = new ArrayList<Order>();
+            before_two_Apiorders = Pddutil.Monitoring_order(temp_before_twoStart, temp_before_twoEnd, pddautho.getPddClientId(), pddautho.getPddClientSecret());
+            OrderFilter(before_two_Apiorders);
+        }
     }
 
 
     @Scheduled(cron= "0 0/5 * * * ? ")//间隔五分钟执行
     public void dailyOrder() throws ParseException {//全天候24小时监控订单，每隔五分钟获取一次近两小时的订单
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//时间处理模板
-        List<Order> orders = new ArrayList<Order>();//订单总数
+        //获取所有账户的拼多多授权信息
+        List <Pddautho> pddauthoList = pddauthoService.findAll();
 
-        //获取当前时间之前120分钟之前的时间
-        String now = df.format(new Date());
-        Calendar beforeTime_120 = Calendar.getInstance();
-        beforeTime_120.add(Calendar.MINUTE,-120);
-        Date temp_120 = beforeTime_120.getTime();
-        String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
 
-        String deal_now = TimeUtil.StringToTimestamp(now);
-        String deal_before120 = TimeUtil.StringToTimestamp(date_beforeTime_120);
-        List<Order> orderList_120 = Pddutil.Monitoring_order(deal_before120,deal_now);
-        for(int i=0;i<orderList_120.size();i++){
-            orders.add(orderList_120.get(i));
+        for (Pddautho pddautho : pddauthoList) {
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//时间处理模板
+//            List<Order> orders = new ArrayList<Order>();//订单总数
+
+            //获取当前时间之前120分钟之前的时间
+            String now = df.format(new Date());
+            Calendar beforeTime_120 = Calendar.getInstance();
+            beforeTime_120.add(Calendar.MINUTE,-120);
+            Date temp_120 = beforeTime_120.getTime();
+            String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
+
+            String deal_now = TimeUtil.StringToTimestamp(now);
+            String deal_before120 = TimeUtil.StringToTimestamp(date_beforeTime_120);
+            List<Order> orderList_120 = new ArrayList<Order>();
+            orderList_120 = Pddutil.Monitoring_order(deal_before120, deal_now, pddautho.getPddClientId(), pddautho.getPddClientSecret());
+
+            OrderFilter(orderList_120);
         }
-
-        OrderFilter(orders);
     }
 
     public void OrderFilter(List<Order> orders){//订单集群处理过滤器,传入的是api接口获取的订单

@@ -365,7 +365,7 @@
                 <Br>
                 <%--<span style="color:red">若验证码输错了请直接关掉淘宝的窗口然后再次点下面的链接重试。</span><br>--%>
                 <%--您当前已成功授权我们获取您的淘宝客订单数据，若有问题可尝试重新授权。<Br>--%>
-                <a href="taobaoLogin" target="_blank" class="greenbtn">点击进入授权淘宝客账号</a><br>
+                <a href="tbshouquan" target="_blank" class="greenbtn">点击进入授权淘宝客账号</a><br>
                 每次授权淘宝客后一定要重新设置一遍 淘宝客session,类似于 1000123123这样的数字<br>
                 <%--淘宝客session<input type="text" id="taobaosession" value="1000923743"><a href="#" onclick="settaobaosession()">点此设置淘宝客session</a>--%>
                 <hr>

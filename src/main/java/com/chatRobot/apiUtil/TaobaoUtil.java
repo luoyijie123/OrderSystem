@@ -27,9 +27,9 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
     @Autowired
     private OrderService orderService;
 
-    private static String taobao_session ="70000101325356299b691c87e9594484c5d861ead30a40bb379edbc1ea5ff92939bf0e82395126756";
+//    private static String taobao_session ="70000101325356299b691c87e9594484c5d861ead30a40bb379edbc1ea5ff92939bf0e82395126756";
                                            //70000101723758f95698eea4477ec9f1dbe1df81f8841969b74bedd883cb4e5eaddba662395126756
-    public static List<Order> Monitoring_order(String date) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+    public static List<Order> Monitoring_order(String date, String taobao_session) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
         List<Order> orderList = new ArrayList<Order>();
         //taobao_session = session;
         int page_no = 1;//页面从第一页开始

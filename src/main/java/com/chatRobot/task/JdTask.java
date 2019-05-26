@@ -31,7 +31,7 @@ public class JdTask {
     public void checkOrder() throws ParseException {
 
         //获取所有账户的京东授权信息
-        List <Jdautho> jdauthoList = new ArrayList<Jdautho>();
+        List <Jdautho> jdauthoList = jdauthoService.findAll();
 
         //check前一天的订单
         SimpleDateFormat sdf = null;
@@ -65,15 +65,14 @@ public class JdTask {
     @Scheduled(cron= "0 0/5 * * * ? ")//间隔五分钟执行
     public void dailyOrder() throws ParseException {//全天候24小时监控订单，每隔五分钟获取一次近两小时的订单
         //获取所有账户的京东授权信息
-        List <Jdautho> jdauthoList = new ArrayList<Jdautho>();
+        List <Jdautho> jdauthoList = jdauthoService.findAll();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHH");//时间处理模板
 
         for (Jdautho jdautho : jdauthoList) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHH");//时间处理模板
-            List<Order> orders = new ArrayList<Order>();//订单总数
             //京东这里的接口只要传入当前时间，实现实时监控即可
+            List<Order> orders = new ArrayList<Order>();//订单总数
             String now_time = df.format(new Date());
             orders = JdUtil.Monitoring_order(now_time, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()));
-
             OrderFilter(orders);
         }
     }

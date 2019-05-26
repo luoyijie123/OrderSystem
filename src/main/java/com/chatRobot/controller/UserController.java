@@ -172,7 +172,7 @@ public class UserController {
             request.getSession().setAttribute("User_session", user);
             if(!StringUtils.isNotBlank(user.getUserlink())){
 //                UUID uuid = UUID.randomUUID();
-                user.setUserlink(basePath+"/client/clientHistoryOrder/YBJs8QyLqq"+user.getAccount());
+                user.setUserlink(basePath+"client/clientHistoryOrder/YBJs8QyLqq"+user.getAccount());
                 userService.updateUser(user);
             }
             return new ModelAndView("index");
@@ -216,7 +216,6 @@ public class UserController {
 
     @RequestMapping("jdshouquan")
     public String jdshouquan(){
-
         return "jdshouquan";
     }
 
@@ -489,18 +488,32 @@ public class UserController {
 
 
     @RequestMapping("pdd_manager")
-    public String pdd_manager(){
-        return "pdd_manager";
+    public ModelAndView pdd_manager(HttpServletRequest request,Model model){
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+        Pddautho pddautho = pddauthoService.selectByAccount(currentUser.getAccount());
+
+        model.addAttribute("pddautho",pddautho);
+        return new ModelAndView("pdd_manager","pddauthoModel",model);
     }
 
     @RequestMapping("jd_manager")
-    public String jd_manager(){
-        return "jd_manager";
+    public ModelAndView jd_manager(HttpServletRequest request,Model model){
+
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+        Jdautho jdautho = jdauthoService.selectByUserAccount(currentUser.getAccount());
+
+        model.addAttribute("jdautho",jdautho);
+        return new ModelAndView("jd_manager","jdauthoModel",model);
     }
 
     @RequestMapping("tb_manager")
-    public String tb_manager(){
-        return "tb_manager";
+    public ModelAndView tb_manager(HttpServletRequest request,Model model){
+        User currentUser = (User)request.getSession().getAttribute("User_session");
+        Tbautho tbautho = tbauthoService.selectByaccount(currentUser.getAccount());
+
+        model.addAttribute("tbautho",tbautho);
+        return new ModelAndView("tb_manager","tbauthoModel",model);
     }
 
     @RequestMapping("PddTongbu")
