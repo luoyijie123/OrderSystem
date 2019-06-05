@@ -20,6 +20,7 @@
     <!-- 扫描任务 -->
     <context:component-scan base-package="com.chatRobot.task" />
     <context:component-scan base-package="com.chatRobot.apiUtil" />
+    <context:component-scan base-package="com.chatRobot.test" />
     <!-- 开启SpringMVC注解模式 -->
     <mvc:annotation-driven/>
 

@@ -1,14 +1,13 @@
-
 <%--
   Created by IntelliJ IDEA.
   User: 75293
-  Date: 2019/1/27
-  Time: 1:18
+  Date: 2018/11/5
+  Time: 17:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page isELIgnored="false" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,79 +32,56 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <script src="../static/js/lyz.calendar.min.js" type="text/javascript"></script>
-    <script src="https://cdn.bootcss.com/clipboard.js/2.0.0/clipboard.js"></script>
-    <script>
 
-        function getNowFormatDate() {
-            var date = new Date();
-            var seperator1 = "-";
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate = year + seperator1 + month + seperator1 + strDate;
-            return currentdate;
+    <script>
+        function display_alert() {
+            alert("更新成功")
         }
 
-        $(
-            function () {
-                new ClipboardJS('.btn');
-                var today = new Date();
-                var todaystr = getNowFormatDate()
-                $("#txtBeginDate").val(todaystr);
-                $("#txtEndDate").val(todaystr);
-                $("#txtBeginDate").calendar({
-
-                    controlId: "divDate",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
-
-                    speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
-
-                    complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
-
-                    readonly: true,                                       // 目标对象是否设为只读，默认：true
-
-                    upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
-
-                    lowerLimit: new Date("2018/04/15"),                   // 日期下限，默认：NaN(不限制)
-
-                    callback: function () {                               // 点击选择日期后的回调函数
-
-
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
                     }
+                }
+            }
+            return cookieValue;
+        }
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                var csrftoken = getCookie('csrftoken');
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        function sendshowchoice() {
+            var checkopt = $('input[name="contacttype"]:checked').val();
+            $.post("/lbsite/setshowchoice/",
+                {
+                    choice: checkopt
+
+                },
+                function (ret) {
+                    alert(ret);
 
                 });
-
-                $("#txtEndDate").calendar({
-
-                    controlId: "divDate2",                                 // 弹出的日期控件ID，默认: $(this).attr("id") + "Calendar"
-
-                    speed: 200,                                           // 三种预定速度之一的字符串("slow", "normal", or "fast")或表示动画时长的毫秒数值(如：1000),默认：200
-
-                    complement: true,                                     // 是否显示日期或年空白处的前后月的补充,默认：true
-
-                    readonly: true,                                       // 目标对象是否设为只读，默认：true
-
-                    upperLimit: new Date(),                               // 日期上限，默认：NaN(不限制)
-
-                    lowerLimit: new Date("2018/04/15"),                   // 日期下限，默认：NaN(不限制)
-
-                    callback: function () {                               // 点击选择日期后的回调函数
-
-
-                    }
-
-                });
-
-            });
-
+            return false;
+        }
     </script>
-
 
 
 
@@ -154,11 +130,9 @@
             background-color: #e8f0de;
         }
     </style>
-    <link href="../static/css/lyz.calendar.css" rel="stylesheet" type="text/css"/>
 
 
-
-    <title> 后台首页 </title>
+    <title> 用户填写事项设置 </title>
 </head>
 <body>
 <div id="wrap">
@@ -222,10 +196,10 @@
                 </div>
 
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>订单查询</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="selectorder"><i class="icon-bullhorn"></i>--%>
+                <%--<span>订单查询</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
 
                 <div class="accordion-group">
@@ -236,16 +210,16 @@
                 </div>
 
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>查找用户</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="checkuser"><i class="icon-bullhorn"></i>--%>
+                <%--<span>查找用户</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
                 <%--<div class="accordion-group">--%>
-                    <%--<div class="accordion-heading">--%>
-                        <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
-                            <%--<span>按商品查询</span></a>--%>
-                    <%--</div>--%>
+                <%--<div class="accordion-heading">--%>
+                <%--<a class="accordion-toggle b_9FDDF6" href="selectproduct"><i class="icon-bullhorn"></i>--%>
+                <%--<span>按商品查询</span></a>--%>
+                <%--</div>--%>
                 <%--</div>--%>
 
                 <div class="accordion-group">
@@ -269,33 +243,31 @@
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="UserManager">用户管理</a></li>
-                <li><a href="AddUserface">添加用户</a></li>
+                <li><a href="UserManager">用户管理</a></li>
+                <li class="active"><a href="AddUserface">添加用户</a></li>
             </ul>
+
+            <%--<br><span style="color:red">设置成功</span><br>--%>
+            新建会员
+            <form action="${pageContext.request.contextPath}/user/AddUserOperation.action">
+                <input type='hidden' name='csrfmiddlewaretoken' value='iYM8XIZw0GBAN1m1YkHyLDdFAKbxd2D7Z1tftkK0aqIl6UmMOC9T5M8TNU4BsO3E' />
+                <table>
+                    <tr>
+                        <td>平台账号</td>
+                        <td><input type="text" name="account" placeholder="必填" value="${userModel.user.weixing_account}"/></td>
+                    </tr>
+                    <tr>
+                        <td>平台密码</td>
+                        <td><input type="text" name="password" placeholder="必填" value="${userModel.user.name}"/></td>
+                    </tr>
+
+                </table>
+
+                <input type="submit" value="确定" class="weui-btn weui-btn_mini weui-btn_primary" onclick="display_alert()"/><br>
+            </form>
+
         </div>
         <!-- /Main window -->
-
-        <table class="table">
-            <caption>当前授权的的多多进宝联盟账号</caption>
-            <thead>
-            <tr>
-                <th>账号</th>
-                <th>账号</th>
-                <th>密码</th>
-                <th>姓名</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${userList}" var="user">
-            <tr>
-                <td>${user.account}</td>
-                <td>${user.account}</td>
-                <td>${user.password}</td>
-                <td>${user.name}</td>
-            </tr>
-            </c:forEach>
-            </tbody>
-        </table>
 
     </div><!--/.fluid-container-->
 </div><!-- wrap ends-->

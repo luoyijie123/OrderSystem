@@ -4,6 +4,8 @@ import com.chatRobot.model.Order;
 import com.chatRobot.model.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface IUserDao {
 
     //添加用户
@@ -18,5 +20,8 @@ public interface IUserDao {
 
     //根据account查询用户
     public User findUserByAccount(String account);
+
+    //查找所有用户
+    public List<User> findAll();
 
 }

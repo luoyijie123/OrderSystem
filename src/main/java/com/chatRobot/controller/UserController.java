@@ -2,8 +2,6 @@ package com.chatRobot.controller;
 
 import com.chatRobot.model.*;
 import com.chatRobot.service.*;
-import com.chatRobot.test.JdApiTest;
-import com.chatRobot.test.PddApiTest;
 import com.chatRobot.test.TaobaoApiTest;
 import com.chatRobot.util.Util;
 //import org.json.JSONArray;
@@ -23,7 +21,6 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/user")
@@ -482,7 +479,28 @@ public class UserController {
     }
 
     @RequestMapping("UserManager")
-    public String UserManager(){
+    public String UserManager(Model model){
+        List<User> userList = userService.findAll();
+        model.addAttribute("userList",userList);
+
+        return "UserManager";
+    }
+
+
+    @RequestMapping("AddUserface")
+    public String AddUserface(){
+        return "AddUserface";
+    }
+
+    @RequestMapping("AddUserOperation")
+    public String AddUserOperation(String account, String password){
+
+        User user = new User();
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setRole("0");
+
+        userService.addUser(user);
         return "UserManager";
     }
 

@@ -2,6 +2,8 @@ package com.chatRobot.service;
 
 import com.chatRobot.model.User;
 
+import java.util.List;
+
 public interface UserService {
 
     //新增用户
@@ -15,4 +17,7 @@ public interface UserService {
 
     //根据account获取user
     User getUserByaccount(String account);
+
+    //获取所有user
+    List<User> findAll();
 }

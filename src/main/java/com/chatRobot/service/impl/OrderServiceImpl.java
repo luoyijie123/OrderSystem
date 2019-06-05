@@ -60,4 +60,10 @@ public class OrderServiceImpl implements OrderService {
         List<Order> Allorders = orderDao.findOrderByTime(map);
         return Allorders;
     }
+
+    @Override
+    public List<Order> FindOrderByOrderType(String channel) {
+        List<Order> Allorders = orderDao.findOrderByOrderType(channel);
+        return Allorders;
+    }
 }

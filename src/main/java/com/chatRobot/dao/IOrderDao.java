@@ -1,6 +1,7 @@
 package com.chatRobot.dao;
 
 import com.chatRobot.model.Order;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +22,6 @@ public interface IOrderDao {
     List<Order> findOrderByTimeNoproductid(Map map);
 
     List<Order> findOrderByTime(Map map);
+
+    List<Order> findOrderByOrderType(String channel);
 }

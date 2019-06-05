@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService{
@@ -37,5 +38,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User getUserByaccount(String account) {
         return userDao.findUserByAccount(account);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 }

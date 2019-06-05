@@ -38,7 +38,7 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
 //    private static String jd_Access_token = "410610b8-4205-40e5-810b-98ea315a87b2";//token有效期为一年,暂时写死
 //    private static int jdunionid = 1000189695;//后续从数据库中去获取，暂时写死
 
-    public static List<Order> Monitoring_order(String start_time, String Jd_appKey, String Jd_appSecret, String jd_Access_token, int jdunionid) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
+    public static List<Order> Monitoring_order(String start_time, String Jd_appKey, String Jd_appSecret, String jd_Access_token, int jdunionid, String useraccount) throws ParseException {//监控订单,返回接口中的数据，拼装成订单
 
         List<Order> orders = new ArrayList<Order>();
         String hasMore = "true";
@@ -122,6 +122,8 @@ public class JdUtil {//正式部署中去调用，部署在定时任务模块
                     } else if (json.getString("validCode").equals("18")) {
                         order.setState("已结算");
                     }
+
+                    order.setUseraccount(useraccount);
 
                     //orderService.addOrder(order);
                     orders.add(order);

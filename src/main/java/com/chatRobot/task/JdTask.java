@@ -6,10 +6,13 @@ import com.chatRobot.model.Order;
 import com.chatRobot.service.JdauthoService;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -27,6 +30,24 @@ public class JdTask {
     @Autowired
     private JdauthoService jdauthoService;
 
+    @Scheduled(cron = "0 0 1 * * ?")//每天凌晨一点钟准时执行,更新所有订单策略
+    public void checkOrderAllTable() throws ParseException {
+       //获取所有京东订单
+        DateFormat format = new SimpleDateFormat("yyyyMMddhh");
+        List<Order> orderList = orderService.FindOrderByOrderType("京东");
+        for(Order order:orderList){
+            String startTime = format.format(order.getOrderTime());
+            if(StringUtils.isNotBlank(order.getUseraccount())) {
+                Jdautho jdautho = jdauthoService.selectByUserAccount(order.getUseraccount());
+                List<Order> updateOrders = JdUtil.Monitoring_order(startTime, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+                for(Order updateOrder:updateOrders){
+                    orderService.UpdateOrder(updateOrder);
+                }
+            }
+        }
+
+    }
+
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {
 
@@ -43,7 +64,7 @@ public class JdTask {
             while (before_oneday_start.compareTo(DayDate)<0){
                 before_oneday_start = addHour(before_oneday_start,1);
                 String string_before_oneday = sdf.format(before_oneday_start);//时间转换为需要的格式
-                List<Order> oneday_orders = JdUtil.Monitoring_order(string_before_oneday, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()));
+                List<Order> oneday_orders = JdUtil.Monitoring_order(string_before_oneday, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
                 OrderFilter(oneday_orders);
             }
         }
@@ -56,7 +77,7 @@ public class JdTask {
             while(before_twoDaystart.compareTo(before_oneDayDate)<0) {
                 before_twoDaystart = addHour(before_twoDaystart,1);
                 String string_beforetwo = sdf.format(before_twoDaystart);//时间转换为需要的格式
-                List<Order> twoday_orders = JdUtil.Monitoring_order(string_beforetwo, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()));
+                List<Order> twoday_orders = JdUtil.Monitoring_order(string_beforetwo, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
                 OrderFilter(twoday_orders);
             }
         }
@@ -72,7 +93,7 @@ public class JdTask {
             //京东这里的接口只要传入当前时间，实现实时监控即可
             List<Order> orders = new ArrayList<Order>();//订单总数
             String now_time = df.format(new Date());
-            orders = JdUtil.Monitoring_order(now_time, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()));
+            orders = JdUtil.Monitoring_order(now_time, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
             OrderFilter(orders);
         }
     }

@@ -16,6 +16,15 @@ public class Order {
     private String Refunds;//返款状态
     private String isSubmit;//是否提交
     private Timestamp submitTime;//提交时间
+    private String useraccount;
+
+    public String getUseraccount() {
+        return useraccount;
+    }
+
+    public void setUseraccount(String useraccount) {
+        this.useraccount = useraccount;
+    }
 
     public String getChannel() {
         return channel;

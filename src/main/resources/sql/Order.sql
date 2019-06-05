@@ -1,5 +1,5 @@
 CREATE TABLE `ProductOrder` (
-  `orderTime` date,
+  `orderTime` timestamp,
   `productName` varchar(255),
   `productId` varchar(255) NOT NULL,
   `orderId` varchar(255) NOT NULL,

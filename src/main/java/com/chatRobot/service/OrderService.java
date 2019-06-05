@@ -21,4 +21,6 @@ public interface OrderService {
     List<Order> FindOrderByTimeNoproductid(Map map);
 
     List<Order> FindOrderByTime(Map map);
+
+    List<Order> FindOrderByOrderType(String channel);
 }

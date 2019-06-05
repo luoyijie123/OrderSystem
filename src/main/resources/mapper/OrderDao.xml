@@ -3,7 +3,7 @@
 <mapper namespace="com.chatRobot.dao.IOrderDao">
     <!--注意sql语句没有分号结尾  -->
     <insert id="saveOrder" parameterType="Order">
-        insert into productorder(orderTime,productName,productId,orderId,Estimated,state,finishTime,channel) values(#{orderTime},#{productName},#{productId},#{orderId},#{Estimated},#{state},#{finishTime},#{channel})
+        insert into productorder(orderTime,productName,productId,orderId,Estimated,state,finishTime,channel,useraccount) values(#{orderTime},#{productName},#{productId},#{orderId},#{Estimated},#{state},#{finishTime},#{channel},#{useraccount})
     </insert>
 
     <update id="updateOrder" parameterType="Order">
@@ -16,6 +16,10 @@
 
     <select id="findOrderByOrderId" parameterType="String" resultType="Order">
          select *from productorder where orderId=#{OrderId}
+    </select>
+
+    <select id="findOrderByOrderType" parameterType="String" resultType="Order">
+        select *from productorder where channel=#{channel}
     </select>
 
     <select id="findOrderByProductId" parameterType="String" resultType="Order">
