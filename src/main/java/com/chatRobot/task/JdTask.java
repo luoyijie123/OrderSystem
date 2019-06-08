@@ -36,12 +36,12 @@ public class JdTask {
         DateFormat format = new SimpleDateFormat("yyyyMMddhh");
         List<Order> orderList = orderService.FindOrderByOrderType("京东");
         for(Order order:orderList){
-            String startTime = format.format(order.getOrderTime());
-            if(StringUtils.isNotBlank(order.getUseraccount())) {
-                Jdautho jdautho = jdauthoService.selectByUserAccount(order.getUseraccount());
-                List<Order> updateOrders = JdUtil.Monitoring_order(startTime, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
-                for(Order updateOrder:updateOrders){
-                    orderService.UpdateOrder(updateOrder);
+            if (StringUtils.isNotBlank(order.getEntertime())) {//最近新增的订单有入表时间
+                String startTime = format.format(order.getEntertime());
+                if(StringUtils.isNotBlank(order.getUseraccount())) {
+                    Jdautho jdautho = jdauthoService.selectByUserAccount(order.getUseraccount());
+                    List<Order> Orders = JdUtil.Monitoring_order(startTime, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+                    OrderFilter(Orders);
                 }
             }
         }

@@ -1,11 +1,15 @@
 package com.chatRobot.task;
 
+import com.chatRobot.apiUtil.Pddutil;
 import com.chatRobot.apiUtil.TaobaoUtil;
 import com.chatRobot.model.Order;
+import com.chatRobot.model.Pddautho;
 import com.chatRobot.model.Tbautho;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.TbauthoService;
 import com.chatRobot.service.UserService;
+import com.chatRobot.util.TimeUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -26,6 +30,23 @@ public class TaobaoTask {
 
     @Autowired
     private TbauthoService tbauthoService;
+
+    @Scheduled(cron = "0 0 3 * * ? ")//每天凌晨三点钟准时执行，查找所有遗漏订单并且更新订单
+    public void checkOrderAllTable() throws ParseException {
+        //获取所有淘宝客订单
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Order> orderList = orderService.FindOrderByOrderType("淘宝");
+        for(Order order:orderList){
+            if (StringUtils.isNotBlank(order.getEntertime())) {//最近新增的订单有入表时间
+                String startTime = order.getEntertime();
+                if(StringUtils.isNotBlank(order.getUseraccount())) {
+                    Tbautho tbautho = tbauthoService.selectByaccount(order.getUseraccount());
+                    List<Order> Orders = TaobaoUtil.Monitoring_order(startTime,tbautho.getTaobaoSession(),tbautho.getUserAccount());
+                    OrderFilter(Orders);
+                }
+            }
+        }
+    }
 
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {

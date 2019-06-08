@@ -21,16 +21,9 @@ public class TimeTest {
     private OrderService orderService;
 
     public static void main(String[] args) throws ParseException {
-        TimeTest timeTest = new TimeTest();
-        Order order = timeTest.getOrder();
-        Timestamp timestamp = order.getOrderTime();
-
-
-//        Date date = null;
-//        DateFormat format = new SimpleDateFormat("yyyyMMddhh");
-//        String strng_date = temp.substring(0,11);
-//        date = format.parse(strng_date);
-//        System.out.println(date);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String nowDate = format.format(new Date());//当前入库时间
+        System.out.println(new Date().toString());
     }
 
     public Order getOrder(){

@@ -1,5 +1,6 @@
 package com.chatRobot.task;
 
+import com.chatRobot.apiUtil.JdUtil;
 import com.chatRobot.apiUtil.Pddutil;
 import com.chatRobot.model.Jdautho;
 import com.chatRobot.model.Order;
@@ -8,10 +9,13 @@ import com.chatRobot.service.OrderService;
 import com.chatRobot.service.PddauthoService;
 import com.chatRobot.service.UserService;
 import com.chatRobot.util.TimeUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,6 +32,26 @@ public class PddTask {
 
     @Autowired
     private PddauthoService pddauthoService;
+
+    @Scheduled(cron = "0 0 2 * * ? ")//每天凌晨两点钟准时执行，查找所有遗漏订单并且更新订单
+    public void checkOrderAllTable() throws ParseException {
+        //获取所有拼多多订单
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        List<Order> orderList = orderService.FindOrderByOrderType("拼多多");
+        for(Order order:orderList){
+            if (StringUtils.isNotBlank(order.getEntertime())) {//最近新增的订单有入表时间
+                String startTime = TimeUtil.StringToTimestamp(order.getEntertime());
+                Date datestartTime = sdf.parse(order.getEntertime());
+                Date dateendTime = getnowEndTime(datestartTime);
+                String endTime = TimeUtil.StringToTimestamp(dateendTime.toString());
+                if(StringUtils.isNotBlank(order.getUseraccount())) {
+                    Pddautho pddautho = pddauthoService.selectByAccount(order.getUseraccount());
+                    List<Order> Orders = Pddutil.Monitoring_order(startTime,endTime,pddautho.getPddClientId(),pddautho.getPddClientSecret(),pddautho.getUserAccount());
+                    OrderFilter(Orders);
+                }
+            }
+        }
+    }
 
     @Scheduled(cron = "0 0 21 * * ? ")//每天晚上21点检查遗漏订单,最近两天的订单
     public void checkOrder() throws ParseException {

@@ -27,13 +27,13 @@ public class TimedTask {
 
     @Scheduled(cron = "0/5 * * * * ? ")// 间隔5秒执行
     public void taskCycle() {
-        System.out.println("使用SpringMVC框架配置定时任务");
-        List<Order> orderList = orderService.FindOrderByOrderType("拼多多");
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String temp ="";
-        Order order = orderList.get(0);
-        Timestamp timestamp = order.getOrderTime();
-        temp = TimeUtil.StringToTimestamp(timestamp.toString());
-        System.out.println(temp);
+//        System.out.println("使用SpringMVC框架配置定时任务");
+//        List<Order> orderList = orderService.FindOrderByOrderType("拼多多");
+//        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        String temp ="";
+//        Order order = orderList.get(0);
+//        Timestamp timestamp = order.getOrderTime();
+//        temp = TimeUtil.StringToTimestamp(timestamp.toString());
+//        System.out.println(temp);
     }
 }

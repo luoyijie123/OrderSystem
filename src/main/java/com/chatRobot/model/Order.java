@@ -16,7 +16,16 @@ public class Order {
     private String Refunds;//返款状态
     private String isSubmit;//是否提交
     private Timestamp submitTime;//提交时间
+    private String entertime;//入表时间
     private String useraccount;
+
+    public String getEntertime() {
+        return entertime;
+    }
+
+    public void setEntertime(String entertime) {
+        this.entertime = entertime;
+    }
 
     public String getUseraccount() {
         return useraccount;
