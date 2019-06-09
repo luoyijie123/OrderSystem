@@ -34,6 +34,10 @@
        select *from productorder where orderTime between #{beginTime} and #{endTime}
     </select>
 
+    <select id="findOrderByOrderIdAndUseraccount" resultType="Order" parameterType="map">
+        select *from productorder where orderId=#{orderId} and useraccount=#{useraccount}
+    </select>
+
     <select id="findOrderByTime" resultType="Order" parameterType="map">
         select *from productorder where orderTime between #{beginTime} and #{endTime} and productId=#{productId}
     </select>

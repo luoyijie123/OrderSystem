@@ -14,6 +14,8 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,24 +110,26 @@
 <div id="mainbody" style=" margin-bottom: 100px;width:100%;">
 
     <ul class="nav nav-tabs">
-        <li class="active"><a href="clientSelectOrder">订单查询</a></li>
-        <li><a href="clientHistoryOrder">历史订单</a></li>
+        <li class="active"><a href="clientSelectOrder?useraccount=${usermodel.useraccount}">订单查询</a></li>
+        <li><a href="clientHistoryOrder?useraccount=${usermodel.useraccount}">历史订单</a></li>
     </ul>
 
     <div>
-        <input type='hidden' name='csrfmiddlewaretoken' value='vVmdq6loOkBT9nqK0KYkbh8ctAe1JX57km8hMCiAmviY9Qu6o7uY43PVRpnlzFL4' />
-        一行一个订单号，多次提交以最后提交的为准。<br>
-        <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;">
-            <div style="display: flex;justify-content: left;">
+        <form action="${pageContext.request.contextPath}/client/clientSelectOrderOperation?useraccount=${usermodel.useraccount}"><input type='hidden' name='csrfmiddlewaretoken'
+                  value='vVmdq6loOkBT9nqK0KYkbh8ctAe1JX57km8hMCiAmviY9Qu6o7uY43PVRpnlzFL4'/>
+            一行一个订单号，多次提交以最后提交的为准。<br>
+            <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;">
+                <div style="display: flex;justify-content: left;">
 
             <textarea class="weui-textarea" id="dingdanlist" name="dingdanlist"
                       style="width:90%;background-color: #EEE;height:300px;" rows="11" placeholder="一行一个订单号"></textarea>
+                </div>
+
+                <br>
+
             </div>
-
-            <br>
-
-        </div>
-        <a style="width:300px;" class="weui-btn weui-btn_plain-primary" onclick="getfromdb()">提交</a>
+            <input type="submit" style="width:300px;" class="weui-btn weui-btn_plain-primary">提交</input>
+        </form>
     </div>
 
     <div id="showresulttb">
@@ -147,7 +151,23 @@
                     <th>订单渠道</th>
                 </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                <c:forEach items="${usermodel.orderList}" var="order">
+                    <tr>
+                        <td>${order.orderTime}</td>
+                        <td>${order.productName}</td>
+                        <td>${order.orderId}</td>
+                        <td>${order.estimated}</td>
+                        <td>${order.state}</td>
+                        <td>${order.finishTime}</td>
+                        <td>${order.weixin}</td>
+                        <td>${order.refunds}</td>
+                        <td>${order.isSubmit}</td>
+                        <td>${order.submitTime}</td>
+                        <td>${order.channel}</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
             </table>
         </div>
     </div>

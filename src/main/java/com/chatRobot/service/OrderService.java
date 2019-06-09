@@ -23,4 +23,6 @@ public interface OrderService {
     List<Order> FindOrderByTime(Map map);
 
     List<Order> FindOrderByOrderType(String channel);
+
+    Order FindOrderByOrderIdAndUseraccount(Map map);
 }

@@ -169,7 +169,7 @@ public class UserController {
             request.getSession().setAttribute("User_session", user);
             if(!StringUtils.isNotBlank(user.getUserlink())){
 //                UUID uuid = UUID.randomUUID();
-                user.setUserlink(basePath+"client/clientHistoryOrder/YBJs8QyLqq"+user.getAccount());
+                user.setUserlink(basePath+"client/clientHistoryOrder?useraccount="+user.getAccount());
                 userService.updateUser(user);
             }
             return new ModelAndView("index");
@@ -231,7 +231,7 @@ public class UserController {
 
         jdauthoService.AddJdautho(jdautho);
 
-        return new ModelAndView("josLogin");
+        return new ModelAndView("redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id="+jdautho.getJdAppkey()+"&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi");
 
     }
 
@@ -305,10 +305,10 @@ public class UserController {
         return "redirect:http://api.tkurl.top/authorize?type=1&appkey=6oiyzUgz";
     }
 
-    @RequestMapping("josLogin")
-    public String jingdongLogin(){
-        return "redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id=C2CD6961D2C32326CD837705D6BB7273&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi";
-    }
+//    @RequestMapping("josLogin")
+//    public String jingdongLogin(){
+//        return "redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id=C2CD6961D2C32326CD837705D6BB7273&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi";
+//    }
 
     @RequestMapping("pingduoduoLogin")
     public String pingLogin(){

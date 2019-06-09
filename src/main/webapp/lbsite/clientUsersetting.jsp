@@ -128,11 +128,11 @@
 
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
-    <a href="clientHistoryOrder" class="weui-tabbar__item">
+    <a href="clientHistoryOrder?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">订单操作</p>
     </a>
-    <a href="clientUsersetting" class="weui-tabbar__item">
+    <a href="clientUsersetting?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">个人设置</p>
     </a>

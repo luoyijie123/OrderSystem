@@ -66,4 +66,10 @@ public class OrderServiceImpl implements OrderService {
         List<Order> Allorders = orderDao.findOrderByOrderType(channel);
         return Allorders;
     }
+
+    @Override
+    public Order FindOrderByOrderIdAndUseraccount(Map map) {
+        Order order = orderDao.findOrderByOrderIdAndUseraccount(map);
+        return order;
+    }
 }

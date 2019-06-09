@@ -101,8 +101,8 @@
 <div id="mainbody" style=" margin-bottom: 100px;width:100%;">
 
     <ul class="nav nav-tabs">
-        <li><a href="clientSelectOrder">订单查询</a></li>
-        <li  class="active"><a href="clientHistoryOrder">历史订单</a></li>
+        <li><a href="clientSelectOrder?useraccount=${usermodel.useraccount}">订单查询</a></li>
+        <li  class="active"><a href="clientHistoryOrder?useraccount=${usermodel.useraccount}">历史订单</a></li>
     </ul>
 
     <div style="width:100%;clear:both;">
@@ -119,6 +119,7 @@
                         <td>商品名</td>
                         <td>付款金额</td>
                         <td>状态</td>
+                        <td>上传好评截图</td>
                     </tr>
 
                 </table>

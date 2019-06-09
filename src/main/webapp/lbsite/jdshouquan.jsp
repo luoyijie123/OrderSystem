@@ -311,7 +311,7 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-            <form>
+            <form action="${pageContext.request.contextPath}/user/jdshouquan_operation">
                 <div class="form-group">
                     <label for="exampleInputAppKey">京东联盟appKey</label>
                     <div class="col-sm-10">
