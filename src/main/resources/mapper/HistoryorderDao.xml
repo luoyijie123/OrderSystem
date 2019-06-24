@@ -38,6 +38,6 @@
         select
         <include refid="Base_Column_List" />
         from historyorder
-        where useraccount = #{useraccount,jdbcType=VARCHAR}
+        where useraccount = #{useraccount}
     </select>
 </mapper>

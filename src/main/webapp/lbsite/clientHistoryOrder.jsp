@@ -7,6 +7,8 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,7 +123,17 @@
                         <td>状态</td>
                         <td>上传好评截图</td>
                     </tr>
-
+                    <tbody>
+                    <c:forEach items="${usermodel.historyorderList}" var="historyorder">
+                        <tr>
+                            <td>${historyorder.historyorderid}</td>
+                            <td>${historyorder.productname}</td>
+                            <td>${historyorder.estimated}</td>
+                            <td>${historyorder.state}</td>
+                            <td><a href="#">上传</a></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
                 </table>
                 <p>说明： <br>若有未查询到的订单请稍后再查询。<br>
                     若显示"已付款"表示订单状态正常。<br>
@@ -176,11 +188,11 @@
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
 
-    <a href="clientHistoryOrder" class="weui-tabbar__item">
+    <a href="clientHistoryOrder?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">订单操作</p>
     </a>
-    <a href="clientUsersetting" class="weui-tabbar__item">
+    <a href="clientUsersetting?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">个人设置</p>
     </a>

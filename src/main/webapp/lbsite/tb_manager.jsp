@@ -283,7 +283,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>${tbauthoModel.tbautho.taobaoAccount}</td>
+                    <td>${tbauthoModel.tbautho.taobaoaccount}</td>
                     <td>${tbauthoModel.tbautho.phone}</td>
                     <td>${tbauthoModel.tbautho.name}</td>
                 </tr>

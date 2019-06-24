@@ -1,6 +1,7 @@
 package com.chatRobot.service;
 
 import com.chatRobot.model.Order;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,6 @@ public interface OrderService {
     List<Order> FindOrderByOrderType(String channel);
 
     Order FindOrderByOrderIdAndUseraccount(Map map);
+
+    Order FindOrderByLastTime();
 }

@@ -121,12 +121,12 @@ public class UserController {
         code = mapRequest.get("code");
         state = mapRequest.get("state");
 //        json = Util.jd_Json(Jd_appKey,Jd_appSecret,Jd_redirect_uri,code,state);
-        json = Util.jd_Json(jdautho.getJdAppkey(),jdautho.getJdAppsecret(),Jd_redirect_uri,code,state);
+        json = Util.jd_Json(jdautho.getJdappkey(),jdautho.getJdappsecret(),Jd_redirect_uri,code,state);
         System.out.println(code);
         System.out.println(json);
 //        this.jd_Access_token = Util.jd_Access_token(json);
         String jd_accessToken = Util.jd_Access_token(json);
-        jdautho.setJdAccessToken(jd_accessToken);
+        jdautho.setJdaccesstoken(jd_accessToken);
         jdauthoService.update(jdautho);
         System.out.println(jd_accessToken);
 
@@ -146,7 +146,7 @@ public class UserController {
         Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
         code = mapRequest.get("code");
         System.out.println("code值为"+code);
-        json = Util.pdd_Json(pddautho.getPddClientId(),pddautho.getPddClientSecret(),code);
+        json = Util.pdd_Json(pddautho.getPddclientid(),pddautho.getPddclientsecret(),code);
         System.out.println("json值为"+json);
         this.pdd_Access_token = Util.pingduoduo_Access_token(json);
         System.out.println("拼多多Access_token值为"+this.pdd_Access_token);
@@ -160,7 +160,9 @@ public class UserController {
     public ModelAndView checklogin(String account, String password, Model model,HttpServletRequest request){
         System.out.println("用户登录："+account+password);
         String path = request.getContextPath();
-        this.basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        StringBuffer url = request.getRequestURL();
+        this.basePath = url.delete(url.length() - request.getRequestURI().length(), url.length()).append(request.getServletContext().getContextPath()).append("/").toString();
+//        this.basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; //开发环境
         System.out.println("项目根路径:"+basePath);
         Util.setBasePath(this.basePath);
         User user=userService.login(account,password);
@@ -222,16 +224,16 @@ public class UserController {
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
         Jdautho jdautho = new Jdautho();
-        jdautho.setUserAccount(currentUser.getAccount());
-        jdautho.setJdAppkey(JdAppkey);
-        jdautho.setJdAppsecret(JdappSecret);
+        jdautho.setUseraccount(currentUser.getAccount());
+        jdautho.setJdappkey(JdAppkey);
+        jdautho.setJdappsecret(JdappSecret);
         jdautho.setJdunionid(jdunionid);
         jdautho.setName(name);
         jdautho.setPhone(phone);
 
         jdauthoService.AddJdautho(jdautho);
 
-        return new ModelAndView("redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id="+jdautho.getJdAppkey()+"&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi");
+        return new ModelAndView("redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id="+jdautho.getJdappkey()+"&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi");
 
     }
 
@@ -246,9 +248,9 @@ public class UserController {
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
         Tbautho tbautho = new Tbautho();
-        tbautho.setUserAccount(currentUser.getAccount());
-        tbautho.setTaobaoSession(taobaoSession);
-        tbautho.setTaobaoAccount(taobaoAccount);
+        tbautho.setUseraccount(currentUser.getAccount());
+        tbautho.setTaobaosession(taobaoSession);
+        tbautho.setTaobaoaccount(taobaoAccount);
         tbautho.setName(name);
         tbautho.setPhone(phone);
 
@@ -269,9 +271,9 @@ public class UserController {
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
         Pddautho pddautho = new Pddautho();
-        pddautho.setUserAccount(currentUser.getAccount());
-        pddautho.setPddClientId(pdd_client_id);
-        pddautho.setPddClientSecret(pdd_client_secret);
+        pddautho.setUseraccount(currentUser.getAccount());
+        pddautho.setPddclientid(pdd_client_id);
+        pddautho.setPddclientsecret(pdd_client_secret);
         pddautho.setName(name);
         pddautho.setPhone(phone);
 

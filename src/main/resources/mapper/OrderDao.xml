@@ -42,5 +42,12 @@
         select *from productorder where orderTime between #{beginTime} and #{endTime} and productId=#{productId}
     </select>
 
+    <select id="findOrderByLastTime" resultType="Order" >
+        SELECT *, ABS(NOW() - finishTime)  AS diffTime
+        FROM productorder
+        ORDER BY diffTime ASC
+                 LIMIT 0, 1
+    </select>
+
 </mapper>
 

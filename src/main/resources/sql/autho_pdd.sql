@@ -1,8 +1,9 @@
-CREATE TABLE `Pddautho` (
-                             `user_account` varchar(255) not null primary key,
-                             `pdd_client_id` varchar(255) NOT NULL,
-                             `pdd_client_secret` varchar(255) NOT NULL,
-                             `ddk_id` varchar(255),
-                             `phone` varchar(255),
-                             `name` varchar(255)
-)ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `pddautho` (
+                          `useraccount` varchar(255) NOT NULL,
+                          `pddclientid` varchar(255) NOT NULL,
+                          `pddclientsecret` varchar(255) NOT NULL,
+                          `ddkid` varchar(255) DEFAULT NULL,
+                          `phone` varchar(255) DEFAULT NULL,
+                          `name` varchar(255) DEFAULT NULL,
+                          PRIMARY KEY (`useraccount`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

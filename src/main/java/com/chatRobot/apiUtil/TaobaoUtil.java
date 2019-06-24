@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -82,6 +83,9 @@ public class TaobaoUtil {//正式部署中去调用，部署在定时任务模�
                 }
 
                 order.setUseraccount(useraccount);
+
+                String nowDate = format.format(new Date());//当前入库时间
+                order.setEntertime(nowDate);
 
                 orderList.add(order);
                 //orderService.addOrder(order);

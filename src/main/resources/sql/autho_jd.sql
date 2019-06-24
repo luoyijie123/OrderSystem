@@ -1,9 +1,10 @@
-CREATE TABLE `Jdautho` (
-  `user_account` varchar(255) not null primary key,
-  `Jd_appKey` varchar(255) NOT NULL,
-  `Jd_appSecret` varchar(255) NOT NULL,
-  `Jd_Access_token` varchar(255) NOT NULL,
-  `jdunionid` varchar(255) NOT NULL,
-  `phone` varchar(255),
-  `name` varchar(255)
-)ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `jdautho` (
+                         `useraccount` varchar(255) NOT NULL,
+                         `jdappkey` varchar(255) DEFAULT NULL,
+                         `jdappsecret` varchar(255) DEFAULT NULL,
+                         `jdaccesstoken` varchar(255) DEFAULT NULL,
+                         `jdunionid` varchar(255) DEFAULT NULL,
+                         `phone` varchar(255) DEFAULT NULL,
+                         `name` varchar(255) DEFAULT NULL,
+                         PRIMARY KEY (`useraccount`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

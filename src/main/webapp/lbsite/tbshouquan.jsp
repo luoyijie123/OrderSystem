@@ -318,7 +318,7 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-            <form>
+            <form action="${pageContext.request.contextPath}/user/tbshouquan_operation">
                 <div class="form-group">
                     <a href="taobaoLogin">点击此处获取淘宝session，复制后粘贴至下面</a>
                 </div>
@@ -326,21 +326,21 @@
                 <div class="form-group">
                     <label for="exampleInputSession">淘宝session</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputSession" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputSession" placeholder="必填" name="taobaoSession">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="必填">
+                        <input type="text" class="form-control" id="name" placeholder="必填" name="name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">手机</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="必填">
+                        <input type="text" class="form-control" id="phone" placeholder="必填" name="phone">
                     </div>
                 </div>
 

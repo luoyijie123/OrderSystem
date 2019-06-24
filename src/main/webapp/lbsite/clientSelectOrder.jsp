@@ -115,8 +115,8 @@
     </ul>
 
     <div>
-        <form action="${pageContext.request.contextPath}/client/clientSelectOrderOperation?useraccount=${usermodel.useraccount}"><input type='hidden' name='csrfmiddlewaretoken'
-                  value='vVmdq6loOkBT9nqK0KYkbh8ctAe1JX57km8hMCiAmviY9Qu6o7uY43PVRpnlzFL4'/>
+        <form action="${pageContext.request.contextPath}/client/clientSelectOrderOperation?useraccount=${usermodel.useraccount}"><input type='hidden' name='useraccount'
+                  value='${usermodel.useraccount}'/>
             一行一个订单号，多次提交以最后提交的为准。<br>
             <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;">
                 <div style="display: flex;justify-content: left;">
@@ -188,11 +188,11 @@
 
 </div>
 <div class="weui-tabbar" style="position:fixed;bottom:0;">
-    <a href="clientHistoryOrder" class="weui-tabbar__item">
+    <a href="clientHistoryOrder?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-activity_history.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">订单操作</p>
     </a>
-    <a href="clientUsersetting" class="weui-tabbar__item">
+    <a href="clientUsersetting?useraccount=${usermodel.useraccount}" class="weui-tabbar__item">
         <img src="../static/icons-user.png" alt="" class="weui-tabbar__icon">
         <p class="weui-tabbar__label">个人设置</p>
     </a>

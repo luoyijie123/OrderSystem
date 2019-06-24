@@ -318,32 +318,32 @@
 
         <!-- Main window -->
         <div class="main_container" id="dashboard_page">
-            <form>
+            <form action="${pageContext.request.contextPath}/user/pddshouquan_operation">
                 <div class="form-group">
                     <label for="exampleInputClientid">拼多多client_id</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputClientid" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputClientid" placeholder="必填" name="pdd_client_id">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputclientsecret">拼多多client_secret</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="exampleInputclientsecret" placeholder="必填">
+                        <input type="text" class="form-control" id="exampleInputclientsecret" placeholder="必填" name="pdd_client_secret">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="name">姓名</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="name" placeholder="必填">
+                        <input type="text" class="form-control" id="name" placeholder="必填" name="name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="phone">手机</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="phone" placeholder="必填">
+                        <input type="text" class="form-control" id="phone" placeholder="必填" name="phone">
                     </div>
                 </div>
 

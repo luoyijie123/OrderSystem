@@ -37,12 +37,12 @@
         </javaClientGenerator>
 
         <!-- 相关表的配置 -->
-        <!--<table tableName="jdautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-                                                     <!--enableUpdateByExample="false"/>-->
-        <!--<table tableName="pddautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--enableUpdateByExample="false"/>-->
-        <!--<table tableName="tbautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"-->
-               <!--enableUpdateByExample="false"/>-->
+        <table tableName="jdautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+                                                     enableUpdateByExample="false"/>
+        <table tableName="pddautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false"/>
+        <table tableName="tbautho" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
+               enableUpdateByExample="false"/>
         <table tableName="historyorder" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false"/>
     </context>

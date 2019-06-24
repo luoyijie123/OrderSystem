@@ -280,6 +280,9 @@ public class ExportExcel<T> {
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
 
             Field[] fields = t.getClass().getDeclaredFields();
+            HSSFFont font3 = workbook.createFont();
+
+            font3.setColor(HSSFColor.BLUE.index);
 
             for (short i = 0; i < fields.length; i++) {
 
@@ -420,9 +423,9 @@ public class ExportExcel<T> {
 
                                     textValue);
 
-                            HSSFFont font3 = workbook.createFont();
+//                            font3 = workbook.createFont();
 
-                            font3.setColor(HSSFColor.BLUE.index);
+//                            font3.setColor(HSSFColor.BLUE.index);
 
                             richString.applyFont(font3);
 

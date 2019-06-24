@@ -72,4 +72,9 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderDao.findOrderByOrderIdAndUseraccount(map);
         return order;
     }
+
+    @Override
+    public Order FindOrderByLastTime() {
+        return orderDao.findOrderByLastTime();
+    }
 }

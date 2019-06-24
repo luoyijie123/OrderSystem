@@ -107,7 +107,31 @@
 
 
                 <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">微信昵称 </label></div>
+                    <div class="weui-cell__hd"><label class="weui-label">支付宝账号 </label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="nickname" type="text" placeholder="请输入"
+                               value="">
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">手机号码 </label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="nickname" type="text" placeholder="请输入"
+                               value="">
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">平台账号 </label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="nickname" type="text" placeholder="请输入"
+                               value="">
+                    </div>
+                </div>
+
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">邮箱 </label></div>
                     <div class="weui-cell__bd">
                         <input class="weui-input" name="nickname" type="text" placeholder="请输入"
                                value="">

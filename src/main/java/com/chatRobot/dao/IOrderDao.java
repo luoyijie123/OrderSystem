@@ -26,4 +26,6 @@ public interface IOrderDao {
     List<Order> findOrderByOrderType(String channel);
 
     Order findOrderByOrderIdAndUseraccount(Map map);
+
+    Order findOrderByLastTime();
 }

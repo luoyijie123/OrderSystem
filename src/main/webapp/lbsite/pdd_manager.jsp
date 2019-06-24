@@ -284,7 +284,7 @@
                 <tbody>
                 <tr>
                     <td>${pddauthoModel.pddautho.phone}</td>
-                    <td>${pddauthoModel.pddautho.ddkId}</td>
+                    <td>${pddauthoModel.pddautho.ddkid}</td>
                     <td>${pddauthoModel.pddautho.name}</td>
                 </tr>
                 </tbody>

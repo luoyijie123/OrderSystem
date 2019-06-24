@@ -18,6 +18,15 @@ public class Order {
     private Timestamp submitTime;//提交时间
     private String entertime;//入表时间
     private String useraccount;
+    private String picture;
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
 
     public String getEntertime() {
         return entertime;

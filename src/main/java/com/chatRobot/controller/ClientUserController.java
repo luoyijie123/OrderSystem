@@ -1,6 +1,8 @@
 package com.chatRobot.controller;
 
+import com.chatRobot.model.Historyorder;
 import com.chatRobot.model.Order;
+import com.chatRobot.service.HistoryOrderService;
 import com.chatRobot.service.OrderService;
 import com.chatRobot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,16 @@ public class ClientUserController {//客户端控制器，负责手机端业务�
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private HistoryOrderService historyOrderService;
+
 
 
     @RequestMapping("clientHistoryOrder")
     public ModelAndView clientHistoryOrder(String useraccount,Model model){
+        List<Historyorder> historyorderList = historyOrderService.SelectByUseraccount(useraccount);
 
+        model.addAttribute("historyorderList",historyorderList);
         model.addAttribute("useraccount",useraccount);
         return new ModelAndView("clientHistoryOrder","usermodel",model);
     }
@@ -43,7 +50,7 @@ public class ClientUserController {//客户端控制器，负责手机端业务�
     }
 
     @RequestMapping("clientSelectOrderOperation")
-    public ModelAndView clientSelectOrderOperation(String dingdanlist,Model model){
+    public ModelAndView clientSelectOrderOperation(String dingdanlist, Model model, String useraccount){
 
         String[] orderids = dingdanlist.split("\\r?\\n");
         List<Order> totalOrders = new ArrayList<Order>();
@@ -57,6 +64,31 @@ public class ClientUserController {//客户端控制器，负责手机端业务�
             }
         }
 
+        for(Order order:totalOrders){
+            try {
+                Historyorder historyorder = new Historyorder();
+                historyorder.setChannel(order.getChannel());
+                historyorder.setFinishtime(order.getFinishTime());
+                historyorder.setOrdertime(order.getOrderTime());
+                historyorder.setHistoryorderid(order.getOrderId());
+                historyorder.setHistoryproductid(order.getProductId());
+                historyorder.setProductname(order.getProductName());
+                historyorder.setEstimated(order.getEstimated());
+                historyorder.setState(order.getState());
+                historyorder.setWeixin(order.getWeixin());
+                historyorder.setRefunds(order.getRefunds());
+                historyorder.setIssubmit(order.getIsSubmit());
+                historyorder.setSubmittime(order.getSubmitTime());
+                historyorder.setUseraccount(order.getUseraccount());
+                historyorder.setEntertime(order.getEntertime());
+
+                historyOrderService.Add(historyorder);
+            }catch (Exception e){
+                continue;
+            }
+        }
+
+        model.addAttribute("useraccount",useraccount);
         model.addAttribute("orderList",totalOrders);
         return new ModelAndView("clientSelectOrder","usermodel",model);
     }

@@ -40,7 +40,7 @@ public class JdTask {
                 String startTime = format.format(order.getEntertime());
                 if(StringUtils.isNotBlank(order.getUseraccount())) {
                     Jdautho jdautho = jdauthoService.selectByUserAccount(order.getUseraccount());
-                    List<Order> Orders = JdUtil.Monitoring_order(startTime, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+                    List<Order> Orders = JdUtil.Monitoring_order(startTime, jdautho.getJdappkey(), jdautho.getJdappsecret(), jdautho.getJdaccesstoken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUseraccount());
                     OrderFilter(Orders);
                 }
             }
@@ -64,7 +64,7 @@ public class JdTask {
             while (before_oneday_start.compareTo(DayDate)<0){
                 before_oneday_start = addHour(before_oneday_start,1);
                 String string_before_oneday = sdf.format(before_oneday_start);//时间转换为需要的格式
-                List<Order> oneday_orders = JdUtil.Monitoring_order(string_before_oneday, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+                List<Order> oneday_orders = JdUtil.Monitoring_order(string_before_oneday, jdautho.getJdappkey(), jdautho.getJdappsecret(), jdautho.getJdaccesstoken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUseraccount());
                 OrderFilter(oneday_orders);
             }
         }
@@ -77,7 +77,7 @@ public class JdTask {
             while(before_twoDaystart.compareTo(before_oneDayDate)<0) {
                 before_twoDaystart = addHour(before_twoDaystart,1);
                 String string_beforetwo = sdf.format(before_twoDaystart);//时间转换为需要的格式
-                List<Order> twoday_orders = JdUtil.Monitoring_order(string_beforetwo, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+                List<Order> twoday_orders = JdUtil.Monitoring_order(string_beforetwo, jdautho.getJdappkey(), jdautho.getJdappsecret(), jdautho.getJdaccesstoken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUseraccount());
                 OrderFilter(twoday_orders);
             }
         }
@@ -93,7 +93,7 @@ public class JdTask {
             //京东这里的接口只要传入当前时间，实现实时监控即可
             List<Order> orders = new ArrayList<Order>();//订单总数
             String now_time = df.format(new Date());
-            orders = JdUtil.Monitoring_order(now_time, jdautho.getJdAppkey(), jdautho.getJdAppsecret(), jdautho.getJdAccessToken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUserAccount());
+            orders = JdUtil.Monitoring_order(now_time, jdautho.getJdappkey(), jdautho.getJdappsecret(), jdautho.getJdaccesstoken(), Integer.parseInt(jdautho.getJdunionid()), jdautho.getUseraccount());
             OrderFilter(orders);
         }
     }

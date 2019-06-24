@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,7 +88,7 @@ public class OrderController {
     public void download(String txtBeginDate, String txtEndDate, String productid, HttpServletRequest request, HttpServletResponse response) throws ParseException, IOException {
         OutputStream out = response.getOutputStream();
         ExportExcel<Order> ex = new ExportExcel<Order>();
-        String[] headers = {"下单时间","商品名称","商品id","订单号","预估金额","订单渠道","订单状态","完成时间","微信","返款状态","是否提交","提交时间"};
+        String[] headers = {"下单时间","商品名称","商品id","订单号","预估金额","订单渠道","订单状态","完成时间","微信","返款状态","是否提交","提交时间","用户账户","订单入库时间","好评图片"};
         Date date = new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String title = df.format(date);
@@ -98,16 +99,21 @@ public class OrderController {
 
         List<Order> orders = new ArrayList<Order>();
 
+        Order lastTimeOrder = orderService.FindOrderByLastTime();
+
         String beginTime = txtBeginDate;
         String endTime = txtEndDate;
         String productId = productid;
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         java.util.Date beginTemp = format.parse(beginTime);
-        java.sql.Date begin = new java.sql.Date(beginTemp.getTime());
+        Timestamp begin = new Timestamp(beginTemp.getTime());
         java.util.Date endTemp = format.parse(endTime);
-        java.sql.Date end = new java.sql.Date(endTemp.getTime());
+        Timestamp end = new Timestamp(endTemp.getTime());
 
+        if(lastTimeOrder.getFinishTime().before(end)){
+            end = lastTimeOrder.getFinishTime();
+        }
         if(productId.equals("")==false) {
             Map<String, Object> map = new HashMap<>();
             map.put("beginTime", begin);
