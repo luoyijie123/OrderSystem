@@ -5,9 +5,11 @@ import com.chatRobot.service.OrderService;
 import com.chatRobot.util.ExportExcel;
 import com.chatRobot.util.JsonUtil;
 import com.chatRobot.util.TimeUtil;
+import com.chatRobot.util.modelToJsonModelUtil;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +21,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import com.chatRobot.model.jsonmodel.JsonOrder;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/order")
@@ -99,7 +103,7 @@ public class OrderController {
 
         List<Order> orders = new ArrayList<Order>();
 
-        Order lastTimeOrder = orderService.FindOrderByLastTime();
+//        Order lastTimeOrder = orderService.FindOrderByLastTime();
 
         String beginTime = txtBeginDate;
         String endTime = txtEndDate;
@@ -111,9 +115,9 @@ public class OrderController {
         java.util.Date endTemp = format.parse(endTime);
         Timestamp end = new Timestamp(endTemp.getTime());
 
-        if(lastTimeOrder.getFinishTime().before(end)){
-            end = lastTimeOrder.getFinishTime();
-        }
+//        if(lastTimeOrder.getFinishTime().before(end)){
+//            end = lastTimeOrder.getFinishTime();
+//        }
         if(productId.equals("")==false) {
             Map<String, Object> map = new HashMap<>();
             map.put("beginTime", begin);
@@ -158,29 +162,29 @@ public class OrderController {
     }
 
     @RequestMapping("ajaxsellerdingdan")
-    public String getOrderByid(HttpServletResponse response, String dingdanlist) throws IOException {//从后台获取订单数据
+    public ModelAndView getOrderByid(HttpServletResponse response, String dingdanlist, Model model) throws IOException {//从后台获取订单数据
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out=response.getWriter();
         String status ="";
         String data ="";
         String[] orderNos = dingdanlist.split("\\r?\\n");
-        List<Order>totalOrders = new ArrayList<Order>();
+        List<JsonOrder>totalOrders = new ArrayList<JsonOrder>();
 
         for(String orderNo:orderNos){
             List<Order>temp = new ArrayList<Order>();
             temp = orderService.FindOrderByOrderId(orderNo);
 
             for(int i=0;i<temp.size();i++){
-                totalOrders.add(temp.get(i));
+                totalOrders.add(modelToJsonModelUtil.orderToJsonOrder(temp.get(i)));
             }
         }
-
+        model.addAttribute("count",totalOrders.size());
         if(totalOrders.size()==0){//大括号最后加
             status = "status: \"empty\"";
         }else {
             status = "status: \"ok\"";
         }
-        for(Order order: totalOrders){
+        for(JsonOrder order: totalOrders){
             String temp=JsonUtil.toJSON(order);
             data = data + temp+",";
         }
@@ -196,7 +200,8 @@ public class OrderController {
         out.flush();
         out.close();
 
-        return "adminchaxun";
+
+        return new ModelAndView("adminchaxun","orderModel",model);
     }
 
     @RequestMapping("selectbyproductid")

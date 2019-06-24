@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -74,7 +76,7 @@
             }
             var finalstr = totalstr.join("");
             $("#restb tbody").html(finalstr);
-
+            $("#count").html(tbjson.length);
         }
 
         function setfankuan(fankuan) {
@@ -301,6 +303,7 @@
                     </table>
                 </div>
             </div>
+            <div>订单总数:<div id="count"></div></div>
 
 
         </div>

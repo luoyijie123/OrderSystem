@@ -104,7 +104,13 @@
         <form name="wfform" action="/lbsite/custominfo//" accept-charset="UTF-8" method="post">
             <input type='hidden' name='csrfmiddlewaretoken' value='t9BjgGrE8zuv4UXx1z5qhpCwapVjYO3QD8m0GaYgZtGw9ERG647qGp8bPppiKkV4' />
             <div style="display: flex;justify-content: left;flex-direction:column;margin-left: 10px;margin-right:10px;">
-
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">姓名 </label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="nickname" type="text" placeholder="请输入"
+                               value="">
+                    </div>
+                </div>
 
                 <div class="weui-cell">
                     <div class="weui-cell__hd"><label class="weui-label">支付宝账号 </label></div>
@@ -130,13 +136,6 @@
                     </div>
                 </div>
 
-                <div class="weui-cell">
-                    <div class="weui-cell__hd"><label class="weui-label">邮箱 </label></div>
-                    <div class="weui-cell__bd">
-                        <input class="weui-input" name="nickname" type="text" placeholder="请输入"
-                               value="">
-                    </div>
-                </div>
 
                 <div style="width:100%;text-align: center">
                     <input type="submit" style="margin-top:10px;" onclick="savetocookie()" value="提交"
