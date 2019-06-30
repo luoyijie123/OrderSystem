@@ -45,6 +45,12 @@ public class UserController {
 
     private String basePath;
 
+    private Jdautho jdautho;
+
+    private Tbautho tbautho;
+
+    private Pddautho pddautho;
+
     private String Jd_redirect_uri = basePath+"user/josauth";
     private String Jd_SERVER_URL="https://api.jd.com/routerjson";
 //    private String Jd_appKey = "C2CD6961D2C32326CD837705D6BB7273";
@@ -111,7 +117,7 @@ public class UserController {
     public ModelAndView loback_Josauth(HttpServletRequest request,Model model,HttpSession session,String JdAppkey,String JdappSecret,String jdunionid){//获取京东的access_taken
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
-        Jdautho jdautho = jdauthoService.selectByUserAccount(currentUser.getAccount());
+//        Jdautho jdautho = jdauthoService.selectByUserAccount(currentUser.getAccount());
         String code ="";
         String state = "";
         String json = "";
@@ -127,32 +133,32 @@ public class UserController {
 //        this.jd_Access_token = Util.jd_Access_token(json);
         String jd_accessToken = Util.jd_Access_token(json);
         jdautho.setJdaccesstoken(jd_accessToken);
-        jdauthoService.update(jdautho);
+        jdauthoService.AddJdautho(jdautho);
         System.out.println(jd_accessToken);
 
         return new ModelAndView("josauth");
     }
 
-    @RequestMapping("pinduoduoauth")
-    public String backpingduo(HttpServletRequest request){
-
-        User currentUser = (User) request.getSession().getAttribute("User_session");
-        Pddautho pddautho = pddauthoService.selectByAccount(currentUser.getAccount());
-
-        String code="";
-        String json = "";
-        String result = "?后面的参数为:" + request.getQueryString();
-        System.out.println(result);
-        Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
-        code = mapRequest.get("code");
-        System.out.println("code值为"+code);
-        json = Util.pdd_Json(pddautho.getPddclientid(),pddautho.getPddclientsecret(),code);
-        System.out.println("json值为"+json);
-        this.pdd_Access_token = Util.pingduoduo_Access_token(json);
-        System.out.println("拼多多Access_token值为"+this.pdd_Access_token);
-
-        return "pinduoduoauth";
-    }
+//    @RequestMapping("pinduoduoauth")
+//    public String backpingduo(HttpServletRequest request){
+//
+////        User currentUser = (User) request.getSession().getAttribute("User_session");
+////        Pddautho pddautho = pddauthoService.selectByAccount(currentUser.getAccount());
+////
+////        String code="";
+////        String json = "";
+////        String result = "?后面的参数为:" + request.getQueryString();
+////        System.out.println(result);
+////        Map<String, String> mapRequest = Util.URLRequest(request.getQueryString());
+////        code = mapRequest.get("code");
+////        System.out.println("code值为"+code);
+////        json = Util.pdd_Json(pddautho.getPddclientid(),pddautho.getPddclientsecret(),code);
+////        System.out.println("json值为"+json);
+////        this.pdd_Access_token = Util.pingduoduo_Access_token(json);
+////        System.out.println("拼多多Access_token值为"+this.pdd_Access_token);
+////
+////        return "pinduoduoauth";
+//    }
 
 
 
@@ -223,7 +229,7 @@ public class UserController {
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
-        Jdautho jdautho = new Jdautho();
+        this.jdautho = new Jdautho();
         jdautho.setUseraccount(currentUser.getAccount());
         jdautho.setJdappkey(JdAppkey);
         jdautho.setJdappsecret(JdappSecret);
@@ -231,7 +237,7 @@ public class UserController {
         jdautho.setName(name);
         jdautho.setPhone(phone);
 
-        jdauthoService.AddJdautho(jdautho);
+//        jdauthoService.AddJdautho(jdautho);
 
         return new ModelAndView("redirect:https://oauth.jd.com/oauth/authorize?response_type=code&client_id="+jdautho.getJdappkey()+"&redirect_uri=http://localhost:8080/ChatRobot/user/josauth&state=quanyi");
 
@@ -247,7 +253,7 @@ public class UserController {
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
-        Tbautho tbautho = new Tbautho();
+        this.tbautho = new Tbautho();
         tbautho.setUseraccount(currentUser.getAccount());
         tbautho.setTaobaosession(taobaoSession);
         tbautho.setTaobaoaccount(taobaoAccount);
@@ -270,7 +276,7 @@ public class UserController {
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
 
-        Pddautho pddautho = new Pddautho();
+        this.pddautho = new Pddautho();
         pddautho.setUseraccount(currentUser.getAccount());
         pddautho.setPddclientid(pdd_client_id);
         pddautho.setPddclientsecret(pdd_client_secret);
@@ -511,9 +517,9 @@ public class UserController {
     public ModelAndView pdd_manager(HttpServletRequest request,Model model){
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
-        Pddautho pddautho = pddauthoService.selectByAccount(currentUser.getAccount());
+        List<Pddautho> pddauthoList = pddauthoService.selectByUserAccount(currentUser.getAccount());
 
-        model.addAttribute("pddautho",pddautho);
+        model.addAttribute("pddauthoList",pddauthoList);
         return new ModelAndView("pdd_manager","pddauthoModel",model);
     }
 
@@ -521,18 +527,18 @@ public class UserController {
     public ModelAndView jd_manager(HttpServletRequest request,Model model){
 
         User currentUser = (User)request.getSession().getAttribute("User_session");
-        Jdautho jdautho = jdauthoService.selectByUserAccount(currentUser.getAccount());
+        List<Jdautho> jdauthoList = jdauthoService.selectByUserAccount(currentUser.getAccount());
 
-        model.addAttribute("jdautho",jdautho);
+        model.addAttribute("jdauthoList",jdauthoList);
         return new ModelAndView("jd_manager","jdauthoModel",model);
     }
 
     @RequestMapping("tb_manager")
     public ModelAndView tb_manager(HttpServletRequest request,Model model){
         User currentUser = (User)request.getSession().getAttribute("User_session");
-        Tbautho tbautho = tbauthoService.selectByaccount(currentUser.getAccount());
+        List<Tbautho> tbauthoList = tbauthoService.selectByUserAccount(currentUser.getAccount());
 
-        model.addAttribute("tbautho",tbautho);
+        model.addAttribute("tbauthoList",tbauthoList);
         return new ModelAndView("tb_manager","tbauthoModel",model);
     }
 

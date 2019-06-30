@@ -7,13 +7,15 @@ import com.chatRobot.model.Tbautho;
 import java.util.List;
 
 public interface TbauthoService {
-    int deleteByaccount(String account);
+    int deleteById(Integer id);
 
     int AddTbautho(Tbautho record);
 
-    Tbautho selectByaccount(String account);
+    Tbautho selectById(Integer id);
 
     int update(Tbautho record);
 
     List<Tbautho> findAll();
+
+    List<Tbautho> selectByUserAccount(String useraccount);
 }

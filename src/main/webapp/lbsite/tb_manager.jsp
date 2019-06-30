@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 75293
@@ -6,6 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,17 +279,17 @@
                 <caption>当前授权的的淘宝客联盟账号</caption>
                 <thead>
                 <tr>
-                    <th>淘宝客账号</th>
-                    <th>手机</th>
-                    <th>姓名</th>
+                    <th>系统账号</th>
+                    <th>淘宝session</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>${tbauthoModel.tbautho.taobaoaccount}</td>
-                    <td>${tbauthoModel.tbautho.phone}</td>
-                    <td>${tbauthoModel.tbautho.name}</td>
-                </tr>
+                <c:forEach items="${tbauthoModel.tbauthoList}" var="tbautho">
+                    <tr>
+                        <td>${tbautho.useraccount}</td>
+                        <td>${tbautho.taobaosession}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

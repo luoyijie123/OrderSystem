@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,17 +278,23 @@
                 <caption>当前授权的的京东联盟账号</caption>
                 <thead>
                 <tr>
-                    <th>手机</th>
+                    <th>系统账号</th>
                     <th>联盟ID</th>
-                    <th>姓名</th>
+                    <th>jdappkey</th>
+                    <th>jdappsecret</th>
+                    <th>jdaccesstoken</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>${jdauthoModel.jdautho.phone}</td>
-                    <td>${jdauthoModel.jdautho.jdunionid}</td>
-                    <td>${jdauthoModel.jdautho.name}</td>
-                </tr>
+                <c:forEach items="${jdauthoModel.jdauthoList}" var="jdautho">
+                    <tr>
+                        <td>${jdautho.useraccount}</td>
+                        <td>${jdautho.jdunionid}</td>
+                        <td>${jdautho.jdappkey}</td>
+                        <td>${jdautho.jdappsecret}</td>
+                        <td>${jdautho.jdaccesstoken}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

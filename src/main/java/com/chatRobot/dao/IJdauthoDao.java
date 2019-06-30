@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IJdauthoDao {
     List<Jdautho> findAll();
+
+    List<Jdautho> findByUseraccount(String useraccount);
 }

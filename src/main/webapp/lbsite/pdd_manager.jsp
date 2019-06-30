@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -276,17 +278,19 @@
                 <caption>当前授权的的多多进宝联盟账号</caption>
                 <thead>
                 <tr>
-                    <th>手机</th>
-                    <th>多多客ID</th>
-                    <th>姓名</th>
+                    <th>系统账号</th>
+                    <th>拼多多pddclientid</th>
+                    <th>拼多多pddclientsecret</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>${pddauthoModel.pddautho.phone}</td>
-                    <td>${pddauthoModel.pddautho.ddkid}</td>
-                    <td>${pddauthoModel.pddautho.name}</td>
-                </tr>
+                <c:forEach items="${pddauthoModel.pddauthoList}" var="pddautho">
+                    <tr>
+                        <td>${pddautho.useraccount}</td>
+                        <td>${pddautho.pddclientid}</td>
+                        <td>${pddautho.pddclientsecret}</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>

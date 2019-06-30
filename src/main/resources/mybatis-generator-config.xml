@@ -14,7 +14,7 @@
         </commentGenerator>
 
         <!-- 数据库的相关配置 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/ChatRobot" userId="root" password="root"/>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://49.234.10.76:3306/ChatRobot" userId="root" password="*^32otTi0YHNX2gs"/>
 
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>

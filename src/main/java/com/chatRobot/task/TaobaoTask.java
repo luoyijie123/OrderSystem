@@ -40,8 +40,15 @@ public class TaobaoTask {
             if (StringUtils.isNotBlank(order.getEntertime())) {//最近新增的订单有入表时间
                 String startTime = order.getEntertime();
                 if(StringUtils.isNotBlank(order.getUseraccount())) {
-                    Tbautho tbautho = tbauthoService.selectByaccount(order.getUseraccount());
-                    List<Order> Orders = TaobaoUtil.Monitoring_order(startTime,tbautho.getTaobaosession(),tbautho.getUseraccount());
+                    List<Tbautho> tbauthoList = tbauthoService.selectByUserAccount(order.getUseraccount());
+                    List<Order> Orders = null;
+                    try {
+                        for(Tbautho tbautho : tbauthoList) {
+                            Orders = TaobaoUtil.Monitoring_order(startTime, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
                     OrderFilter(Orders);
                 }
             }
@@ -64,7 +71,12 @@ public class TaobaoTask {
             while(start.compareTo(DayDate)<0){
                 start = addTwetyMin(start,20);
                 String deal_date = sdf.format(start);
-                List<Order> Apidatas = TaobaoUtil.Monitoring_order(deal_date, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                List<Order> Apidatas = null;
+                try {
+                    Apidatas = TaobaoUtil.Monitoring_order(deal_date, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                } catch (Exception e) {
+                    continue;
+                }
                 OrderFilter(Apidatas);
             }
         }
@@ -78,7 +90,12 @@ public class TaobaoTask {
             while(before_twoDaystart.compareTo(before_oneDayDate)<0){
                 before_twoDaystart = addTwetyMin(before_twoDaystart,20);
                 String deal_date2 = sdf.format(before_twoDaystart);
-                List<Order> Apidatas_twodays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                List<Order> Apidatas_twodays = null;
+                try {
+                    Apidatas_twodays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                } catch (Exception e) {
+                    continue;
+                }
                 OrderFilter(Apidatas_twodays);
             }
         }
@@ -92,7 +109,12 @@ public class TaobaoTask {
             while(before_threeDaystart.compareTo(before_twoDayDate)<0){
                 before_threeDaystart = addTwetyMin(before_threeDaystart,20);
                 String deal_date2 = sdf.format(before_threeDaystart);
-                List<Order> Apidatas_threedays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                List<Order> Apidatas_threedays = null;
+                try {
+                    Apidatas_threedays = TaobaoUtil.Monitoring_order(deal_date2, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                } catch (Exception e) {
+                    continue;
+                }
                 OrderFilter(Apidatas_threedays);
             }
         }
@@ -109,13 +131,17 @@ public class TaobaoTask {
 
         //获取当前时间之前120分钟之前的时间
         for (Tbautho tbautho : tbauthoList) {
-            Calendar beforeTime_120 = Calendar.getInstance();
-            beforeTime_120.add(Calendar.MINUTE,-120);
-            Date temp_120 = beforeTime_120.getTime();
-            String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
-            List<Order> orderList_120 = TaobaoUtil.Monitoring_order(date_beforeTime_120, tbautho.getTaobaosession(), tbautho.getUseraccount());
-            for(int i=0;i<orderList_120.size();i++){
-                orders.add(orderList_120.get(i));
+            try {
+                Calendar beforeTime_120 = Calendar.getInstance();
+                beforeTime_120.add(Calendar.MINUTE, -120);
+                Date temp_120 = beforeTime_120.getTime();
+                String date_beforeTime_120 = df.format(temp_120);//正式传入api接口的参数
+                List<Order> orderList_120 = TaobaoUtil.Monitoring_order(date_beforeTime_120, tbautho.getTaobaosession(), tbautho.getUseraccount());
+                for (int i = 0; i < orderList_120.size(); i++) {
+                    orders.add(orderList_120.get(i));
+                }
+            }catch (Exception e){
+                continue;
             }
         }
 
@@ -126,7 +152,12 @@ public class TaobaoTask {
             beforeTime_100.add(Calendar.MINUTE,-100);
             Date temp_100 = beforeTime_100.getTime();
             String date_beforeTime_100 = df.format(temp_100);//正式传入api接口的参数
-            List<Order> orderList_100 = TaobaoUtil.Monitoring_order(date_beforeTime_100, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            List<Order> orderList_100 = null;
+            try {
+                orderList_100 = TaobaoUtil.Monitoring_order(date_beforeTime_100, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             for(int i=0;i<orderList_100.size();i++){
                 orders.add(orderList_100.get(i));
             }
@@ -138,7 +169,12 @@ public class TaobaoTask {
             beforeTime_80.add(Calendar.MINUTE,-80);
             Date temp_80 = beforeTime_100.getTime();
             String date_beforeTime_80 = df.format(temp_80);//正式传入api接口的参数
-            List<Order> orderList_80 = TaobaoUtil.Monitoring_order(date_beforeTime_80, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            List<Order> orderList_80 = null;
+            try {
+                orderList_80 = TaobaoUtil.Monitoring_order(date_beforeTime_80, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             for(int i=0;i<orderList_80.size();i++){
                 orders.add(orderList_80.get(i));
             }
@@ -150,7 +186,12 @@ public class TaobaoTask {
             beforeTime_60.add(Calendar.MINUTE,-60);
             Date temp_60 = beforeTime_60.getTime();
             String date_beforeTime_60 = df.format(temp_60);//正式传入api接口的参数
-            List<Order> orderList_60 = TaobaoUtil.Monitoring_order(date_beforeTime_60, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            List<Order> orderList_60 = null;
+            try {
+                orderList_60 = TaobaoUtil.Monitoring_order(date_beforeTime_60, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             for(int i=0;i<orderList_60.size();i++){
                 orders.add(orderList_60.get(i));
             }
@@ -162,7 +203,12 @@ public class TaobaoTask {
             beforeTime_40.add(Calendar.MINUTE,-40);
             Date temp_40 = beforeTime_40.getTime();
             String date_beforeTime_40 = df.format(temp_40);//正式传入api接口的参数
-            List<Order> orderList_40 = TaobaoUtil.Monitoring_order(date_beforeTime_40, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            List<Order> orderList_40 = null;
+            try {
+                orderList_40 = TaobaoUtil.Monitoring_order(date_beforeTime_40, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             for(int i=0;i<orderList_40.size();i++){
                 orders.add(orderList_40.get(i));
             }
@@ -174,7 +220,12 @@ public class TaobaoTask {
             beforeTime_20.add(Calendar.MINUTE,-20);
             Date temp_20 = beforeTime_20.getTime();
             String date_beforeTime_20 = df.format(temp_20);//正式传入api接口的参数
-            List<Order> orderList_20 = TaobaoUtil.Monitoring_order(date_beforeTime_20, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            List<Order> orderList_20 = null;
+            try {
+                orderList_20 = TaobaoUtil.Monitoring_order(date_beforeTime_20, tbautho.getTaobaosession(), tbautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             for(int i=0;i<orderList_20.size();i++){
                 orders.add(orderList_20.get(i));
             }

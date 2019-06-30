@@ -45,8 +45,15 @@ public class PddTask {
                 Date dateendTime = getnowEndTime(datestartTime);
                 String endTime = TimeUtil.StringToTimestamp(dateendTime.toString());
                 if(StringUtils.isNotBlank(order.getUseraccount())) {
-                    Pddautho pddautho = pddauthoService.selectByAccount(order.getUseraccount());
-                    List<Order> Orders = Pddutil.Monitoring_order(startTime,endTime,pddautho.getPddclientid(),pddautho.getPddclientsecret(),pddautho.getUseraccount());
+                    List<Pddautho> pddauthoList = pddauthoService.selectByUserAccount(order.getUseraccount());
+                    List<Order> Orders = null;
+                    try {
+                        for(Pddautho pddautho : pddauthoList) {
+                            Orders = Pddutil.Monitoring_order(startTime, endTime, pddautho.getPddclientid(), pddautho.getPddclientsecret(), pddautho.getUseraccount());
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
                     OrderFilter(Orders);
                 }
             }
@@ -74,7 +81,11 @@ public class PddTask {
             String temp_before_oneStart = TimeUtil.StringToTimestamp(string_before_oneStart);//开始时刻
             String temp_before_oneEnd = TimeUtil.StringToTimestamp(string_before_oneEnd);//结束时刻
             List<Order> before_one_Apiorders = new ArrayList<Order>();
-            before_one_Apiorders = Pddutil.Monitoring_order(temp_before_oneStart,temp_before_oneEnd,pddautho.getPddclientid(),pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            try {
+                before_one_Apiorders = Pddutil.Monitoring_order(temp_before_oneStart,temp_before_oneEnd,pddautho.getPddclientid(),pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             OrderFilter(before_one_Apiorders);
         }
 
@@ -92,7 +103,11 @@ public class PddTask {
             String temp_before_twoStart = TimeUtil.StringToTimestamp(string_before_twoStart);//开始时刻
             String temp_before_twoEnd = TimeUtil.StringToTimestamp(string_before_twoEnd);//结束时刻
             List<Order> before_two_Apiorders = new ArrayList<Order>();
-            before_two_Apiorders = Pddutil.Monitoring_order(temp_before_twoStart, temp_before_twoEnd, pddautho.getPddclientid(), pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            try {
+                before_two_Apiorders = Pddutil.Monitoring_order(temp_before_twoStart, temp_before_twoEnd, pddautho.getPddclientid(), pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
             OrderFilter(before_two_Apiorders);
         }
     }
@@ -118,7 +133,11 @@ public class PddTask {
             String deal_now = TimeUtil.StringToTimestamp(now);
             String deal_before120 = TimeUtil.StringToTimestamp(date_beforeTime_120);
             List<Order> orderList_120 = new ArrayList<Order>();
-            orderList_120 = Pddutil.Monitoring_order(deal_before120, deal_now, pddautho.getPddclientid(), pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            try {
+                orderList_120 = Pddutil.Monitoring_order(deal_before120, deal_now, pddautho.getPddclientid(), pddautho.getPddclientsecret(), pddautho.getUseraccount());
+            } catch (Exception e) {
+                continue;
+            }
 
             OrderFilter(orderList_120);
         }

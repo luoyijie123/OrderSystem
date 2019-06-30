@@ -20,7 +20,7 @@ public class PddauthoServiceImpl implements PddauthoService {
 
 
     @Override
-    public int deleteByAccount(String id) {
+    public int deleteById(Integer id) {
         return pddauthoMapper.deleteByPrimaryKey(id);
     }
 
@@ -30,9 +30,10 @@ public class PddauthoServiceImpl implements PddauthoService {
     }
 
     @Override
-    public Pddautho selectByAccount(String account) {
-        return pddauthoMapper.selectByPrimaryKey(account);
+    public Pddautho selectById(Integer id) {
+        return pddauthoMapper.selectByPrimaryKey(id);
     }
+
 
     @Override
     public int update(Pddautho record) {
@@ -42,5 +43,10 @@ public class PddauthoServiceImpl implements PddauthoService {
     @Override
     public List<Pddautho> findAll() {
         return pddauthoDao.findAll();
+    }
+
+    @Override
+    public List<Pddautho> selectByUserAccount(String useraccount) {
+        return pddauthoDao.findByUseraccount(useraccount);
     }
 }

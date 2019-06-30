@@ -6,13 +6,15 @@ import java.util.List;
 
 public interface JdauthoService {
 
-    int deleteByUserAccount(String id);
+    int deleteById(Integer id);
 
     int AddJdautho(Jdautho record);
 
-    Jdautho selectByUserAccount(String id);
+    Jdautho selectById(Integer id);
 
     int update(Jdautho record);
 
     List<Jdautho> findAll();
+
+    List<Jdautho> selectByUserAccount(String useraccount);
 }

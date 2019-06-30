@@ -20,8 +20,8 @@ public class TbauthoServiceImpl implements TbauthoService {
 
 
     @Override
-    public int deleteByaccount(String account) {
-        return tbauthoMapper.deleteByPrimaryKey(account);
+    public int deleteById(Integer id) {
+        return tbauthoMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -30,9 +30,10 @@ public class TbauthoServiceImpl implements TbauthoService {
     }
 
     @Override
-    public Tbautho selectByaccount(String account) {
-        return tbauthoMapper.selectByPrimaryKey(account);
+    public Tbautho selectById(Integer id) {
+        return tbauthoMapper.selectByPrimaryKey(id);
     }
+
 
     @Override
     public int update(Tbautho record) {
@@ -42,5 +43,10 @@ public class TbauthoServiceImpl implements TbauthoService {
     @Override
     public List<Tbautho> findAll() {
         return tbauthoDao.findAll();
+    }
+
+    @Override
+    public List<Tbautho> selectByUserAccount(String useraccount) {
+        return tbauthoDao.findByUseraccount(useraccount);
     }
 }

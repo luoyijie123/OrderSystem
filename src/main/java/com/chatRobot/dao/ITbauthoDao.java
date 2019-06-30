@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ITbauthoDao {
     List<Tbautho> findAll();
+
+    List<Tbautho> findByUseraccount(String useraccount);
 }

@@ -21,7 +21,7 @@ public class JdauthoServiceImpl implements JdauthoService {
 
 
     @Override
-    public int deleteByUserAccount(String id) {
+    public int deleteById(Integer id) {
         return jdauthoMapper.deleteByPrimaryKey(id);
     }
 
@@ -31,9 +31,10 @@ public class JdauthoServiceImpl implements JdauthoService {
     }
 
     @Override
-    public Jdautho selectByUserAccount(String id) {
+    public Jdautho selectById(Integer id) {
         return jdauthoMapper.selectByPrimaryKey(id);
     }
+
 
     @Override
     public int update(Jdautho record) {
@@ -43,5 +44,10 @@ public class JdauthoServiceImpl implements JdauthoService {
     @Override
     public List<Jdautho> findAll() {
         return jdauthoDao.findAll();
+    }
+
+    @Override
+    public List<Jdautho> selectByUserAccount(String useraccount) {
+        return jdauthoDao.findByUseraccount(useraccount);
     }
 }
